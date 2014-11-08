@@ -70,8 +70,6 @@ class DbMessagesLoader {
  * @throws \RuntimeException If model could not be loaded.
  */
 	public function __invoke() {
-		$domain = Inflector::underscore(str_replace('/', '/ ', $this->_domain));
-
 		$model = $this->_model;
 		if (is_string($model)) {
 			$model = TableRegistry::get($this->_model);
@@ -85,7 +83,7 @@ class DbMessagesLoader {
 
 		$messages = $model->find('messages', [
 				'conditions' => [
-					'domain' => $domain,
+					'domain' => $this->_domain,
 					'locale' => $this->_locale
 				]
 			])
