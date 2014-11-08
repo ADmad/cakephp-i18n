@@ -9,6 +9,8 @@ of po/mo files.
 
 ## Usage
 
+Create database table using sql file provided in `config` folder.
+
 Add code similar to what's shown below in your app's `config/bootstrap.php`:
 
 ```php
