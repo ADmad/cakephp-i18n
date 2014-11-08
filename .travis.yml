@@ -1,0 +1,29 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.4
+      env: PHPCS=1 DEFAULT=0
+
+before_script:
+  - composer self-update
+
+  - sh -c "if [ '$PHPCS' = '1' ]; then composer require cakephp/cakephp-codesniffer:*; fi"
+
+  - composer install --prefer-dist --no-interaction --dev
+
+  - phpenv rehash
+  - set +H
+
+script:
+  - sh -c "if [ '$PHPCS' != '1' ]; then phpunit --stderr; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then phpcs -p --extensions=php --standard=/home/travis/.composer/vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=vendor . ; fi"
+
+notifications:
+  email: false
