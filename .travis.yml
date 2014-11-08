@@ -23,7 +23,7 @@ before_script:
 
 script:
   - sh -c "if [ '$PHPCS' != '1' ]; then phpunit --stderr; fi"
-  - sh -c "if [ '$PHPCS' = '1' ]; then phpcs -p --extensions=php --standard=/home/travis/.composer/vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=vendor . ; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then ./vendor/bin/phpcs -p --extensions=php --standard=/home/travis/.composer/vendor/cakephp/cakephp-codesniffer/CakePHP --ignore=vendor . ; fi"
 
 notifications:
   email: false
