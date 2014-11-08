@@ -1,4 +1,4 @@
-# I18nMessages plugin
+# Intro
 
 This plugins allows retrieving translation messages stored in database instead
 of po/mo files.
@@ -29,6 +29,5 @@ I18n::config('default', function ($domain, $locale) {
 
 ## TODO
 
-* Add tests.
-* Add support for plural string and context. Currently only supports singular
+* Add support for plural strings and context. Currently only supports singular
   strings.

@@ -26,6 +26,8 @@ class I18nMessagesFixture extends TestFixture {
  */
 	public $records = [
 		['domain' => 'default', 'locale' => 'en', 'key' => 'test', 'value' => 'test translated'],
+		['domain' => 'default', 'locale' => 'fr', 'key' => 'test', 'value' => 'fr test translated'],
+		['domain' => 'my_domain', 'locale' => 'en', 'key' => 'test', 'value' => 'domain test translated'],
 	];
 
 }
