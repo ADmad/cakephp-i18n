@@ -1,0 +1,42 @@
+{
+    "name": "admad/cakephp-i18n-messages",
+    "description": "A CakePHP 3.x plugin for storing I18n messages in database",
+    "type": "cakephp-plugin",
+    "keywords": [
+        "cakephp",
+        "i18n",
+        "messages"
+    ],
+    "homepage": "https://github.com/ADmad/cakephp-i18n-messages",
+    "authors": [
+        {
+            "name":"ADmad",
+            "role":"Author",
+            "homepage":"https://github.com/ADmad"
+        }
+    ],
+    "license": "MIT",
+    "support": {
+        "source":"https://github.com/ADmad/cakephp-i18n-messages",
+        "issues":"https://github.com/ADmad/cakephp-i18n-messages/issues"
+    },
+    "require": {
+        "cakephp/cakephp": "3.0.*-dev",
+        "cakephp/plugin-installer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "I18nMessages\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "I18nMessages\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
