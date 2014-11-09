@@ -2,6 +2,7 @@
 namespace I18nMessages\I18n;
 
 use Aura\Intl\Package;
+use Cake\ORM\ResultSet;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -88,26 +89,27 @@ class DbMessagesLoader {
 				]
 			])
 			->hydrate(false)
-			->toArray();
+			->all();
 
 		return new Package($this->_formatter, null, $this->_messages($results));
 	}
 
 /**
- * Convert db results array to message array.
+ * Convert db results to message array.
  *
- * @param array $results Results array from db
+ * @param \Cake\ORM\ResultSet $results ResultSet
  * @return array
  */
-	protected function _messages(array $results) {
-		if (empty($results)) {
+	protected function _messages(ResultSet $results) {
+		if (!$results->count()) {
 			return [];
 		}
 
 		$messages = [];
 		$pluralForms = 0;
+		$item = $results->first();
 		for ($i = 5; $i > 0; $i--) {
-			if (isset($results[0]['value_' . $i])) {
+			if (isset($item['value_' . $i])) {
 				$pluralForms = $i;
 				break;
 			}
