@@ -9,6 +9,12 @@ use Cake\ORM\Table;
  */
 class I18nMessagesTable extends Table {
 
+/**
+ * Add I18nMessages behavior which provides the finder for messages.
+ *
+ * @param array $config Config list
+ * @return void
+ */
 	public function initialize(array $config) {
 		$this->addBehavior('I18nMessages.I18nMessages');
 	}
