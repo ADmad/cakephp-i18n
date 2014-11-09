@@ -14,8 +14,9 @@ class I18nMessagesFixture extends TestFixture {
 		'id' => ['type' => 'integer'],
 		'domain' => ['type' => 'string', 'null' => false],
 		'locale' => ['type' => 'string', 'null' => false],
-		'key' => ['type' => 'string', 'null' => false],
-		'value' => ['type' => 'string', 'null' => false],
+		'context' => ['type' => 'string', 'null' => false],
+		'singular' => ['type' => 'string', 'null' => false],
+		'value_0' => ['type' => 'string', 'null' => false],
 		'_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]]
 	];
 
@@ -25,9 +26,9 @@ class I18nMessagesFixture extends TestFixture {
  * @var array
  */
 	public $records = [
-		['domain' => 'default', 'locale' => 'en', 'key' => 'test', 'value' => 'test translated'],
-		['domain' => 'default', 'locale' => 'fr', 'key' => 'test', 'value' => 'fr test translated'],
-		['domain' => 'my_domain', 'locale' => 'en', 'key' => 'test', 'value' => 'domain test translated'],
+		['domain' => 'default', 'locale' => 'en', 'context' => '', 'singular' => 'test', 'value_0' => 'test translated'],
+		['domain' => 'default', 'locale' => 'fr', 'context' => '', 'singular' => 'test', 'value_0' => 'fr test translated'],
+		['domain' => 'my_domain', 'locale' => 'en', 'context' => '', 'singular' => 'test', 'value_0' => 'domain test translated'],
 	];
 
 }

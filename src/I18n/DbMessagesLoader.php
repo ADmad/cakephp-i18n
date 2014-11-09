@@ -81,15 +81,63 @@ class DbMessagesLoader {
 			$this->_model = $model;
 		}
 
-		$messages = $model->find('messages', [
+		$results = $model->find('all', [
 				'conditions' => [
 					'domain' => $this->_domain,
 					'locale' => $this->_locale
 				]
 			])
+			->hydrate(false)
 			->toArray();
 
-		return new Package($this->_formatter, null, $messages);
+		return new Package($this->_formatter, null, $this->_messages($results));
+	}
+
+/**
+ * Convert db results array to message array.
+ *
+ * @param array $results Results array from db
+ * @return array
+ */
+	protected function _messages(array $results) {
+		if (empty($results)) {
+			return [];
+		}
+
+		$messages = [];
+		$pluralForms = 0;
+		for ($i = 5; $i > 0; $i--) {
+			if (isset($results[0]['value_' . $i])) {
+				$pluralForms = $i;
+				break;
+			}
+		}
+
+		foreach ($results as $item) {
+			$singular = $item['singular'];
+			$context = $item['context'];
+			$translation = $item['value_0'];
+			if ($context) {
+				$messages[$singular]['_context'][$context] = $item['value_0'];
+			} else {
+				$messages[$singular] = $item['value_0'];
+			}
+
+			if (!empty($item['plural'])) {
+				$key = $item['plural'];
+				for ($i = 0; $i <= $pluralForms; $i++) {
+					$plurals[] = $item['value_' . $i];
+				}
+
+				if ($context) {
+					$messages[$key]['_context'][$context] = $plurals;
+				} else {
+					$messages[$key] = $plurals;
+				}
+			}
+		}
+
+		return $messages;
 	}
 
 }
