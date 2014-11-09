@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ADmad/cakephp-i18n-messages.png?branch=master)](https://travis-ci.org/ADmad/cakephp-i18n-messages)
+
 # Intro
 
 This plugins allows retrieving translation messages stored in database instead
