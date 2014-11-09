@@ -55,7 +55,7 @@ class DbMessagesLoader {
 		$formatter = 'default'
 	) {
 		if (!$model) {
-			$model = 'I18nMessages.I18nMessages';
+			$model = 'I18nMessages';
 		}
 		$this->_domain = $domain;
 		$this->_locale = $locale;
