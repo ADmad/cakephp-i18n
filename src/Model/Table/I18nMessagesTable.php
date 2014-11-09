@@ -9,20 +9,8 @@ use Cake\ORM\Table;
  */
 class I18nMessagesTable extends Table {
 
-/**
- * Finder for translation messages.
- *
- * @param \Cake\ORM\Query $query Query instance.
- * @param array $options Options list
- * @return @return \Cake\ORM\Query
- */
-	public function findMessages(Query $query, array $options) {
-		return $query->formatResults(function ($results) use ($options) {
-			return $results->combine(
-				'key',
-				'value'
-			);
-		});
+	public function initialize(array $config) {
+		$this->addBehavior('I18nMessages.I18nMessages');
 	}
 
 }
