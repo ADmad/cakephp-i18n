@@ -18,7 +18,7 @@ before_script:
 
   - composer install --prefer-dist --no-interaction --dev
 
-  - sh -c "if [ '$PHPCS' = '1' ]; then ./vendor/bin/phpcs --config-set installed_paths ./vendor/cakephp/cakephp-codesniffer; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then ./vendor/bin/phpcs --config-set installed_paths vendor/cakephp/cakephp-codesniffer; fi"
 
   - phpenv rehash
   - set +H
