@@ -127,6 +127,7 @@ class DbMessagesLoader {
 
 			if (!empty($item['plural'])) {
 				$key = $item['plural'];
+				$plurals = [];
 				for ($i = 0; $i <= $pluralForms; $i++) {
 					$plurals[] = $item['value_' . $i];
 				}

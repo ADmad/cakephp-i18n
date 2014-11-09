@@ -26,8 +26,3 @@ I18n::config('default', function ($domain, $locale) {
 	);
 });
 ```
-
-## TODO
-
-* Add support for plural strings and context. Currently only supports singular
-  strings.

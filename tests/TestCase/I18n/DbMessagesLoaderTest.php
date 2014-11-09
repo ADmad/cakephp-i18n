@@ -44,7 +44,11 @@ class DbMessagesLoaderTest extends TestCase {
 				'default',
 				'en',
 				null,
-				['test' => 'test translated']
+				[
+					'test' => 'test translated',
+					'singular' => '{0} value',
+					'plural' => ['{0} value', '{0} values']
+				]
 			],
 			[
 				'default',
@@ -53,16 +57,30 @@ class DbMessagesLoaderTest extends TestCase {
 				['test' => 'fr test translated']
 			],
 			[
-				'default',
-				'en',
-				null,
-				['test' => 'test translated']
-			],
-			[
 				'my_domain',
 				'en',
 				null,
 				['test' => 'domain test translated']
+			],
+			[
+				'w_context',
+				'en',
+				null,
+				[
+					'test' => ['_context' => ['c1' => 'test translated']],
+					'singular' => [
+						'_context' => [
+							'c1' => '{0} value',
+							'c2' => '{0} value c2'
+						]
+					],
+					'plural' => [
+						'_context' => [
+							'c1' => ['{0} value', '{0} values'],
+							'c2' => ['{0} value c2', '{0} values c2']
+						]
+					],
+				]
 			],
 		];
 	}
