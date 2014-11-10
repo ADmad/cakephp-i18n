@@ -2,7 +2,8 @@
 namespace I18nMessages\I18n;
 
 use Aura\Intl\Package;
-use Cake\ORM\ResultSet;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -30,7 +31,7 @@ class DbMessagesLoader {
 /**
  * The model name to use for loading messages or model instance.
  *
- * @var mixed
+ * @var string|\Cake\Datasource\RepositoryInterface
  */
 	protected $_model;
 
@@ -45,7 +46,7 @@ class DbMessagesLoader {
  *
  * @param string $domain Domain name.
  * @param string $locale Locale string.
- * @param mixed $model Model name or instance. Defaults to 'I18nMessages.I18nMessages'.
+ * @param string|\Cake\Datasource\RepositoryInterface $model Model name or instance. Defaults to 'I18nMessages'.
  * @param string $formatter Formatter name. Defaults to 'default' (ICU formatter).
  */
 	public function __construct(
@@ -76,23 +77,27 @@ class DbMessagesLoader {
 			$model = TableRegistry::get($this->_model);
 			if (!$model) {
 				throw new \RuntimeException(sprintf(
-					'Unable to model "%s".', $this->_model
+					'Unable to load model "%s".', $this->_model
 				));
 			}
 			$this->_model = $model;
 		}
 
-		// Get list of fields without primaryKey, domain, locale.
-		$fields = $model->schema()->columns();
-		$fields = array_flip(array_diff($fields, (array)$model->primaryKey()));
-		unset($fields['domain'], $fields['locale']);
-		$fields = array_flip($fields);
+		$query = $model->find();
 
-		$conditions = ['domain' => $this->_domain, 'locale' => $this->_locale];
+		if ($model instanceof Table) {
+			// Get list of fields without primaryKey, domain, locale.
+			$fields = $model->schema()->columns();
+			$fields = array_flip(array_diff(
+				$fields,
+				$model->schema()->primaryKey()
+			));
+			unset($fields['domain'], $fields['locale']);
+			$query->select(array_flip($fields));
+		}
 
-		$results = $model->find('all')
-			->select($fields)
-			->where($conditions)
+		$results = $query
+			->where(['domain' => $this->_domain, 'locale' => $this->_locale])
 			->hydrate(false)
 			->all();
 
@@ -100,12 +105,12 @@ class DbMessagesLoader {
 	}
 
 /**
- * Convert db results to message array.
+ * Convert db resultset to messages array.
  *
- * @param \Cake\ORM\ResultSet $results ResultSet
+ * @param \Cake\Datasource\ResultSetInterface $results ResultSet
  * @return array
  */
-	protected function _messages(ResultSet $results) {
+	protected function _messages(ResultSetInterface $results) {
 		if (!$results->count()) {
 			return [];
 		}
