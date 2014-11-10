@@ -82,12 +82,17 @@ class DbMessagesLoader {
 			$this->_model = $model;
 		}
 
-		$results = $model->find('all', [
-				'conditions' => [
-					'domain' => $this->_domain,
-					'locale' => $this->_locale
-				]
-			])
+		// Get list of fields without primaryKey, domain, locale.
+		$fields = $model->schema()->columns();
+		$fields = array_flip(array_diff($fields, (array)$model->primaryKey()));
+		unset($fields['domain'], $fields['locale']);
+		$fields = array_flip($fields);
+
+		$conditions = ['domain' => $this->_domain, 'locale' => $this->_locale];
+
+		$results = $model->find('all')
+			->select($fields)
+			->where($conditions)
 			->hydrate(false)
 			->all();
 
