@@ -9,6 +9,10 @@ of po/mo files.
 
 * CakePHP 3.0+
 
+## Installation
+
+`php composer.phar require admad/cakephp-i18n-messages:*`
+
 ## Usage
 
 Create database table using sql file provided in `config` folder.
