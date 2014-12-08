@@ -5,27 +5,32 @@ php:
   - 5.5
   - 5.6
 
+sudo: false
+
+env:
+  - DB=mysql db_dsn='mysql://travis@0.0.0.0/cakephp_test'
+  - DB=pgsql db_dsn='postgres://postgres@127.0.0.1/cakephp_test'
+  - DB=sqlite db_dsn='sqlite:///:memory:'
+
 matrix:
   fast_finish: true
+
   include:
     - php: 5.4
-      env: PHPCS=1 DEFAULT=0
+      env: PHPCS=1
 
 before_script:
   - composer self-update
+  - composer install --prefer-dist --no-interaction --dev
+
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi"
 
   - sh -c "if [ '$PHPCS' = '1' ]; then composer require cakephp/cakephp-codesniffer:*; fi"
 
-  - composer install --prefer-dist --no-interaction --dev
-
-  - sh -c "if [ '$PHPCS' = '1' ]; then ./vendor/bin/phpcs --config-set installed_paths vendor/cakephp/cakephp-codesniffer; fi"
-
-  - phpenv rehash
-  - set +H
-
 script:
-  - sh -c "if [ '$PHPCS' != '1' ]; then phpunit --stderr; fi"
-  - sh -c "if [ '$PHPCS' = '1' ]; then ./vendor/bin/phpcs -p --extensions=php --standard=CakePHP ./src ./tests; fi"
+  - sh -c "if [ '$PHPCS' != '1' ]; then phpunit; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then ./vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi"
 
 notifications:
   email: false
