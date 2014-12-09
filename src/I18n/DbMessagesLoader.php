@@ -135,18 +135,20 @@ class DbMessagesLoader {
 				$messages[$singular] = $item['value_0'];
 			}
 
-			if (!empty($item['plural'])) {
-				$key = $item['plural'];
-				$plurals = [];
-				for ($i = 0; $i <= $pluralForms; $i++) {
-					$plurals[] = $item['value_' . $i];
-				}
+			if (empty($item['plural'])) {
+				continue;
+			}
 
-				if ($context) {
-					$messages[$key]['_context'][$context] = $plurals;
-				} else {
-					$messages[$key] = $plurals;
-				}
+			$key = $item['plural'];
+			$plurals = [];
+			for ($i = 0; $i <= $pluralForms; $i++) {
+				$plurals[] = $item['value_' . $i];
+			}
+
+			if ($context) {
+				$messages[$key]['_context'][$context] = $plurals;
+			} else {
+				$messages[$key] = $plurals;
 			}
 		}
 
