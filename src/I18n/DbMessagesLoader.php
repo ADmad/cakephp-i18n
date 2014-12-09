@@ -15,7 +15,7 @@ use Cake\Utility\Inflector;
 class DbMessagesLoader {
 
 /**
- * The domain name
+ * The domain name.
  *
  * @var string
  */
@@ -46,7 +46,8 @@ class DbMessagesLoader {
  *
  * @param string $domain Domain name.
  * @param string $locale Locale string.
- * @param string|\Cake\Datasource\RepositoryInterface $model Model name or instance. Defaults to 'I18nMessages'.
+ * @param string|\Cake\Datasource\RepositoryInterface $model Model name or instance.
+ *   Defaults to 'I18nMessages'.
  * @param string $formatter Formatter name. Defaults to 'default' (ICU formatter).
  */
 	public function __construct(
@@ -118,6 +119,8 @@ class DbMessagesLoader {
 		$messages = [];
 		$pluralForms = 0;
 		$item = $results->first();
+		// There are max 6 plural forms possible but most people won't need
+		// that so will only have the required number of value_{n} fields in db.
 		for ($i = 5; $i > 0; $i--) {
 			if (isset($item['value_' . $i])) {
 				$pluralForms = $i;
