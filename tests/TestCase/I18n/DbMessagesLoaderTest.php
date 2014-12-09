@@ -14,7 +14,7 @@ class DbMessagesLoaderTest extends TestCase {
  *
  * @var array
  */
-	public $fixtures = ['plugin.i18n_messages.i18n_messages'];
+	public $fixtures = ['plugin.I18nMessages.I18nMessages'];
 
 /**
  * testInvoke method
@@ -82,6 +82,12 @@ class DbMessagesLoaderTest extends TestCase {
 					],
 				]
 			],
+			[
+				'foo',
+				'bar',
+				null,
+				[]
+			]
 		];
 	}
 
