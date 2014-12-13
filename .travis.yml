@@ -13,7 +13,7 @@ env:
     - DB=pgsql db_dsn='postgres://postgres@127.0.0.1/cakephp_test'
     - DB=sqlite db_dsn='sqlite:///:memory:'
 
- global:
+  global:
     - DEFAULT=1
 
 matrix:
