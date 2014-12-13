@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/ADmad/cakephp-i18n-messages.png?branch=master)](https://travis-ci.org/ADmad/cakephp-i18n-messages)
+[![Coverage Status](https://img.shields.io/coveralls/ADmad/cakephp-i18n-messages.svg)](https://coveralls.io/r/ADmad/cakephp-i18n-messages?branch=master)
 
 # Intro
 
