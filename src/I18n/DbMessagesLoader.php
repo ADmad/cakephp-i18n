@@ -12,150 +12,151 @@ use Cake\Utility\Inflector;
  *
  * Returns translation messages stored in database.
  */
-class DbMessagesLoader {
+class DbMessagesLoader
+{
+    /**
+     * The domain name.
+     *
+     * @var string
+     */
+    protected $_domain;
 
-/**
- * The domain name.
- *
- * @var string
- */
-	protected $_domain;
+    /**
+     * The locale to load messages for.
+     *
+     * @var string
+     */
+    protected $_locale;
 
-/**
- * The locale to load messages for.
- *
- * @var string
- */
-	protected $_locale;
+    /**
+     * The model name to use for loading messages or model instance.
+     *
+     * @var string|\Cake\Datasource\RepositoryInterface
+     */
+    protected $_model;
 
-/**
- * The model name to use for loading messages or model instance.
- *
- * @var string|\Cake\Datasource\RepositoryInterface
- */
-	protected $_model;
+    /**
+     * Formatting used for messsages.
+     * @var string
+     */
+    protected $_formatter;
 
-/**
- * Formatting used for messsages.
- * @var string
- */
-	protected $_formatter;
+    /**
+     * Constructor
+     *
+     * @param string $domain Domain name.
+     * @param string $locale Locale string.
+     * @param string|\Cake\Datasource\RepositoryInterface $model Model name or instance.
+     *   Defaults to 'I18nMessages'.
+     * @param string $formatter Formatter name. Defaults to 'default' (ICU formatter).
+     */
+    public function __construct(
+        $domain,
+        $locale,
+        $model = null,
+        $formatter = 'default'
+    ) {
+        if (!$model) {
+            $model = 'I18nMessages';
+        }
+        $this->_domain = $domain;
+        $this->_locale = $locale;
+        $this->_model = $model;
+        $this->_formatter = $formatter;
+    }
 
-/**
- * Constructor
- *
- * @param string $domain Domain name.
- * @param string $locale Locale string.
- * @param string|\Cake\Datasource\RepositoryInterface $model Model name or instance.
- *   Defaults to 'I18nMessages'.
- * @param string $formatter Formatter name. Defaults to 'default' (ICU formatter).
- */
-	public function __construct(
-		$domain,
-		$locale,
-		$model = null,
-		$formatter = 'default'
-	) {
-		if (!$model) {
-			$model = 'I18nMessages';
-		}
-		$this->_domain = $domain;
-		$this->_locale = $locale;
-		$this->_model = $model;
-		$this->_formatter = $formatter;
-	}
+    /**
+     * Fetches the translation messages from db and returns package with those
+     * messages.
+     *
+     * @return \Aura\Intl\Package
+     * @throws \RuntimeException If model could not be loaded.
+     */
+    public function __invoke()
+    {
+        $model = $this->_model;
+        if (is_string($model)) {
+            $model = TableRegistry::get($this->_model);
+            if (!$model) {
+                throw new \RuntimeException(
+                    sprintf('Unable to load model "%s".', $this->_model)
+                );
+            }
+            $this->_model = $model;
+        }
 
-/**
- * Fetches the translation messages from db and returns package with those
- * messages.
- *
- * @return \Aura\Intl\Package
- * @throws \RuntimeException If model could not be loaded.
- */
-	public function __invoke() {
-		$model = $this->_model;
-		if (is_string($model)) {
-			$model = TableRegistry::get($this->_model);
-			if (!$model) {
-				throw new \RuntimeException(sprintf(
-					'Unable to load model "%s".', $this->_model
-				));
-			}
-			$this->_model = $model;
-		}
+        $query = $model->find();
 
-		$query = $model->find();
+        if ($model instanceof Table) {
+            // Get list of fields without primaryKey, domain, locale.
+            $fields = $model->schema()->columns();
+            $fields = array_flip(array_diff(
+                $fields,
+                $model->schema()->primaryKey()
+            ));
+            unset($fields['domain'], $fields['locale']);
+            $query->select(array_flip($fields));
+        }
 
-		if ($model instanceof Table) {
-			// Get list of fields without primaryKey, domain, locale.
-			$fields = $model->schema()->columns();
-			$fields = array_flip(array_diff(
-				$fields,
-				$model->schema()->primaryKey()
-			));
-			unset($fields['domain'], $fields['locale']);
-			$query->select(array_flip($fields));
-		}
+        $results = $query
+            ->where(['domain' => $this->_domain, 'locale' => $this->_locale])
+            ->hydrate(false)
+            ->all();
 
-		$results = $query
-			->where(['domain' => $this->_domain, 'locale' => $this->_locale])
-			->hydrate(false)
-			->all();
+        return new Package($this->_formatter, null, $this->_messages($results));
+    }
 
-		return new Package($this->_formatter, null, $this->_messages($results));
-	}
+    /**
+     * Convert db resultset to messages array.
+     *
+     * @param \Cake\Datasource\ResultSetInterface $results ResultSet
+     * @return array
+     */
+    protected function _messages(ResultSetInterface $results)
+    {
+        if (!$results->count()) {
+            return [];
+        }
 
-/**
- * Convert db resultset to messages array.
- *
- * @param \Cake\Datasource\ResultSetInterface $results ResultSet
- * @return array
- */
-	protected function _messages(ResultSetInterface $results) {
-		if (!$results->count()) {
-			return [];
-		}
+        $messages = [];
+        $pluralForms = 0;
+        $item = $results->first();
+        // There are max 6 plural forms possible but most people won't need
+        // that so will only have the required number of value_{n} fields in db.
+        for ($i = 5; $i > 0; $i--) {
+            if (isset($item['value_' . $i])) {
+                $pluralForms = $i;
+                break;
+            }
+        }
 
-		$messages = [];
-		$pluralForms = 0;
-		$item = $results->first();
-		// There are max 6 plural forms possible but most people won't need
-		// that so will only have the required number of value_{n} fields in db.
-		for ($i = 5; $i > 0; $i--) {
-			if (isset($item['value_' . $i])) {
-				$pluralForms = $i;
-				break;
-			}
-		}
+        foreach ($results as $item) {
+            $singular = $item['singular'];
+            $context = $item['context'];
+            $translation = $item['value_0'];
+            if ($context) {
+                $messages[$singular]['_context'][$context] = $item['value_0'];
+            } else {
+                $messages[$singular] = $item['value_0'];
+            }
 
-		foreach ($results as $item) {
-			$singular = $item['singular'];
-			$context = $item['context'];
-			$translation = $item['value_0'];
-			if ($context) {
-				$messages[$singular]['_context'][$context] = $item['value_0'];
-			} else {
-				$messages[$singular] = $item['value_0'];
-			}
+            if (empty($item['plural'])) {
+                continue;
+            }
 
-			if (empty($item['plural'])) {
-				continue;
-			}
+            $key = $item['plural'];
+            $plurals = [];
+            for ($i = 0; $i <= $pluralForms; $i++) {
+                $plurals[] = $item['value_' . $i];
+            }
 
-			$key = $item['plural'];
-			$plurals = [];
-			for ($i = 0; $i <= $pluralForms; $i++) {
-				$plurals[] = $item['value_' . $i];
-			}
+            if ($context) {
+                $messages[$key]['_context'][$context] = $plurals;
+            } else {
+                $messages[$key] = $plurals;
+            }
+        }
 
-			if ($context) {
-				$messages[$key]['_context'][$context] = $plurals;
-			} else {
-				$messages[$key] = $plurals;
-			}
-		}
-
-		return $messages;
-	}
-
+        return $messages;
+    }
 }
