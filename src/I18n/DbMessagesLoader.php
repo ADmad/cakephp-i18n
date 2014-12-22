@@ -109,7 +109,7 @@ class DbMessagesLoader
     /**
      * Convert db resultset to messages array.
      *
-     * @param \Cake\Datasource\ResultSetInterface $results ResultSet
+     * @param \Cake\Datasource\ResultSetInterface $results ResultSet instance.
      * @return array
      */
     protected function _messages(ResultSetInterface $results)
