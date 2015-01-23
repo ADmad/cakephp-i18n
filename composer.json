@@ -21,8 +21,7 @@
         "issues":"https://github.com/ADmad/cakephp-i18n-messages/issues"
     },
     "require": {
-        "cakephp/cakephp": "3.0.*-dev",
-        "cakephp/plugin-installer": "*"
+        "cakephp/cakephp": "3.0.*-dev"
     },
     "autoload": {
         "psr-4": {
