@@ -12,7 +12,7 @@ of po/mo files.
 
 ## Installation
 
-`php composer.phar require admad/cakephp-i18n-messages:*`
+`php composer.phar require admad/cakephp-i18n-messages:1.0.x-dev`
 
 ## Usage
 
