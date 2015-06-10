@@ -1,5 +1,9 @@
-[![Build Status](https://travis-ci.org/ADmad/cakephp-i18n-messages.png?branch=master)](https://travis-ci.org/ADmad/cakephp-i18n-messages)
-[![Coverage Status](https://img.shields.io/coveralls/ADmad/cakephp-i18n-messages.svg)](https://coveralls.io/r/ADmad/cakephp-i18n-messages?branch=master)
+# CakePHP I18n Messages plugin
+
+[![Build Status](https://img.shields.io/travis/ADmad/cakephp-i18n-messages/master.svg?style=flat-square)](https://travis-ci.org/ADmad/cakephp-i18n-messages)
+[![Coverage](https://img.shields.io/coveralls/ADmad/cakephp-i18n-messages/master.svg?style=flat-square)](https://coveralls.io/r/ADmad/cakephp-i18n-messages)
+[![Total Downloads](https://img.shields.io/packagist/dt/ADmad/cakephp-i18n-messages.svg?style=flat-square)](https://packagist.org/packages/ADmad/cakephp-i18n-messages)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
 # Intro
 
