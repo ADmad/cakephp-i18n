@@ -1,8 +1,8 @@
 <?php
 namespace ADmad\I18nMessages\Test\I18n;
 
-use Cake\TestSuite\TestCase;
 use ADmad\I18nMessages\I18n\DbMessagesLoader;
+use Cake\TestSuite\TestCase;
 
 /**
  * Tests for DbMessagesLoader
