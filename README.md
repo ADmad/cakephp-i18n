@@ -27,7 +27,7 @@ Create database table using sql file provided in `config` folder.
 Add code similar to what's shown below in your app's `config/bootstrap.php`:
 
 ```php
-// Load the plugin. Instead of using 'autoload' you can use composer's autoloader too.
+// Load the plugin.
 Plugin::load('ADmad\I18nMessages');
 
 // Configure I18n to use DbMessagesLoader for default domain. You need to do
