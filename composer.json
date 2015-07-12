@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "I18nMessages\\": "src"
+            "ADmad\\I18nMessages\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "I18nMessages\\Test\\": "tests"
+            "ADmad\\I18nMessages\\Test\\": "tests"
         }
     },
     "extra": {

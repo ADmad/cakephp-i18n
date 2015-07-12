@@ -96,4 +96,4 @@ Log::config([
     ]
 ]);
 
-Plugin::load('I18nMessages', ['path' => ROOT, 'autoload' => true]);
+Plugin::load('ADmad/I18nMessages', ['path' => ROOT, 'autoload' => true]);

@@ -1,5 +1,5 @@
 <?php
-namespace I18nMessages\I18n;
+namespace ADmad\I18nMessages\I18n;
 
 use Aura\Intl\Package;
 use Cake\Datasource\ResultSetInterface;

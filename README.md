@@ -16,7 +16,9 @@ of po/mo files.
 
 ## Installation
 
-`php composer.phar require admad/cakephp-i18n-messages:1.0.x-dev`
+```
+composer require admad/cakephp-i18n-messages:1.0.x-dev
+```
 
 ## Usage
 
@@ -26,12 +28,12 @@ Add code similar to what's shown below in your app's `config/bootstrap.php`:
 
 ```php
 // Load the plugin. Instead of using 'autoload' you can use composer's autoloader too.
-Plugin::load('I18nMessages', ['autoload' => true]);
+Plugin::load('ADmad\I18nMessages');
 
 // Configure I18n to use DbMessagesLoader for default domain. You need to do
 // this for each domain separately.
 I18n::config('default', function ($domain, $locale) {
-	return new \I18nMessages\I18n\DbMessagesLoader(
+	return new \ADmad\I18nMessages\I18n\DbMessagesLoader(
 		$domain,
 		$locale
 	);

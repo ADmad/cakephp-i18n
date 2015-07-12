@@ -1,5 +1,5 @@
 <?php
-namespace I18nMessages\Test\Fixture;
+namespace ADmad\I18nMessages\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
 
