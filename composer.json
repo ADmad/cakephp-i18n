@@ -1,13 +1,15 @@
 {
     "name": "admad/cakephp-i18n-messages",
-    "description": "A CakePHP 3.x plugin for storing I18n messages in database",
+    "description": "A CakePHP plugin for I18n related tools.",
     "type": "cakephp-plugin",
     "keywords": [
         "cakephp",
         "i18n",
-        "messages"
+        "messages",
+        "validation",
+        "routing"
     ],
-    "homepage": "https://github.com/ADmad/cakephp-i18n-messages",
+    "homepage": "https://github.com/ADmad/cakephp-i18n",
     "authors": [
         {
             "name":"ADmad",
@@ -17,20 +19,20 @@
     ],
     "license": "MIT",
     "support": {
-        "source":"https://github.com/ADmad/cakephp-i18n-messages",
-        "issues":"https://github.com/ADmad/cakephp-i18n-messages/issues"
+        "source":"https://github.com/ADmad/cakephp-i18n",
+        "issues":"https://github.com/ADmad/cakephp-i18n/issues"
     },
     "require": {
         "cakephp/cakephp": "~3.0"
     },
     "autoload": {
         "psr-4": {
-            "ADmad\\I18nMessages\\": "src"
+            "ADmad\\I18n\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ADmad\\I18nMessages\\Test\\": "tests"
+            "ADmad\\I18n\\Test\\": "tests"
         }
     },
     "extra": {

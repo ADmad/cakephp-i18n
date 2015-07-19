@@ -1,5 +1,5 @@
 <?php
-namespace ADmad\I18nMessages\Validation;
+namespace ADmad\I18n\Validation;
 
 use Cake\Validation\ValidationSet;
 

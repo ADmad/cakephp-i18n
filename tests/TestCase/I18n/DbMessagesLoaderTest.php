@@ -1,7 +1,7 @@
 <?php
-namespace ADmad\I18nMessages\Test\I18n;
+namespace ADmad\I18nM\Test\I18n;
 
-use ADmad\I18nMessages\I18n\DbMessagesLoader;
+use ADmad\I18n\I18n\DbMessagesLoader;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -14,7 +14,7 @@ class DbMessagesLoaderTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = ['plugin.ADmad/I18nMessages.I18nMessages'];
+    public $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
     /**
      * testInvoke method

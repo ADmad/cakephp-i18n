@@ -12,7 +12,7 @@
 
 	<!-- Add any additional test suites you want to run here -->
 	<testsuites>
-		<testsuite name="I18nMessages TestSuite">
+		<testsuite name="I18n TestSuite">
 			<directory>./tests/TestCase</directory>
 		</testsuite>
 		<!-- Add plugin test suites here. -->

@@ -1,14 +1,16 @@
-# CakePHP I18n Messages plugin
+# CakePHP plugin for I18n related tools.
 
-[![Build Status](https://img.shields.io/travis/ADmad/cakephp-i18n-messages/master.svg?style=flat-square)](https://travis-ci.org/ADmad/cakephp-i18n-messages)
-[![Coverage](https://img.shields.io/coveralls/ADmad/cakephp-i18n-messages/master.svg?style=flat-square)](https://coveralls.io/r/ADmad/cakephp-i18n-messages)
+[![Build Status](https://img.shields.io/travis/ADmad/cakephp-i18n/master.svg?style=flat-square)](https://travis-ci.org/ADmad/cakephp-i18n)
+[![Coverage](https://img.shields.io/coveralls/ADmad/cakephp-i18n/master.svg?style=flat-square)](https://coveralls.io/r/ADmad/cakephp-i18n)
 [![Total Downloads](https://img.shields.io/packagist/dt/ADmad/cakephp-i18n-messages.svg?style=flat-square)](https://packagist.org/packages/ADmad/cakephp-i18n-messages)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
 # Intro
 
-This plugins allows retrieving translation messages stored in database instead
-of po/mo files.
+This plugins provides:
+
+- Class for retrieving translation messages stored in database instead of po/mo files.
+- Validation class auto translating validation message.
 
 ## Requirements
 
@@ -28,12 +30,12 @@ Add code similar to what's shown below in your app's `config/bootstrap.php`:
 
 ```php
 // Load the plugin.
-Plugin::load('ADmad/I18nMessages');
+Plugin::load('ADmad/I18n');
 
 // Configure I18n to use DbMessagesLoader for default domain. You need to do
 // this for each domain separately.
 I18n::config('default', function ($domain, $locale) {
-	return new \ADmad\I18nMessages\I18n\DbMessagesLoader(
+	return new \ADmad\I18n\I18n\DbMessagesLoader(
 		$domain,
 		$locale
 	);
