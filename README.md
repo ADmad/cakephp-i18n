@@ -11,6 +11,7 @@ This plugins provides:
 
 - Class for retrieving translation messages stored in database instead of po/mo files.
 - Validation class auto translating validation message.
+- Route class for generating and matching urls with language prefix.
 
 ## Requirements
 
@@ -24,14 +25,55 @@ composer require admad/cakephp-i18n:1.0.x-dev
 
 ## Usage
 
+Load the plugin in `config/bootstrap.php`:
+
+```php
+// Load the plugin.
+Plugin::load('ADmad/I18n');
+```
+
+### Using the I18nRoute
+
+The `I18nRoutes` helps generating routes of style `/:lang/:controller/:action`.
+
+For e.g. you can add routes to your `routes.php` similar to the ones shown below:
+
+```php
+Router::scope('/', function ($routes) {
+    $routes->connect(
+        '/:controller',
+        ['action' => 'index'],
+        ['routeClass' => 'ADmad/I18n.I18nRoute']
+    );
+    $routes->connect(
+        '/:controller/:action',
+        [],
+        ['routeClass' => 'ADmad/I18n.I18nRoute']
+    );
+});
+```
+
+Fragment `/:lang` will be auto prefixed to the routes which allows matching
+URLs like `/en/posts`, `/en/posts/add` etc. The `:lang` element is persisted so
+that when generating URLs if you don't provide the `lang` key in URL array it
+will be automatically added based on current URL.
+
+When connecting the routes you can use `lang` key in options to provide regular
+expression to match only languages which your app supports. Or your can set
+config value `II18n.languages` which the route class will use to auto generate
+regex for `lang` element matching:
+
+```php
+Configure::write('I18n.languages', ['en', 'fr', 'de']);
+```
+
+### Using the DbMessagesLoader
+
 Create database table using sql file provided in `config` folder.
 
 Add code similar to what's shown below in your app's `config/bootstrap.php`:
 
 ```php
-// Load the plugin.
-Plugin::load('ADmad/I18n');
-
 // Configure I18n to use DbMessagesLoader for default domain. You need to do
 // this for each domain separately.
 I18n::config('default', function ($domain, $locale) {
@@ -41,3 +83,5 @@ I18n::config('default', function ($domain, $locale) {
 	);
 });
 ```
+
+Populate the `i18n_messages` table with required message strings and translations.
