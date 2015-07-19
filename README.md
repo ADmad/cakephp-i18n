@@ -46,7 +46,7 @@ Router::scope('/', function ($routes) {
         ['routeClass' => 'ADmad/I18n.I18nRoute']
     );
     $routes->connect(
-        '/:controller/:action',
+        '/:controller/:action/*',
         [],
         ['routeClass' => 'ADmad/I18n.I18nRoute']
     );
