@@ -1,5 +1,5 @@
 {
-    "name": "admad/cakephp-i18n-messages",
+    "name": "admad/cakephp-i18n",
     "description": "A CakePHP plugin for I18n related tools.",
     "type": "cakephp-plugin",
     "keywords": [

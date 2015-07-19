@@ -19,7 +19,7 @@ This plugins provides:
 ## Installation
 
 ```
-composer require admad/cakephp-i18n-messages:1.0.x-dev
+composer require admad/cakephp-i18n:1.0.x-dev
 ```
 
 ## Usage
