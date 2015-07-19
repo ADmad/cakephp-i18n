@@ -67,6 +67,9 @@ regex for `lang` element matching:
 Configure::write('I18n.languages', ['en', 'fr', 'de']);
 ```
 
+Note: `I18nRoute` extends core's `DashedRoute` so the URL fragments will be
+inflected accordingly.
+
 ### Using the DbMessagesLoader
 
 Create database table using sql file provided in `config` folder.
