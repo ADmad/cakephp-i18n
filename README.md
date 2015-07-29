@@ -9,9 +9,9 @@
 
 This plugins provides:
 
-- Class for retrieving translation messages stored in database instead of po/mo files.
-- Validation class auto translating validation message.
 - Route class for generating and matching urls with language prefix.
+- Class for retrieving translation messages stored in database instead of po/mo files.
+- Validation class for auto translating validation message.
 
 ## Requirements
 
