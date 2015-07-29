@@ -17,7 +17,8 @@ class I18nRouteTest extends TestCase
      *
      * @return void
      */
-    public function setUp() {
+    public function setUp()
+    {
         Configure::write('I18n.languages', ['en', 'fr', 'de']);
 
         Router::reload();
@@ -28,7 +29,8 @@ class I18nRouteTest extends TestCase
      *
      * @return void
      */
-    public function testConstructor() {
+    public function testConstructor()
+    {
         $route = new I18nRoute('/:controller/:action');
         $this->assertEquals('/:lang/:controller/:action', $route->template);
         $this->assertEquals([], $route->defaults);
