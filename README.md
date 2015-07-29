@@ -60,7 +60,7 @@ will be automatically added based on current URL.
 
 When connecting the routes you can use `lang` key in options to provide regular
 expression to match only languages which your app supports. Or your can set
-config value `II18n.languages` which the route class will use to auto generate
+config value `I18n.languages` which the route class will use to auto generate
 regex for `lang` element matching:
 
 ```php
