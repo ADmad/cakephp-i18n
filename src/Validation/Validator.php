@@ -3,7 +3,7 @@ namespace ADmad\I18n\Validation;
 
 use Cake\Validation\ValidationSet;
 
-class Validator extends Cake\Validation\Validator
+class Validator extends \Cake\Validation\Validator
 {
 
     /**
@@ -12,6 +12,7 @@ class Validator extends Cake\Validation\Validator
      */
     public function __construct()
     {
+        parent::__construct();
         $this->_useI18n = true;
     }
 
