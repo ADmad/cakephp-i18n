@@ -13,7 +13,7 @@ class I18nRoute extends DashedRoute
      *
      * @var string
      */
-    public static $langRegEx = null;
+    protected static $_langRegEx = null;
 
     /**
      * Constructor for a Route
@@ -36,12 +36,12 @@ class I18nRoute extends DashedRoute
         $options['persist'][] = 'lang';
 
         if (!array_key_exists('lang', $options)) {
-            if (self::$langRegEx === null &&
+            if (self::$_langRegEx === null &&
                 $langs = Configure::read('I18n.languages')
             ) {
-                self::$langRegEx = implode('|', array_keys(Hash::normalize($langs)));
+                self::$_langRegEx = implode('|', array_keys(Hash::normalize($langs)));
             }
-            $options['lang'] = self::$langRegEx;
+            $options['lang'] = self::$_langRegEx;
         }
 
         parent::__construct($template, $defaults, $options);
