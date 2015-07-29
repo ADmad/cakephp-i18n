@@ -1,5 +1,5 @@
 <?php
-namespace ADmad\I18nM\Test\I18n;
+namespace ADmad\I18n\Test\I18n;
 
 use ADmad\I18n\I18n\DbMessagesLoader;
 use Cake\TestSuite\TestCase;
