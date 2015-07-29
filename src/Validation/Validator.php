@@ -20,7 +20,7 @@ class Validator extends Cake\Validation\Validator
      *
      * @var string
      */
-    protected $_validationDomain = 'validation_messages';
+    protected $_validationDomain = 'validation';
 
     /**
      * Get/set the I18n domain for validation messages.
