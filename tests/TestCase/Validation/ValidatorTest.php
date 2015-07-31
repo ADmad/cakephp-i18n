@@ -3,8 +3,8 @@ namespace ADmad\I18n\Test\Validation;
 
 use ADmad\I18n\I18n\DbMessagesLoader;
 use ADmad\I18n\Validation\Validator;
-use Cake\I18n\I18n;
 use Cake\Cache\Cache;
+use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
