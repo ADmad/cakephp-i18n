@@ -31,6 +31,13 @@ class ValidatorTest extends TestCase
             );
         });
 
+        I18n::config('validation_non_default', function ($domain, $locale) {
+            return new \ADmad\I18n\I18n\DbMessagesLoader(
+                $domain,
+                $locale
+            );
+        });
+
         $I18nMessages = TableRegistry::get('I18nMessages');
         $messages = [
             [
@@ -59,7 +66,16 @@ class ValidatorTest extends TestCase
                 'plural' => '',
                 'value_0' => 'less',
                 'value_1' => '',
-            ]
+            ],
+            [
+                'domain' => 'validation_non_default',
+                'locale' => I18n::locale(),
+                'context' => '',
+                'singular' => 'email',
+                'plural' => '',
+                'value_0' => 'Message from validation_non_default',
+                'value_1' => '',
+            ],
         ];
         foreach ($messages as $row) {
             $I18nMessages->save($I18nMessages->newEntity($row));
@@ -87,6 +103,26 @@ class ValidatorTest extends TestCase
         $expected = [
             'email' => ['email' => 'Enter a valid email'],
             'field' => ['comparison' => 'This value must be less than 50']
+        ];
+        $this->assertEquals($expected, $errors);
+    }
+
+    /**
+     * [testNonDefaultDomain description]
+     *
+     * @return void
+     */
+    public function testNonDefaultDomain()
+    {
+        $this->validator->validationDomain('validation_non_default');
+        $this->assertEquals('validation_non_default', $this->validator->validationDomain());
+
+        $errors = $this->validator->errors([
+            'email' => 'foo',
+        ]);
+
+        $expected = [
+            'email' => ['email' => 'Message from validation_non_default'],
         ];
         $this->assertEquals($expected, $errors);
     }
