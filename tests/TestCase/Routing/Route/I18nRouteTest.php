@@ -7,13 +7,12 @@ use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 
 /**
- * Tests for I18nRoute
+ * Tests for I18nRoute.
  */
 class I18nRouteTest extends TestCase
 {
-
     /**
-     * setUp method
+     * setUp method.
      *
      * @return void
      */
@@ -25,7 +24,7 @@ class I18nRouteTest extends TestCase
     }
 
     /**
-     * Test constructor
+     * Test constructor.
      *
      * @return void
      */
@@ -38,7 +37,7 @@ class I18nRouteTest extends TestCase
             [
                 'lang' => 'en|fr|de',
                 'inflect' => 'dasherize',
-                'persist' => ['lang']
+                'persist' => ['lang'],
             ],
             $route->options
         );

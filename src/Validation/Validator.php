@@ -5,10 +5,8 @@ use Cake\Validation\ValidationSet;
 
 class Validator extends \Cake\Validation\Validator
 {
-
     /**
-     * Constructor
-     *
+     * Constructor.
      */
     public function __construct()
     {
@@ -28,6 +26,7 @@ class Validator extends \Cake\Validation\Validator
      *
      * @param string|null $domain The validation domain to be used. If null
      *   returns currently set domain.
+     *
      * @return string|null
      */
     public function validationDomain($domain = null)
@@ -40,12 +39,13 @@ class Validator extends \Cake\Validation\Validator
 
     /**
      * Iterates over each rule in the validation set and collects the errors resulting
-     * from executing them
+     * from executing them.
      *
      * @param string $field The name of the field that is being processed
      * @param ValidationSet $rules the list of rules for a field
      * @param array $data the full data passed to the validator
      * @param bool $newRecord whether is it a new record or an existing one
+     *
      * @return array
      */
     protected function _processRules($field, ValidationSet $rules, $data, $newRecord)
@@ -74,6 +74,7 @@ class Validator extends \Cake\Validation\Validator
                 break;
             }
         }
+
         return $errors;
     }
 
@@ -81,6 +82,7 @@ class Validator extends \Cake\Validation\Validator
      * Applies translations to validator arguments.
      *
      * @param array $args The args to translate
+     *
      * @return array Translated args.
      */
     protected function _translateArgs($args)
@@ -90,6 +92,7 @@ class Validator extends \Cake\Validation\Validator
                 $args[$k] = __d($this->_validationDomain, $arg);
             }
         }
+
         return $args;
     }
 }
