@@ -5,7 +5,6 @@ use Aura\Intl\Package;
 use Cake\Datasource\ResultSetInterface;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Inflector;
 
 /**
  * DbMessages loader.
@@ -37,12 +36,13 @@ class DbMessagesLoader
 
     /**
      * Formatting used for messsages.
+     *
      * @var string
      */
     protected $_formatter;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $domain Domain name.
      * @param string $locale Locale string.
@@ -69,8 +69,9 @@ class DbMessagesLoader
      * Fetches the translation messages from db and returns package with those
      * messages.
      *
-     * @return \Aura\Intl\Package
      * @throws \RuntimeException If model could not be loaded.
+     *
+     * @return \Aura\Intl\Package
      */
     public function __invoke()
     {
@@ -110,6 +111,7 @@ class DbMessagesLoader
      * Convert db resultset to messages array.
      *
      * @param \Cake\Datasource\ResultSetInterface $results ResultSet instance.
+     *
      * @return array
      */
     protected function _messages(ResultSetInterface $results)

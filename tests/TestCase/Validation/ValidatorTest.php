@@ -1,7 +1,6 @@
 <?php
 namespace ADmad\I18n\Test\Validation;
 
-use ADmad\I18n\I18n\DbMessagesLoader;
 use ADmad\I18n\Validation\Validator;
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
@@ -9,12 +8,12 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * Tests for Validator
+ * Tests for Validator.
  */
 class ValidatorTest extends TestCase
 {
     /**
-     * fixtures
+     * fixtures.
      *
      * @var array
      */
@@ -89,7 +88,7 @@ class ValidatorTest extends TestCase
     }
 
     /**
-     * [testErrors description]
+     * [testErrors description].
      *
      * @return void
      */
@@ -97,18 +96,18 @@ class ValidatorTest extends TestCase
     {
         $errors = $this->validator->errors([
             'email' => 'foo',
-            'field' => '100'
+            'field' => '100',
         ]);
 
         $expected = [
             'email' => ['email' => 'Enter a valid email'],
-            'field' => ['comparison' => 'This value must be less than 50']
+            'field' => ['comparison' => 'This value must be less than 50'],
         ];
         $this->assertEquals($expected, $errors);
     }
 
     /**
-     * [testNonDefaultDomain description]
+     * [testNonDefaultDomain description].
      *
      * @return void
      */
