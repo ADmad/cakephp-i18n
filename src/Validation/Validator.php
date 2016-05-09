@@ -53,7 +53,6 @@ class Validator extends \Cake\Validation\Validator
         $errors = [];
         // Loading default provider in case there is none
         $this->provider('default');
-        $message = __d('cake', 'The provided value is invalid');
 
         foreach ($rules as $name => $rule) {
             $result = $rule->process($data[$field], $this->_providers, compact('newRecord', 'data', 'field'));
