@@ -9,7 +9,6 @@ use Cake\Routing\DispatcherFilter;
 
 class I18nFilter extends DispatcherFilter
 {
-
     /**
      * Default config.
      *
@@ -22,14 +21,14 @@ class I18nFilter extends DispatcherFilter
      * @var array
      */
     protected $_defaultConfig = [
-        'detectLanguage' => false
+        'detectLanguage' => false,
     ];
 
     /**
      * Set appropirate locale and lang to I18n::locale() and App.language config
      * respectively based on "lang" request param.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function beforeDispatch(Event $event)
     {
@@ -48,6 +47,7 @@ class I18nFilter extends DispatcherFilter
 
             $response->statusCode($statusCode);
             $response->header('Location', $request->webroot . $lang);
+
             return $response;
         }
 
@@ -68,6 +68,7 @@ class I18nFilter extends DispatcherFilter
      *
      * @param \Cake\Network\Request $request Request instance.
      * @param string|null $default Default language to return if no match is found.
+     *
      * @return string
      */
     public function detectLanguage(Request $request, $default = null)
