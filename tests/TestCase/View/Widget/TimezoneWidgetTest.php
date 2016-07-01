@@ -11,7 +11,6 @@ use DateTimeZone;
  */
 class TimezoneWidgetTest extends TestCase
 {
-
     /**
      * setup method.
      *
@@ -30,9 +29,8 @@ class TimezoneWidgetTest extends TestCase
         $this->templates = new StringTemplate($templates);
     }
 
-
     /**
-     * test render
+     * test render.
      *
      * @return void
      */
@@ -41,7 +39,7 @@ class TimezoneWidgetTest extends TestCase
         $select = new TimezoneWidget($this->templates);
         $data = [
             'name' => 'timezone',
-            'options' => ['UTC' => DateTimeZone::UTC]
+            'options' => ['UTC' => DateTimeZone::UTC],
         ];
         $result = $select->render($data, $this->context);
         $expected = [
@@ -49,13 +47,13 @@ class TimezoneWidgetTest extends TestCase
                 'option' => ['value' => 'UTC'],
                 'UTC',
                 '/option',
-            '/select'
+            '/select',
         ];
         $this->assertHtml($expected, $result);
 
         $data = [
             'name' => 'timezone',
-            'options' => ['UTC' => DateTimeZone::UTC, 'Arctic' => DateTimeZone::ARCTIC]
+            'options' => ['UTC' => DateTimeZone::UTC, 'Arctic' => DateTimeZone::ARCTIC],
         ];
         $result = $select->render($data, $this->context);
         $expected = [
@@ -70,7 +68,7 @@ class TimezoneWidgetTest extends TestCase
                     'Arctic/Longyearbyen',
                     '/option',
                 '/optgroup',
-            '/select'
+            '/select',
         ];
         $this->assertHtml($expected, $result);
     }
