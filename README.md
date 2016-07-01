@@ -12,6 +12,7 @@ This plugins provides:
 - Route class for generating and matching urls with language prefix.
 - Class for retrieving translation messages stored in database instead of po/mo files.
 - Validation class for auto translating validation message.
+- A widget to generate select bod with list of timezone identifiers.
 
 ## Requirements
 
@@ -32,7 +33,7 @@ Load the plugin in `config/bootstrap.php`:
 Plugin::load('ADmad/I18n');
 ```
 
-### Using the I18nRoute
+### I18nRoute
 
 The `I18nRoutes` helps generating routes of style `/:lang/:controller/:action`.
 
@@ -70,7 +71,7 @@ Configure::write('I18n.languages', ['en', 'fr', 'de']);
 Note: `I18nRoute` extends core's `DashedRoute` so the URL fragments will be
 inflected accordingly.
 
-### Using the DbMessagesLoader
+### DbMessagesLoader
 
 Create database table using sql file provided in `config` folder.
 
@@ -88,3 +89,39 @@ I18n::config('default', function ($domain, $locale) {
 ```
 
 Populate the `i18n_messages` table with required message strings and translations.
+
+### TimezoneWidget
+
+In your `AppView::initialize()` configure the `FormHelper` to use `TimezoneWidget`.
+
+```php
+// src/View/AppView.php
+public function initialize()
+{
+    $this->loadHelper('Form', [
+        'widget' => [
+            'timezone' => ['ADmad/I18n.Timezone']
+        ]
+    ]);
+}
+```
+
+You can generate a select box with timezone identifiers like:
+
+```php
+// Generates select box with list of all timezone identifiers grouped by regions.
+$this->Form->input('fieldname', ['type' => 'timezone']);
+
+// Generates select box with list of timezone identifiers for specified regions.
+$this->Form->input('fieldname', [
+    'type' => 'timezone',
+    'options' => [
+        'Asia' => DateTimeZone::ASIA,
+        'Europe' => DateTimeZone::EUROPE
+    ]
+]);
+```
+
+As shown in example above note that unlike normal select box, `options` is now
+an associative array of valid timezone regions where the key will be used as
+`optgroup` in the select box.
