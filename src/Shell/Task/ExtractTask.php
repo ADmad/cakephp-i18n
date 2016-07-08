@@ -26,6 +26,66 @@ class ExtractTask extends CoreExtractTask
     protected $_model = null;
 
     /**
+     * Execution method always used for tasks
+     *
+     * @return void
+     */
+    public function main()
+    {
+        if (!empty($this->params['exclude'])) {
+            $this->_exclude = explode(',', $this->params['exclude']);
+        }
+        if (isset($this->params['files']) && !is_array($this->params['files'])) {
+            $this->_files = explode(',', $this->params['files']);
+        }
+        if (isset($this->params['paths'])) {
+            $this->_paths = explode(',', $this->params['paths']);
+        } elseif (isset($this->params['plugin'])) {
+            $plugin = Inflector::camelize($this->params['plugin']);
+            if (!Plugin::loaded($plugin)) {
+                Plugin::load($plugin);
+            }
+            $this->_paths = [Plugin::classPath($plugin)];
+            $this->params['plugin'] = $plugin;
+        } else {
+            $this->_getPaths();
+        }
+
+        if (isset($this->params['extract-core'])) {
+            $this->_extractCore = !(strtolower($this->params['extract-core']) === 'no');
+        } else {
+            $response = $this->in('Would you like to extract the messages from the CakePHP core?', ['y', 'n'], 'n');
+            $this->_extractCore = strtolower($response) === 'y';
+        }
+
+        if (!empty($this->params['exclude-plugins']) && $this->_isExtractingApp()) {
+            $this->_exclude = array_merge($this->_exclude, App::path('Plugin'));
+        }
+
+        if (!empty($this->params['validation-domain'])) {
+            $this->_validationDomain = $this->params['validation-domain'];
+        }
+
+        if ($this->_extractCore) {
+            $this->_paths[] = CAKE;
+        }
+
+        if (isset($this->params['merge'])) {
+            $this->_merge = !(strtolower($this->params['merge']) === 'no');
+        } else {
+            $this->out();
+            $response = $this->in('Would you like to merge all domain strings into the default.pot file?', ['y', 'n'], 'n');
+            $this->_merge = strtolower($response) === 'y';
+        }
+
+        if (empty($this->_files)) {
+            $this->_searchFiles();
+        }
+
+        $this->_extract();
+    }
+
+    /**
      * Gets the option parser instance and configures it.
      *
      * @return \Cake\Console\ConsoleOptionParser
@@ -34,7 +94,7 @@ class ExtractTask extends CoreExtractTask
     {
         $parser = parent::getOptionParser();
         $parser->description(
-            'CakePHP Language String Extraction:'
+            'Language String Extraction:'
         )->addOption('app', [
             'help' => 'Directory where your application is located.',
         ])->addOption('paths', [
@@ -92,7 +152,6 @@ class ExtractTask extends CoreExtractTask
         foreach ($this->_paths as $path) {
             $this->out('   ' . $path);
         }
-        $this->out('Output Directory: ' . $this->_output);
         $this->hr();
         $this->_extractTokens();
 
