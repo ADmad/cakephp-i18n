@@ -12,11 +12,11 @@ use Cake\Utility\Hash;
 class ExtractTask extends CoreExtractTask
 {
     /**
-     * App locales.
+     * App languages.
      *
      * @var array
      */
-    protected $_locales = [];
+    protected $_languages = [];
 
     /**
      * Model instance to save translation messages to.
@@ -44,8 +44,8 @@ class ExtractTask extends CoreExtractTask
             'choices' => ['yes', 'no'],
         ])->addOption('model', [
             'help' => 'Model to use for storing messages.',
-        ])->addOption('locales', [
-            'help' => 'Comma separated list of locales used by app.',
+        ])->addOption('languages', [
+            'help' => 'Comma separated list of languages used by app.',
         ])->addOption('files', [
             'help' => 'Comma separated list of files.',
         ])->addOption('exclude-plugins', [
@@ -96,7 +96,7 @@ class ExtractTask extends CoreExtractTask
         $this->hr();
         $this->_extractTokens();
 
-        $this->_locales();
+        $this->_languages();
         $this->_write();
 
         $this->_paths = $this->_files = $this->_storage = [];
@@ -173,7 +173,7 @@ class ExtractTask extends CoreExtractTask
     {
         $model = $this->_model();
 
-        foreach ($this->_locales as $locale) {
+        foreach ($this->_languages as $locale) {
             $found = $model->find()
                 ->where(compact('domain', 'locale', 'singular'))
                 ->count();
@@ -213,14 +213,14 @@ class ExtractTask extends CoreExtractTask
     }
 
     /**
-     * Get app locales.
+     * Get app languages.
      *
      * @return void
      */
-    protected function _locales()
+    protected function _languages()
     {
-        if (!empty($this->params['locales'])) {
-            $this->_locales = explode(',', $this->params['locales']);
+        if (!empty($this->params['languages'])) {
+            $this->_languages = explode(',', $this->params['languages']);
 
             return;
         }
@@ -230,13 +230,13 @@ class ExtractTask extends CoreExtractTask
             return;
         }
 
-        $this->_locales = [];
+        $this->_languages = [];
         $langs = Hash::normalize($langs);
         foreach ($langs as $key => $value) {
             if (isset($value['locale'])) {
-                $this->_locales[] = $value['locale'];
+                $this->_languages[] = $value['locale'];
             } else {
-                $this->_locales[] = $key;
+                $this->_languages[] = $key;
             }
         }
     }
