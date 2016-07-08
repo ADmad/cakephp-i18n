@@ -1,23 +1,21 @@
 <?php
 namespace ADmad\I18n\Test\TestCase\Routing\Filter;
 
-use Cake\Core\Configure;
+use ADmad\I18n\Routing\Filter\I18nFilter;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
 use Cake\Network\Request;
 use Cake\Network\Response;
-use Cake\Routing\Router;
-use ADmad\I18n\Routing\Filter\I18nFilter;
 use Cake\TestSuite\TestCase;
 use Locale;
 
 /**
  * I18nFilter filter test.
  */
-class I18nFilterTest extends TestCase
+class I18nFilter extends TestCase
 {
     /**
-     * setup
+     * setup.
      *
      * @return void
      */
@@ -29,7 +27,7 @@ class I18nFilterTest extends TestCase
 
         $this->filter = new I18nFilter([
             'defaultLanguage' => 'fr',
-            'availableLanguages' => ['fr', 'en']
+            'availableLanguages' => ['fr', 'en'],
         ]);
         $this->request = new Request();
         $this->request->webroot = '/';
@@ -37,7 +35,7 @@ class I18nFilterTest extends TestCase
     }
 
     /**
-     * Resets the default locale
+     * Resets the default locale.
      *
      * @return void
      */
@@ -49,7 +47,7 @@ class I18nFilterTest extends TestCase
     }
 
     /**
-     * testRedirectionFromSiteRoot
+     * testRedirectionFromSiteRoot.
      *
      * @return void
      */
@@ -57,7 +55,7 @@ class I18nFilterTest extends TestCase
     {
         $event = new Event(__CLASS__, $this, [
             'request' => $this->request,
-            'response' => $this->response
+            'response' => $this->response,
         ]);
         $result = $this->filter->beforeDispatch($event);
 
@@ -66,13 +64,13 @@ class I18nFilterTest extends TestCase
         $this->assertEquals(301, $this->response->statusCode());
 
         $request = new Request([
-            'environment' => ['HTTP_ACCEPT_LANGUAGE' => 'en_US,en;q=0.8,es;q=0.6,da;q=0.4']
+            'environment' => ['HTTP_ACCEPT_LANGUAGE' => 'en_US,en;q=0.8,es;q=0.6,da;q=0.4'],
         ]);
         $request->webroot = '/';
         $this->filter->config('detectLanguage', true);
         $event = new Event(__CLASS__, $this, [
             'request' => $request,
-            'response' => $this->response
+            'response' => $this->response,
         ]);
         $result = $this->filter->beforeDispatch($event);
 
@@ -82,7 +80,7 @@ class I18nFilterTest extends TestCase
     }
 
     /**
-     * testLocaleSetting
+     * testLocaleSetting.
      *
      * @return void
      */
@@ -92,7 +90,7 @@ class I18nFilterTest extends TestCase
         $request->params['lang'] = 'fr';
         $event = new Event(__CLASS__, $this, [
             'request' => $request,
-            'response' => $this->response
+            'response' => $this->response,
         ]);
         $result = $this->filter->beforeDispatch($event);
         $this->assertNull($result);
