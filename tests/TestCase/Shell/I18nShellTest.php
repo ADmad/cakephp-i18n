@@ -18,7 +18,7 @@ class I18nShellTest extends TestCase
     public $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
     /**
-     * setup method
+     * setup method.
      *
      * @return void
      */

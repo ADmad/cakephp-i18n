@@ -9,16 +9,15 @@ use Cake\ORM\TableRegistry;
  */
 class I18nShell extends Shell
 {
-
     /**
-     * Contains tasks to load and instantiate
+     * Contains tasks to load and instantiate.
      *
      * @var array
      */
     public $tasks = ['ADmad/I18n.Extract'];
 
     /**
-     * Override main() for help message hook
+     * Override main() for help message hook.
      *
      * @return void
      */
@@ -44,6 +43,7 @@ class I18nShell extends Shell
                 break;
             case 'q':
                 $this->_stop();
+
                 return;
             default:
                 $this->out('You have made an invalid selection. Please choose a command to execute by entering E, I, H, or Q.');
@@ -56,6 +56,7 @@ class I18nShell extends Shell
      * Inits PO file from POT file.
      *
      * @param string|null $language Language code to use.
+     *
      * @return int|null
      */
     public function init($language = null)
@@ -86,7 +87,7 @@ class I18nShell extends Shell
         $return = $model->connection()->transactional(
             function () use ($model, $entities, $language) {
                 $model->deleteAll([
-                    'locale' => $language
+                    'locale' => $language,
                 ]);
 
                 foreach ($entities as $entity) {
@@ -117,25 +118,25 @@ class I18nShell extends Shell
             'options' => [
                 'model' => [
                     'help' => 'Model name.',
-                    'short' => 'm'
+                    'short' => 'm',
                 ],
             ],
             'arguments' => [
                 'language' => [
-                    'help' => 'Language code, e.g. `en`, `eng`, `en_US`.'
-                ]
-            ]
+                    'help' => 'Language code, e.g. `en`, `eng`, `en_US`.',
+                ],
+            ],
         ];
 
         $parser->description(
             'I18n Shell extracts translation messages from source code and adds to database.'
         )->addSubcommand('extract', [
             'help' => 'Extract translation messages from your application',
-            'parser' => $this->Extract->getOptionParser()
+            'parser' => $this->Extract->getOptionParser(),
         ])
         ->addSubcommand('init', [
             'help' => 'Init new language',
-            'parser' => $initParser
+            'parser' => $initParser,
         ]);
 
         return $parser;
