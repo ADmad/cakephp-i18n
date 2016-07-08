@@ -1,7 +1,7 @@
 # CakePHP plugin for I18n related tools.
 
 [![Build Status](https://img.shields.io/travis/ADmad/cakephp-i18n/master.svg?style=flat-square)](https://travis-ci.org/ADmad/cakephp-i18n)
-[![Coverage](https://img.shields.io/coveralls/ADmad/cakephp-i18n/master.svg?style=flat-square)](https://coveralls.io/r/ADmad/cakephp-i18n)
+[![Coverage Status](https://img.shields.io/codecov/c/github/ADmad/cakephp-i18n.svg?style=flat-square)](https://codecov.io/github/ADmad/cakephp-i18n)
 [![Total Downloads](https://img.shields.io/packagist/dt/ADmad/cakephp-i18n.svg?style=flat-square)](https://packagist.org/packages/ADmad/cakephp-i18n)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
 
