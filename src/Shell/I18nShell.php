@@ -15,7 +15,7 @@ class I18nShell extends Shell
      *
      * @var array
      */
-    public $tasks = ['Extract'];
+    public $tasks = ['ADmad/I18n.Extract'];
 
     /**
      * Override main() for help message hook
