@@ -1,11 +1,12 @@
 <?php
-namespace I18n\Routing\Filter;
+namespace ADmad\I18n\Routing\Filter;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
 use Cake\Network\Request;
 use Cake\Routing\DispatcherFilter;
+use Cake\Utility\Hash;
 
 class I18nFilter extends DispatcherFilter
 {
@@ -17,18 +18,39 @@ class I18nFilter extends DispatcherFilter
      * - `detectLanguage`: If `true` will attempt to get browser locale and
      * redirect to similar language available in app when going to site root.
      * Default `false`.
+     * - `defaultLanguage`: Default language for app. Default `en_US`.
+     * - `availableLanguages`: Languages available in app. Default `[]`.
      *
      * @var array
      */
     protected $_defaultConfig = [
         'detectLanguage' => false,
+        'defaultLanguage' => 'en_US',
+        'availableLanguages' => []
     ];
 
     /**
-     * Set appropirate locale and lang to I18n::locale() and App.language config
+     * Constructor.
+     *
+     * @param array $config Settings for the filter.
+     */
+    public function __construct($config = [])
+    {
+        if (isset($config['availableLanguages'])) {
+            $config['availableLanguages'] = Hash::normalize($config['availableLanguages']);
+        }
+
+        parent::__construct($config);
+    }
+
+    /**
+     * Callback for Dispatcher.beforeDispatch event.
+     *
+     * Sets appropriate locale and lang to I18n::locale() and App.language config
      * respectively based on "lang" request param.
      *
-     * {@inheritDoc}
+     * @param \Cake\Event\Event $event Event object.
+     * @return \Cake\Network\Response|null
      */
     public function beforeDispatch(Event $event)
     {
@@ -39,10 +61,10 @@ class I18nFilter extends DispatcherFilter
             $event->stopPropagation();
 
             $statusCode = 301;
-            $lang = Configure::read('I18n.defaultLanguage');
-            if ($this->config('detectLanguage')) {
+            $lang = $this->_config['defaultLanguage'];
+            if ($this->_config['detectLanguage']) {
                 $statusCode = 302;
-                $lang = $this->detectLanguage($request);
+                $lang = $this->detectLanguage($request, $lang);
             }
 
             $response->statusCode($statusCode);
@@ -51,12 +73,15 @@ class I18nFilter extends DispatcherFilter
             return $response;
         }
 
-        $langs = Configure::read('I18n.languages');
-        $lang = $request->param('lang');
+        $langs = $this->_config['availableLanguages'];
+        $lang = $request->param('lang') ?: $this->_config['defaultLanguage'];
         if (isset($langs[$lang])) {
             I18n::locale($langs[$lang]['locale']);
-            Configure::write('App.language', $lang);
+        } else {
+            I18n::locale($lang);
         }
+
+        Configure::write('App.language', $lang);
     }
 
     /**
@@ -74,7 +99,7 @@ class I18nFilter extends DispatcherFilter
     public function detectLanguage(Request $request, $default = null)
     {
         if (empty($default)) {
-            $lang = Configure::read('I18n.defaultLanguage');
+            $lang = $this->_config['defaultLanguage'];
         } else {
             $lang = $default;
         }
@@ -87,7 +112,7 @@ class I18nFilter extends DispatcherFilter
         }
         $acceptedLangs = array_intersect(
             $browserLangs,
-            array_keys(Configure::read('I18n.languages'))
+            array_keys($this->_config['availableLanguages'])
         );
         if (!empty($acceptedLangs)) {
             $lang = reset($acceptedLangs);
