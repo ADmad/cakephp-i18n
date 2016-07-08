@@ -28,7 +28,7 @@ class I18nFilter extends DispatcherFilter
      * Set appropirate locale and lang to I18n::locale() and App.language config
      * respectively based on "lang" request param.
      *
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function beforeDispatch(Event $event)
     {
