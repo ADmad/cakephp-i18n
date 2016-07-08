@@ -1,13 +1,13 @@
 <?php
 namespace ADmad\I18n\Test\TestCase\Routing\Filter;
 
+use ADmad\I18n\Routing\Filter\I18nFilter;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
 use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\Routing\Router;
-use ADmad\I18n\Routing\Filter\I18nFilter;
 use Cake\TestSuite\TestCase;
 use Locale;
 
