@@ -8,7 +8,7 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * ExtractTask Test Case
+ * ExtractTask Test Case.
  */
 class ExtractTaskTest extends TestCase
 {
@@ -20,7 +20,7 @@ class ExtractTaskTest extends TestCase
     public $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
     /**
-     * setUp method
+     * setUp method.
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     * tearDown method
+     * tearDown method.
      *
      * @return void
      */
@@ -61,7 +61,7 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     * testExecute method
+     * testExecute method.
      *
      * @return void
      */
@@ -110,7 +110,7 @@ class ExtractTaskTest extends TestCase
         $result = $this->model->find()
             ->where([
                 'domain' => 'domain',
-                'singular' => 'You have %d new message (domain).'
+                'singular' => 'You have %d new message (domain).',
             ])
             ->hydrate(false)
             ->first();
@@ -119,7 +119,7 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     * testExecute with merging on method
+     * testExecute with merging on method.
      *
      * @return void
      */
@@ -149,7 +149,7 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     * test exclusions
+     * test exclusions.
      *
      * @return void
      */
@@ -179,7 +179,7 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     * testExtractWithoutLocations method
+     * testExtractWithoutLocations method.
      *
      * @return void
      */
@@ -234,7 +234,7 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     * Tests that it is possible to exclude plugin paths by enabling the param option for the ExtractTask
+     * Tests that it is possible to exclude plugin paths by enabling the param option for the ExtractTask.
      *
      * @return void
      */
@@ -262,7 +262,7 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     * Test that is possible to extract messages from a single plugin
+     * Test that is possible to extract messages from a single plugin.
      *
      * @return void
      */
@@ -322,7 +322,7 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     *  Test that the extract shell scans the core libs
+     *  Test that the extract shell scans the core libs.
      *
      * @return void
      */

@@ -27,4 +27,4 @@ require $root . '/vendor/cakephp/cakephp/tests/bootstrap.php';
 define('PLUGIN_ROOT', $root . DS);
 define('PLUGIN_TESTS', $root . DS . 'tests' . DS);
 
-Configure::write('App.paths.plugins', [PLUGIN_TESTS . 'test_app' . DS . 'plugins'. DS]);
+Configure::write('App.paths.plugins', [PLUGIN_TESTS . 'test_app' . DS . 'plugins' . DS]);
