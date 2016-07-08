@@ -1,10 +1,13 @@
 <?php
 namespace ADmad\I18n\Shell\Task;
 
+use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
 use Cake\Shell\Task\ExtractTask as CoreExtractTask;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 
 /**
  * Extract shell task.
