@@ -26,6 +26,58 @@ class ExtractTask extends CoreExtractTask
     protected $_model = null;
 
     /**
+     * Gets the option parser instance and configures it.
+     *
+     * @return \Cake\Console\ConsoleOptionParser
+     */
+    public function getOptionParser()
+    {
+        $parser = parent::getOptionParser();
+        $parser->description(
+            'CakePHP Language String Extraction:'
+        )->addOption('app', [
+            'help' => 'Directory where your application is located.'
+        ])->addOption('paths', [
+            'help' => 'Comma separated list of paths.'
+        ])->addOption('merge', [
+            'help' => 'Merge all domain strings into the "default" domain.',
+            'choices' => ['yes', 'no']
+        ])->addOption('model', [
+            'help' => 'Model to use for storing messages.'
+        ])->addOption('locales', [
+            'help' => 'Comma separated list of locales used by app.'
+        ])->addOption('files', [
+            'help' => 'Comma separated list of files.'
+        ])->addOption('exclude-plugins', [
+            'boolean' => true,
+            'default' => true,
+            'help' => 'Ignores all files in plugins if this command is run inside from the same app directory.'
+        ])->addOption('plugin', [
+            'help' => 'Extracts tokens only from the plugin specified and puts the result in the plugin\'s Locale directory.'
+        ])->addOption('ignore-model-validation', [
+            'boolean' => true,
+            'default' => false,
+            'help' => 'Ignores validation messages in the $validate property.' .
+                ' If this flag is not set and the command is run from the same app directory,' .
+                ' all messages in model validation rules will be extracted as tokens.'
+        ])->addOption('validation-domain', [
+            'help' => 'If set to a value, the localization domain to be used for model validation messages.'
+        ])->addOption('exclude', [
+            'help' => 'Comma separated list of directories to exclude.' .
+                ' Any path containing a path segment with the provided values will be skipped. E.g. test,vendors'
+        ])->addOption('extract-core', [
+            'help' => 'Extract messages from the CakePHP core libs.',
+            'choices' => ['yes', 'no']
+        ])->addOption('no-location', [
+            'boolean' => true,
+            'default' => false,
+            'help' => 'Do not write file locations for each extracted message.',
+        ]);
+
+        return $parser;
+    }
+
+    /**
      * Extract text
      *
      * @return void
