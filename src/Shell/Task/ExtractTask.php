@@ -26,7 +26,7 @@ class ExtractTask extends CoreExtractTask
     protected $_model = null;
 
     /**
-     * Execution method always used for tasks
+     * Execution method always used for tasks.
      *
      * @return void
      */

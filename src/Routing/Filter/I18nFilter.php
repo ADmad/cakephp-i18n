@@ -26,7 +26,7 @@ class I18nFilter extends DispatcherFilter
     protected $_defaultConfig = [
         'detectLanguage' => false,
         'defaultLanguage' => 'en_US',
-        'availableLanguages' => []
+        'availableLanguages' => [],
     ];
 
     /**
@@ -50,6 +50,7 @@ class I18nFilter extends DispatcherFilter
      * respectively based on "lang" request param.
      *
      * @param \Cake\Event\Event $event Event object.
+     *
      * @return \Cake\Network\Response|null
      */
     public function beforeDispatch(Event $event)
