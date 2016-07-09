@@ -27,7 +27,7 @@ class I18nFilterTest extends TestCase
 
         $this->filter = new I18nFilter([
             'defaultLanguage' => 'fr',
-            'availableLanguages' => ['fr', 'en'],
+            'languages' => ['fr', 'en'],
         ]);
         $this->request = new Request();
         $this->request->webroot = '/';

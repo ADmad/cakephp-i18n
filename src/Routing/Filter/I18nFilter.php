@@ -19,14 +19,14 @@ class I18nFilter extends DispatcherFilter
      * redirect to similar language available in app when going to site root.
      * Default `false`.
      * - `defaultLanguage`: Default language for app. Default `en_US`.
-     * - `availableLanguages`: Languages available in app. Default `[]`.
+     * - `languages`: Languages available in app. Default `[]`.
      *
      * @var array
      */
     protected $_defaultConfig = [
         'detectLanguage' => false,
         'defaultLanguage' => 'en_US',
-        'availableLanguages' => [],
+        'languages' => [],
     ];
 
     /**
@@ -36,8 +36,8 @@ class I18nFilter extends DispatcherFilter
      */
     public function __construct($config = [])
     {
-        if (isset($config['availableLanguages'])) {
-            $config['availableLanguages'] = Hash::normalize($config['availableLanguages']);
+        if (isset($config['languages'])) {
+            $config['languages'] = Hash::normalize($config['languages']);
         }
 
         parent::__construct($config);
@@ -74,7 +74,7 @@ class I18nFilter extends DispatcherFilter
             return $response;
         }
 
-        $langs = $this->_config['availableLanguages'];
+        $langs = $this->_config['languages'];
         $lang = $request->param('lang') ?: $this->_config['defaultLanguage'];
         if (isset($langs[$lang])) {
             I18n::locale($langs[$lang]['locale']);
@@ -113,7 +113,7 @@ class I18nFilter extends DispatcherFilter
         }
         $acceptedLangs = array_intersect(
             $browserLangs,
-            array_keys($this->_config['availableLanguages'])
+            array_keys($this->_config['languages'])
         );
         if (!empty($acceptedLangs)) {
             $lang = reset($acceptedLangs);
