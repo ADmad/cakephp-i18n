@@ -69,7 +69,7 @@ class I18nMiddlewareTest extends TestCase
 
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US,en;q=0.8,es;q=0.6,da;q=0.4';
         $request = ServerRequestFactory::fromGlobals([
-            'REQUEST_URI' => '/'
+            'REQUEST_URI' => '/',
         ]);
         $middleware = new I18nMiddleware($this->config + ['detectLanguage' => true]);
         $response = $middleware($request, $this->response, $this->next);
