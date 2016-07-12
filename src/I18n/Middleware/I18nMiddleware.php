@@ -6,8 +6,8 @@ use Cake\Core\InstanceConfigTrait;
 use Cake\I18n\I18n;
 use Cake\Network\Request;
 use Cake\Utility\Hash;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 
 class I18nMiddleware
