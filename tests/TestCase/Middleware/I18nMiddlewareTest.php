@@ -1,7 +1,7 @@
 <?php
-namespace ADmad\I18n\Test\TestCase\I18n\Middleware;
+namespace ADmad\I18n\Test\TestCase\Middleware;
 
-use ADmad\I18n\I18n\Middleware\I18nMiddleware;
+use ADmad\I18n\Middleware\I18nMiddleware;
 use Cake\Http\ServerRequestFactory;
 use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
