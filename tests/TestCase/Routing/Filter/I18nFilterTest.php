@@ -80,6 +80,71 @@ class I18nFilterTest extends TestCase
     }
 
     /**
+     * testRedirectToLang.
+     *
+     * @return void
+     */
+    public function testRedirectToLang()
+    {
+        $this->filter->config('redirectToLang', true);
+        $event = new Event(__CLASS__, $this, [
+            'request' => $this->request,
+            'response' => $this->response,
+        ]);
+        $this->request->webroot = '/';
+        $this->request->url = 'sample/page';
+        $result = $this->filter->beforeDispatch($event);
+
+        $this->assertTrue($result instanceof Response);
+        $this->assertEquals('/fr/sample/page', $this->response->location());
+        $this->assertEquals(301, $this->response->statusCode());
+    }
+
+    /**
+     * testRedirectToLangCallback.
+     *
+     * @return void
+     */
+    public function testRedirectToLangCallback()
+    {
+        $this->filter->config('redirectToLang', function ($request, $event) {
+            return true;
+        });
+        $event = new Event(__CLASS__, $this, [
+            'request' => $this->request,
+            'response' => $this->response,
+        ]);
+        $this->request->webroot = '/';
+        $this->request->url = 'sample/page';
+        $result = $this->filter->beforeDispatch($event);
+
+        $this->assertTrue($result instanceof Response);
+        $this->assertEquals('/fr/sample/page', $this->response->location());
+        $this->assertEquals(301, $this->response->statusCode());
+    }
+
+    /**
+     * testNoRedirectToLang.
+     *
+     * @return void
+     */
+    public function testNoRedirectToLang()
+    {
+        $this->filter->config('redirectToLang', false);
+        $event = new Event(__CLASS__, $this, [
+            'request' => $this->request,
+            'response' => $this->response,
+        ]);
+        $this->request->webroot = '/';
+        $this->request->url = 'sample/page';
+        $result = $this->filter->beforeDispatch($event);
+
+        $this->assertNull($result);
+        $this->assertNull($this->response->location());
+        $this->assertEquals(200, $this->response->statusCode());
+    }
+
+    /**
      * testLocaleSetting.
      *
      * @return void

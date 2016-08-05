@@ -20,6 +20,7 @@ class I18nFilter extends DispatcherFilter
      * Default `false`.
      * - `defaultLanguage`: Default language for app. Default `en_US`.
      * - `languages`: Languages available in app. Default `[]`.
+     * - `redirectToLang`: Whether the filter should redirect requests without lang to the url with lang. Default `false`.
      *
      * @var array
      */
@@ -27,6 +28,7 @@ class I18nFilter extends DispatcherFilter
         'detectLanguage' => false,
         'defaultLanguage' => 'en_US',
         'languages' => [],
+        'redirectToLang' => false,
     ];
 
     /**
@@ -57,10 +59,14 @@ class I18nFilter extends DispatcherFilter
     {
         $request = $event->data['request'];
 
-        if (empty($request->url)) {
-            $response = $event->data['response'];
-            $event->stopPropagation();
+        if (is_callable($this->_config['redirectToLang'])) {
+            $redirectToLang = $this->_config['redirectToLang']($request, $event);
+        } else {
+            $redirectToLang = $this->_config['redirectToLang'];
+        }
 
+        if (empty($request->url) || ($redirectToLang && !$request->param('lang'))) {
+            $event->stopPropagation();
             $statusCode = 301;
             $lang = $this->_config['defaultLanguage'];
             if ($this->_config['detectLanguage']) {
@@ -68,8 +74,10 @@ class I18nFilter extends DispatcherFilter
                 $lang = $this->detectLanguage($request, $lang);
             }
 
+            $location = $request->webroot . $lang . (!empty($request->url) ? '/' . $request->url : '');
+            $response = $event->data['response'];
             $response->statusCode($statusCode);
-            $response->header('Location', $request->webroot . $lang);
+            $response->header('Location', $location);
 
             return $response;
         }
