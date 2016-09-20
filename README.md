@@ -12,7 +12,7 @@ This plugins provides:
 - Route class for generating and matching urls with language prefix.
 - Class for retrieving translation messages stored in database instead of po/mo files.
 - Validation class for auto translating validation message.
-- A widget to generate select bod with list of timezone identifiers.
+- A widget to generate select box with list of timezone identifiers.
 
 ## Requirements
 
