@@ -71,6 +71,33 @@ Configure::write('I18n.languages', ['en', 'fr', 'de']);
 Note: `I18nRoute` extends core's `DashedRoute` so the URL fragments will be
 inflected accordingly.
 
+### I18nFilter
+
+The `I18nFilter` adds some options to `I18nRoutes`:
+
+- languages (`array` default `[]`) - allowed languages, eg. `['nl', 'fr', 'en']`
+- detectLanguage (`boolean` default `false`) - try to detect the language based on the request
+- defaultLanguage (`boolean` default `en_US`) - default language if none is found or passed
+- redirectToLang (`boolean|callback` default `false`) - if requests should be redirected if no lang is found in the url
+
+Use can use it like this in `bootstrap.php`:
+
+```php
+DispatcherFactory::add(
+    new \ADmad\I18n\Routing\Filter\I18nFilter([
+        'languages' => ['nl', 'fr', 'en'],
+        'detectLanguage' => false,
+        'defaultLanguage' => 'en',
+        'redirectToLang' => function ($request, $event) {
+            if (!$request->param('plugin') && !$request->param('prefix')) {
+                return true;
+            }
+            return false;
+        }
+    ])
+);
+```
+
 ### DbMessagesLoader
 
 Create database table using sql file provided in `config` folder.
