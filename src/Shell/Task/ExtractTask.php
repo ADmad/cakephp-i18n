@@ -111,6 +111,8 @@ class ExtractTask extends CoreExtractTask
             'help' => 'Comma separated list of languages used by app.',
         ])->addOption('files', [
             'help' => 'Comma separated list of files.',
+        ])->addOption('domains', [
+            'help' => 'Comma separated domains to extract.',
         ])->addOption('exclude-plugins', [
             'boolean' => true,
             'default' => true,
