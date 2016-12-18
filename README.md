@@ -10,6 +10,9 @@
 This plugins provides:
 
 - Route class for generating and matching urls with language prefix.
+- Middleware (dispatcher filter or CakePHP < 3.3) which sets `I18n::locale()`
+  based on language prefix in URL and also provides redirection to appropriate
+  URL with language prefix when accessing site root.
 - Class for retrieving translation messages stored in database instead of po/mo files.
 - Validation class for auto translating validation message.
 - A widget to generate select box with list of timezone identifiers.
@@ -92,6 +95,23 @@ Use can use `ADmad.I18n` shell to extract the translation message from your code
 files and populate the translations table. Updating the db records with
 translations for each language is upto you. Having the messages in a table
 instead of files make it much to make a web interface for managing translations.
+
+### I18nMiddleware
+
+You can setup the `I18nMiddleware` in your `src/Application::middleware()` as
+shown:
+
+```php
+$middlware->add(new \ADmad\I18n\Middlware\I18nMiddleware([
+    'defaultLanguage' => 'en',
+    'languages' => [
+        'en' => ['locale' => 'en_US'],
+        'fr' => ['locale' => 'fr_FR']
+    ],
+]));
+```
+
+The keys of `languages` array are the language prefixes you use in your URL.
 
 ### TimezoneWidget
 
