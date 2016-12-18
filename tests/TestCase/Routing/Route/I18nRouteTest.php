@@ -38,6 +38,7 @@ class I18nRouteTest extends TestCase
                 'lang' => 'en|fr|de',
                 'inflect' => 'dasherize',
                 'persist' => ['lang'],
+                '_ext' => []
             ],
             $route->options
         );
