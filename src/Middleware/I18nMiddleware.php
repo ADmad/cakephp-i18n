@@ -21,14 +21,14 @@ class I18nMiddleware
      *
      * - `detectLanguage`: If `true` will attempt to get browser locale and
      *   redirect to similar language available in app when going to site root.
-     *   Default `false`.
+     *   Default `true`.
      * - `defaultLanguage`: Default language for app. Default `en_US`.
      * - `languages`: Languages available in app. Default `[]`.
      *
      * @var array
      */
     protected $_defaultConfig = [
-        'detectLanguage' => false,
+        'detectLanguage' => true,
         'defaultLanguage' => 'en_US',
         'languages' => [],
     ];
@@ -59,12 +59,13 @@ class I18nMiddleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
+        $config = $this->config();
         $url = $request->getUri()->getPath();
 
-        if ($url === '' || $url === '/') {
+        if ($url === '/') {
             $statusCode = 301;
-            $lang = $this->_config['defaultLanguage'];
-            if ($this->_config['detectLanguage']) {
+            $lang = $config['defaultLanguage'];
+            if ($config['detectLanguage']) {
                 $statusCode = 302;
                 $lang = $this->detectLanguage($request, $lang);
             }
@@ -77,9 +78,9 @@ class I18nMiddleware
             return $response;
         }
 
-        $langs = $this->_config['languages'];
+        $langs = $config['languages'];
         $requestParams = $request->getAttribute('params');
-        $lang = isset($requestParams['lang']) ? $requestParams['lang'] : $this->_config['defaultLanguage'];
+        $lang = isset($requestParams['lang']) ? $requestParams['lang'] : $config['defaultLanguage'];
         if (isset($langs[$lang])) {
             I18n::locale($langs[$lang]['locale']);
         } else {

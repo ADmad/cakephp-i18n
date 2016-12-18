@@ -60,7 +60,7 @@ class I18nMiddlewareTest extends TestCase
      */
     public function testRedirectionFromSiteRoot()
     {
-        $middleware = new I18nMiddleware($this->config);
+        $middleware = new I18nMiddleware($this->config + ['detectLanguage' => false]);
         $response = $middleware($this->request, $this->response, $this->next);
 
         $headers = $response->getHeaders();
@@ -71,7 +71,7 @@ class I18nMiddlewareTest extends TestCase
         $request = ServerRequestFactory::fromGlobals([
             'REQUEST_URI' => '/',
         ]);
-        $middleware = new I18nMiddleware($this->config + ['detectLanguage' => true]);
+        $middleware = new I18nMiddleware($this->config);
         $response = $middleware($request, $this->response, $this->next);
 
         $headers = $response->getHeaders();
