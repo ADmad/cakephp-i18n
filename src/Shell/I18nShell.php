@@ -25,7 +25,7 @@ class I18nShell extends Shell
     {
         $this->out('<info>I18n Shell</info>');
         $this->hr();
-        $this->out('[E]xtract POT file from sources');
+        $this->out('[E]xtract messages from sources');
         $this->out('[I]nitialize a language');
         $this->out('[H]elp');
         $this->out('[Q]uit');
@@ -53,7 +53,9 @@ class I18nShell extends Shell
     }
 
     /**
-     * Inits PO file from POT file.
+     * Initialize a new languages from exiting messages.
+     *
+     * Any existing translations for specified language will be deleted.
      *
      * @param string|null $language Language code to use.
      *
@@ -135,7 +137,7 @@ class I18nShell extends Shell
             'parser' => $this->Extract->getOptionParser(),
         ])
         ->addSubcommand('init', [
-            'help' => 'Init new language',
+            'help' => 'Initialize new language',
             'parser' => $initParser,
         ]);
 

@@ -77,7 +77,7 @@ class ExtractTask extends CoreExtractTask
             $this->_merge = !(strtolower($this->params['merge']) === 'no');
         } else {
             $this->out();
-            $response = $this->in('Would you like to merge all domain strings into the default.pot file?', ['y', 'n'], 'n');
+            $response = $this->in('Would you like to merge all domain strings into the default domain?', ['y', 'n'], 'n');
             $this->_merge = strtolower($response) === 'y';
         }
 
