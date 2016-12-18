@@ -21,7 +21,7 @@ This plugins provides:
 ## Installation
 
 ```
-composer require admad/cakephp-i18n:1.0.x-dev
+composer require admad/cakephp-i18n
 ```
 
 ## Usage
@@ -88,7 +88,10 @@ I18n::config('default', function ($domain, $locale) {
 });
 ```
 
-Populate the `i18n_messages` table with required message strings and translations.
+Use can use `ADmad.I18n` shell to extract the translation message from your code
+files and populate the translations table. Updating the db records with
+translations for each language is upto you. Having the messages in a table
+instead of files make it much to make a web interface for managing translations.
 
 ### TimezoneWidget
 
