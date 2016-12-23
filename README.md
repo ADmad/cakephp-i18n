@@ -91,7 +91,7 @@ I18n::config('default', function ($domain, $locale) {
 });
 ```
 
-Use can use `ADmad.I18n` shell to extract the translation message from your code
+Use can use `ADmad/I18n.I18n` shell to extract the translation message from your code
 files and populate the translations table. Updating the db records with
 translations for each language is upto you. Having the messages in a table
 instead of files make it much to make a web interface for managing translations.
