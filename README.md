@@ -102,7 +102,7 @@ You can setup the `I18nMiddleware` in your `src/Application::middleware()` as
 shown:
 
 ```php
-$middlware->add(new \ADmad\I18n\Middlware\I18nMiddleware([
+$middlware->add(new \ADmad\I18n\Middleware\I18nMiddleware([
     'defaultLanguage' => 'en',
     'languages' => [
         'en' => ['locale' => 'en_US'],
