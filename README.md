@@ -73,7 +73,7 @@ inflected accordingly.
 
 ### I18nFilter
 
-The `I18nFilter` adds some options to `I18nRoutes`:
+The `I18nFilter` sets the locale using `I18n::locale()` the lang available in request param. If language is not available as request param depending on the options show below it tries to guess the language and/or redirect to appropriate URL with lang.
 
 - languages (`array` default `[]`) - allowed languages, eg. `['nl', 'fr', 'en']`
 - detectLanguage (`boolean` default `false`) - try to detect the language based on the request
