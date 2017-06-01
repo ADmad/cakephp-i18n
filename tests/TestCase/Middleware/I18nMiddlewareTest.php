@@ -2,12 +2,11 @@
 namespace ADmad\I18n\Test\TestCase\Middleware;
 
 use ADmad\I18n\Middleware\I18nMiddleware;
+use Cake\Http\Response;
 use Cake\Http\ServerRequestFactory;
 use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
 use Locale;
-use Zend\Diactoros\Request;
-use Zend\Diactoros\Response;
 
 /**
  * I18nMiddleware test.
@@ -23,6 +22,8 @@ class I18nMiddlewareTest extends TestCase
     {
         parent::setUp();
 
+        $this->server = $_SERVER;
+
         $this->locale = Locale::getDefault();
 
         $this->config = [
@@ -30,9 +31,8 @@ class I18nMiddlewareTest extends TestCase
             'languages' => ['fr', 'en'],
         ];
 
-        $this->request = ServerRequestFactory::fromGlobals([
-            'REQUEST_URI' => '/',
-        ]);
+        $_SERVER['REQUEST_URI'] = '/';
+        $this->request = ServerRequestFactory::fromGlobals();
         $this->request = $this->request->withAttribute('webroot', '/');
         $this->response = new Response();
         $this->next = function ($req, $res) {
@@ -50,7 +50,7 @@ class I18nMiddlewareTest extends TestCase
         parent::tearDown();
 
         Locale::setDefault($this->locale);
-        unset($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        $_SERVER = $this->server;
     }
 
     /**
@@ -68,9 +68,8 @@ class I18nMiddlewareTest extends TestCase
         $this->assertEquals(301, $response->getStatusCode());
 
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US,en;q=0.8,es;q=0.6,da;q=0.4';
-        $request = ServerRequestFactory::fromGlobals([
-            'REQUEST_URI' => '/',
-        ]);
+        $request = ServerRequestFactory::fromGlobals();
+        $request->webroot = '/';
         $middleware = new I18nMiddleware($this->config);
         $response = $middleware($request, $this->response, $this->next);
 
@@ -86,9 +85,8 @@ class I18nMiddlewareTest extends TestCase
      */
     public function testLocaleSetting()
     {
-        $request = ServerRequestFactory::fromGlobals([
-            'REQUEST_URI' => '/fr',
-        ]);
+        $_SERVER['REQUEST_URI'] = '/fr';
+        $request = ServerRequestFactory::fromGlobals();
         $request = $request->withAttribute('params', ['lang' => 'fr']);
         $middleware = new I18nMiddleware($this->config);
         $response = $middleware($request, $this->response, $this->next);

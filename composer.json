@@ -23,10 +23,11 @@
         "issues":"https://github.com/ADmad/cakephp-i18n/issues"
     },
     "require": {
-        "cakephp/cakephp": "~3.0"
+        "cakephp/cakephp": "^3.4"
     },
     "require-dev": {
-        "cakephp/cakephp": "~3.3"
+        "cakephp/cakephp": "^3.4",
+        "phpunit/phpunit": "<6.0"
     },
     "autoload": {
         "psr-4": {
@@ -43,6 +44,5 @@
             "dev-master": "1.0.x-dev"
         }
     },
-    "minimum-stability": "beta",
     "prefer-stable": true
 }

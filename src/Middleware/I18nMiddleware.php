@@ -112,8 +112,7 @@ class I18nMiddleware
             $lang = $default;
         }
 
-        $cakeRequest = new Request();
-        $browserLangs = $cakeRequest->acceptLanguage();
+        $browserLangs = $request->acceptLanguage();
         foreach ($browserLangs as $k => $langKey) {
             if (strpos($langKey, '-') !== false) {
                 $browserLangs[$k] = substr($langKey, 0, 2);
