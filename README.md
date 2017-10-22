@@ -115,7 +115,9 @@ $middlware->add(new \ADmad\I18n\Middleware\I18nMiddleware([
 ]));
 ```
 
-The keys of `languages` array are the language prefixes you use in your URL.
+The keys of `languages` array are the language prefixes you use in your URL. 
+
+To ensure that the `lang` router param is available, you must add this middleware *after* adding CakePHP's default routing middleware (i.e. after `->add(new RoutingMiddleware($this))`).
 
 ### TimezoneWidget
 
