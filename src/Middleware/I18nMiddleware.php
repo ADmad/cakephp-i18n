@@ -4,7 +4,6 @@ namespace ADmad\I18n\Middleware;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\I18n\I18n;
-use Cake\Network\Request;
 use Cake\Utility\Hash;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -44,7 +43,7 @@ class I18nMiddleware
             $config['languages'] = Hash::normalize($config['languages']);
         }
 
-        $this->config($config);
+        $this->setConfig($config);
     }
 
     /**
@@ -59,7 +58,7 @@ class I18nMiddleware
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
     {
-        $config = $this->config();
+        $config = $this->getConfig();
         $url = $request->getUri()->getPath();
 
         if ($url === '/') {
@@ -82,9 +81,9 @@ class I18nMiddleware
         $requestParams = $request->getAttribute('params');
         $lang = isset($requestParams['lang']) ? $requestParams['lang'] : $config['defaultLanguage'];
         if (isset($langs[$lang])) {
-            I18n::locale($langs[$lang]['locale']);
+            I18n::setLocale($langs[$lang]['locale']);
         } else {
-            I18n::locale($lang);
+            I18n::setLocale($lang);
         }
 
         Configure::write('App.language', $lang);

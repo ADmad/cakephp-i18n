@@ -81,12 +81,12 @@ class I18nShell extends Shell
         $messages = $model->find()
             ->select($fields)
             ->distinct(['domain', 'singular', 'context'])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->toArray();
 
         $entities = $model->newEntities($messages);
 
-        $return = $model->connection()->transactional(
+        $return = $model->getConnection()->transactional(
             function () use ($model, $entities, $language) {
                 $model->deleteAll([
                     'locale' => $language,
@@ -130,7 +130,7 @@ class I18nShell extends Shell
             ],
         ];
 
-        $parser->description(
+        $parser->setDescription(
             'I18n Shell extracts translation messages from source code and adds to database.'
         )->addSubcommand('extract', [
             'help' => 'Extract translation messages from your application',

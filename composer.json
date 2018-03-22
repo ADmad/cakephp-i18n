@@ -23,10 +23,10 @@
         "issues":"https://github.com/ADmad/cakephp-i18n/issues"
     },
     "require": {
-        "cakephp/cakephp": "^3.4"
+        "cakephp/cakephp": "dev-3.next"
     },
     "require-dev": {
-        "cakephp/cakephp": "^3.4",
+        "cakephp/cakephp": "dev-3.next",
         "phpunit/phpunit": "<6.0"
     },
     "autoload": {

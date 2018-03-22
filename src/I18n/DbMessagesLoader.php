@@ -90,10 +90,10 @@ class DbMessagesLoader
 
         if ($model instanceof Table) {
             // Get list of fields without primaryKey, domain, locale.
-            $fields = $model->schema()->columns();
+            $fields = $model->getSchema()->columns();
             $fields = array_flip(array_diff(
                 $fields,
-                $model->schema()->primaryKey()
+                $model->getSchema()->primaryKey()
             ));
             unset($fields['domain'], $fields['locale']);
             $query->select(array_flip($fields));
@@ -101,7 +101,7 @@ class DbMessagesLoader
 
         $results = $query
             ->where(['domain' => $this->_domain, 'locale' => $this->_locale])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->all();
 
         return new Package($this->_formatter, null, $this->_messages($results));

@@ -69,7 +69,7 @@ class I18nMiddlewareTest extends TestCase
 
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-US,en;q=0.8,es;q=0.6,da;q=0.4';
         $request = ServerRequestFactory::fromGlobals();
-        $request->webroot = '/';
+        $request = $request->withAttribute('webroot', '/');
         $middleware = new I18nMiddleware($this->config);
         $response = $middleware($request, $this->response, $this->next);
 
@@ -91,6 +91,6 @@ class I18nMiddlewareTest extends TestCase
         $middleware = new I18nMiddleware($this->config);
         $response = $middleware($request, $this->response, $this->next);
 
-        $this->assertEquals('fr', I18n::locale());
+        $this->assertEquals('fr', I18n::getLocale());
     }
 }

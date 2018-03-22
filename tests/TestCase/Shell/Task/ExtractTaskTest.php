@@ -96,14 +96,14 @@ class ExtractTaskTest extends TestCase
 
         $result = $this->model->find()
             ->where(['singular' => 'You have %d new message.'])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->first();
 
         $this->assertTrue((bool)$result);
 
         $result = $this->model->find()
             ->where(['singular' => 'letter'])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->first();
         $this->assertEquals('mail', $result['context']);
 
@@ -112,7 +112,7 @@ class ExtractTaskTest extends TestCase
                 'domain' => 'domain',
                 'singular' => 'You have %d new message (domain).',
             ])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->first();
         $this->assertEquals('You have %d new message (domain).', $result['singular']);
         $this->assertEquals('You have %d new messages (domain).', $result['plural']);

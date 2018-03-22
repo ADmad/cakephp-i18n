@@ -72,14 +72,9 @@ class I18nRouteTest extends TestCase
             ]
         );
         $request = new ServerRequest();
-        $request->addParams([
-            'lang' => 'en',
-            'controller' => 'Posts',
-            'action' => 'index'
-        ])->addPaths([
-            'base' => '',
-            'here' => '/'
-        ]);
+        $request = $request->withParam('lang', 'en')
+            ->withParam('controller', 'Posts')
+            ->withParam('action', 'index');
         Router::pushRequest($request);
 
         $result = Router::url(['_name' => 'blog_show', 'id' => 123, 'slug' => 'hello']);

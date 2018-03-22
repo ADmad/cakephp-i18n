@@ -41,7 +41,7 @@ class ValidatorTest extends TestCase
         $messages = [
             [
                 'domain' => 'validation',
-                'locale' => I18n::locale(),
+                'locale' => I18n::getLocale(),
                 'context' => '',
                 'singular' => 'email',
                 'plural' => '',
@@ -50,7 +50,7 @@ class ValidatorTest extends TestCase
             ],
             [
                 'domain' => 'validation',
-                'locale' => I18n::locale(),
+                'locale' => I18n::getLocale(),
                 'context' => '',
                 'singular' => 'comparison',
                 'plural' => '',
@@ -59,7 +59,7 @@ class ValidatorTest extends TestCase
             ],
             [
                 'domain' => 'validation',
-                'locale' => I18n::locale(),
+                'locale' => I18n::getLocale(),
                 'context' => '',
                 'singular' => '<',
                 'plural' => '',
@@ -68,7 +68,7 @@ class ValidatorTest extends TestCase
             ],
             [
                 'domain' => 'validation_non_default',
-                'locale' => I18n::locale(),
+                'locale' => I18n::getLocale(),
                 'context' => '',
                 'singular' => 'email',
                 'plural' => '',
