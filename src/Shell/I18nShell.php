@@ -6,6 +6,8 @@ use Cake\ORM\TableRegistry;
 
 /**
  * Shell for I18N management.
+ *
+ * @property \ADmad\I18n\Shell\Task\ExtractTask $Extract
  */
 class I18nShell extends Shell
 {
@@ -93,7 +95,7 @@ class I18nShell extends Shell
                 ]);
 
                 foreach ($entities as $entity) {
-                    $entity->locale = $language;
+                    $entity->set('locale', $language);
                     if ($model->save($entity) === false) {
                         return false;
                     }
