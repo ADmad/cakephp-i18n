@@ -10,7 +10,7 @@
 This plugins provides:
 
 - Route class for generating and matching urls with language prefix.
-- Middleware (dispatcher filter or CakePHP < 3.3) which sets `I18n::locale()`
+- Middleware which sets locale using `I18n::setLocale()`
   based on language prefix in URL and also provides redirection to appropriate
   URL with language prefix when accessing site root.
 - Class for retrieving translation messages stored in database instead of po/mo files.
@@ -83,7 +83,7 @@ Add code similar to what's shown below in your app's `config/bootstrap.php`:
 ```php
 // Configure I18n to use DbMessagesLoader for default domain. You need to do
 // this for each domain separately.
-I18n::config('default', function ($domain, $locale) {
+I18n::setConfig('default', function ($domain, $locale) {
     return new \ADmad\I18n\I18n\DbMessagesLoader(
         $domain,
         $locale
@@ -115,7 +115,7 @@ $middlware->add(new \ADmad\I18n\Middleware\I18nMiddleware([
 ]));
 ```
 
-The keys of `languages` array are the language prefixes you use in your URL. 
+The keys of `languages` array are the language prefixes you use in your URL.
 
 To ensure that the `lang` router param is available, you must add this middleware *after* adding CakePHP's default routing middleware (i.e. after `->add(new RoutingMiddleware($this))`).
 
@@ -139,10 +139,10 @@ You can generate a select box with timezone identifiers like:
 
 ```php
 // Generates select box with list of all timezone identifiers grouped by regions.
-$this->Form->input('fieldname', ['type' => 'timezone']);
+$this->Form->control('fieldname', ['type' => 'timezone']);
 
 // Generates select box with list of timezone identifiers for specified regions.
-$this->Form->input('fieldname', [
+$this->Form->control('fieldname', [
     'type' => 'timezone',
     'options' => [
         'Asia' => DateTimeZone::ASIA,
