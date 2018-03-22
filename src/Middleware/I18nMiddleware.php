@@ -3,10 +3,10 @@ namespace ADmad\I18n\Middleware;
 
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
+use Cake\Http\ServerRequest;
 use Cake\I18n\I18n;
 use Cake\Utility\Hash;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 
 class I18nMiddleware
@@ -50,13 +50,13 @@ class I18nMiddleware
      * Sets appropriate locale and lang to I18n::locale() and App.language config
      * respectively based on "lang" request param.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
+     * @param \Cake\Http\ServerRequest $request The request.
      * @param \Psr\Http\Message\ResponseInterface $response The response.
      * @param callable $next Callback to invoke the next middleware.
      *
      * @return \Psr\Http\Message\ResponseInterface A response
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
+    public function __invoke(ServerRequest $request, ResponseInterface $response, $next)
     {
         $config = $this->getConfig();
         $url = $request->getUri()->getPath();
@@ -98,12 +98,12 @@ class I18nMiddleware
      * You should set config var `I18n.languages` to an array containing
      * languages available in your app.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
+     * @param \Cake\Http\ServerRequest $request The request.
      * @param string|null $default Default language to return if no match is found.
      *
      * @return string
      */
-    public function detectLanguage(ServerRequestInterface $request, $default = null)
+    public function detectLanguage(ServerRequest $request, $default = null)
     {
         if (empty($default)) {
             $lang = $this->_config['defaultLanguage'];
