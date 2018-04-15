@@ -6,6 +6,8 @@ use Cake\ORM\TableRegistry;
 
 /**
  * Shell for I18N management.
+ *
+ * @property \ADmad\I18n\Shell\Task\ExtractTask $Extract
  */
 class I18nShell extends Shell
 {
@@ -81,19 +83,19 @@ class I18nShell extends Shell
         $messages = $model->find()
             ->select($fields)
             ->distinct(['domain', 'singular', 'context'])
-            ->hydrate(false)
+            ->enableHydration(false)
             ->toArray();
 
         $entities = $model->newEntities($messages);
 
-        $return = $model->connection()->transactional(
+        $return = $model->getConnection()->transactional(
             function () use ($model, $entities, $language) {
                 $model->deleteAll([
                     'locale' => $language,
                 ]);
 
                 foreach ($entities as $entity) {
-                    $entity->locale = $language;
+                    $entity->set('locale', $language);
                     if ($model->save($entity) === false) {
                         return false;
                     }
@@ -130,7 +132,7 @@ class I18nShell extends Shell
             ],
         ];
 
-        $parser->description(
+        $parser->setDescription(
             'I18n Shell extracts translation messages from source code and adds to database.'
         )->addSubcommand('extract', [
             'help' => 'Extract translation messages from your application',

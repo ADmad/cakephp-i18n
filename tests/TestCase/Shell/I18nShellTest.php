@@ -44,7 +44,7 @@ class I18nShellTest extends TestCase
             ->count();
         $this->assertSame(0, $result);
 
-        $this->shell->io()->expects($this->at(0))
+        $this->shell->getIo()->expects($this->at(0))
             ->method('ask')
             ->will($this->returnValue('de_DE'));
 

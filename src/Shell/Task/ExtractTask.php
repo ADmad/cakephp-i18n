@@ -96,7 +96,7 @@ class ExtractTask extends CoreExtractTask
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();
-        $parser->description(
+        $parser->setDescription(
             'Language String Extraction:'
         )->addOption('app', [
             'help' => 'Directory where your application is located.',

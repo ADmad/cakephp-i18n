@@ -19,7 +19,7 @@ class I18nRoute extends DashedRoute
      *
      * @param string $template Template string with parameter placeholders
      * @param array $defaults Array of defaults for the route.
-     * @param string $options Array of parameters and additional options for the Route
+     * @param array $options Array of parameters and additional options for the Route
      *
      * @return void
      */
