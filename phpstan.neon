@@ -1,3 +1,5 @@
 parameters:
     autoload_files:
         - tests/bootstrap.php
+    ignoreErrors:
+        - '#Call to an undefined method Cake\\Datasource\\QueryInterface::enableHydration\(\)#'
