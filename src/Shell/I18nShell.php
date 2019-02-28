@@ -21,7 +21,7 @@ class I18nShell extends Shell
     /**
      * Override main() for help message hook.
      *
-     * @return void
+     * @return bool|int|null
      */
     public function main()
     {
@@ -46,12 +46,16 @@ class I18nShell extends Shell
             case 'q':
                 $this->_stop();
 
-                return;
+                return null;
             default:
-                $this->out('You have made an invalid selection. Please choose a command to execute by entering E, I, H, or Q.');
+                $this->out(
+                    'You have made an invalid selection. Please choose a command to execute by entering E, I, H, or Q.'
+                );
         }
         $this->hr();
         $this->main();
+
+        return null;
     }
 
     /**

@@ -1,7 +1,4 @@
 <?php
-use Cake\Core\Configure;
-use Cake\Core\Plugin;
-
 /*
  * Test suite bootstrap
  *

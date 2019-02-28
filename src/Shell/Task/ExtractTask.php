@@ -77,7 +77,11 @@ class ExtractTask extends CoreExtractTask
             $this->_merge = !(strtolower($this->params['merge']) === 'no');
         } else {
             $this->out();
-            $response = $this->in('Would you like to merge all domain strings into the default domain?', ['y', 'n'], 'n');
+            $response = $this->in(
+                'Would you like to merge all domain strings into the default domain?',
+                ['y', 'n'],
+                'n',
+            );
             $this->_merge = strtolower($response) === 'y';
         }
 
@@ -118,7 +122,8 @@ class ExtractTask extends CoreExtractTask
             'default' => true,
             'help' => 'Ignores all files in plugins if this command is run inside from the same app directory.',
         ])->addOption('plugin', [
-            'help' => 'Extracts tokens only from the plugin specified and puts the result in the plugin\'s Locale directory.',
+            'help' => 'Extracts tokens only from the plugin specified and '
+                . 'puts the result in the plugin\'s Locale directory.',
         ])->addOption('ignore-model-validation', [
             'boolean' => true,
             'default' => false,

@@ -36,9 +36,8 @@ class I18nRoute extends DashedRoute
         $options['persist'][] = 'lang';
 
         if (!array_key_exists('lang', $options)) {
-            if (self::$_langRegEx === null &&
-                $langs = Configure::read('I18n.languages')
-            ) {
+            $langs = Configure::read('I18n.languages');
+            if (self::$_langRegEx === null && $langs) {
                 self::$_langRegEx = implode('|', array_keys(Hash::normalize($langs)));
             }
             $options['lang'] = self::$_langRegEx;

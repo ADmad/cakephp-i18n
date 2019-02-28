@@ -42,7 +42,7 @@ class Validator extends \Cake\Validation\Validator
      * from executing them.
      *
      * @param string $field The name of the field that is being processed
-     * @param ValidationSet $rules the list of rules for a field
+     * @param \Cake\Validation\ValidationSet $rules the list of rules for a field
      * @param array $data the full data passed to the validator
      * @param bool $newRecord whether is it a new record or an existing one
      *

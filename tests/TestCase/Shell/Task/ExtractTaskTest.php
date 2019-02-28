@@ -1,9 +1,7 @@
 <?php
 namespace App\Test\TestCase\Shell\Task;
 
-use App\Shell\Task\ExtractTask;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
