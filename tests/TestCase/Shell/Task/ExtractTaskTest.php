@@ -49,18 +49,6 @@ class ExtractTaskTest extends TestCase
     }
 
     /**
-     * tearDown method.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-        unset($this->Task);
-        Plugin::unload();
-    }
-
-    /**
      * testExecute method.
      *
      * @return void
