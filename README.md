@@ -29,11 +29,10 @@ composer require admad/cakephp-i18n
 
 ## Usage
 
-Load the plugin in `config/bootstrap.php`:
+Load the plugin by running command:
 
-```php
-// Load the plugin.
-Plugin::load('ADmad/I18n');
+```
+bin/cake plugin load ADmad/I18n
 ```
 
 ### I18nRoute
@@ -81,6 +80,8 @@ Create database table using sql file provided in `config` folder.
 Add code similar to what's shown below in your app's `config/bootstrap.php`:
 
 ```php
+// NOTE: This is should be done below Cache config setup.
+
 // Configure I18n to use DbMessagesLoader for default domain. You need to do
 // this for each domain separately.
 I18n::setConfig('default', function ($domain, $locale) {
@@ -91,10 +92,14 @@ I18n::setConfig('default', function ($domain, $locale) {
 });
 ```
 
-Use can use `ADmad/I18n.I18n` shell to extract the translation message from your code
-files and populate the translations table. Updating the db records with
+You can use `ADmad/I18n.I18n` shell to extract the translation message from your
+code files and populate the translations table. Updating the db records with
 translations for each language is upto you. Having the messages in a table
 instead of files make it much to make a web interface for managing translations.
+
+```
+bin/cake ADmad/I18n.i18n extract
+```
 
 ### I18nMiddleware
 
