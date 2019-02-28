@@ -1,4 +1,4 @@
-CREATE TABLE `translations` (
+CREATE TABLE `i18n_messages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `domain` varchar(100) NOT NULL,
   `locale` varchar(5) NOT NULL,
