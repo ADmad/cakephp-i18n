@@ -48,7 +48,7 @@ class Validator extends \Cake\Validation\Validator
      *
      * @return array
      */
-    protected function _processRules($field, ValidationSet $rules, $data, $newRecord)
+    protected function _processRules(string $field, ValidationSet $rules, array $data, bool $newRecord): array
     {
         $errors = [];
         // Loading default provider in case there is none

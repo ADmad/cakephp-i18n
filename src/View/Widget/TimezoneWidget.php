@@ -20,7 +20,7 @@ class TimezoneWidget extends SelectBoxWidget
      *
      * @return array
      */
-    protected function _renderContent($data)
+    protected function _renderContent(array $data): array
     {
         $data['options'] = $this->_identifierList($data['options']);
 

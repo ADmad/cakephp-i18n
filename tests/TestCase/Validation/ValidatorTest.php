@@ -21,7 +21,7 @@ class ValidatorTest extends TestCase
 
     public function setUp()
     {
-        Cache::clear(false, '_cake_core_');
+        Cache::clear('_cake_core_');
 
         I18n::config('validation', function ($domain, $locale) {
             return new \ADmad\I18n\I18n\DbMessagesLoader(

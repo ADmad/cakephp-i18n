@@ -1,7 +1,9 @@
 <?php
 namespace App\Test\TestCase\Shell\Task;
 
+use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -53,7 +55,7 @@ class ExtractTaskTest extends TestCase
      */
     public function testExecute()
     {
-        $this->Task->params['paths'] = PLUGIN_TESTS . 'test_app/src/Template/Pages';
+        $this->Task->params['paths'] = PLUGIN_TESTS . 'test_app/templates/Pages';
         $this->Task->params['extract-core'] = 'no';
         $this->Task->params['output'] = TMP;
         $this->Task->params['merge'] = 'no';
@@ -111,7 +113,7 @@ class ExtractTaskTest extends TestCase
      */
     public function testExecuteMerge()
     {
-        $this->Task->params['paths'] = PLUGIN_TESTS . 'test_app/src/Template/Pages';
+        $this->Task->params['paths'] = PLUGIN_TESTS . 'test_app/templates/Pages';
         $this->Task->params['output'] = TMP;
         $this->Task->params['extract-core'] = 'no';
         $this->Task->params['merge'] = 'yes';
@@ -143,7 +145,7 @@ class ExtractTaskTest extends TestCase
     {
         $this->Task->interactive = false;
 
-        $this->Task->params['paths'] = PLUGIN_TESTS . 'test_app/src/Template';
+        $this->Task->params['paths'] = PLUGIN_TESTS . 'test_app/templates';
         $this->Task->params['output'] = TMP;
         $this->Task->params['exclude'] = 'Pages,Layout';
         $this->Task->params['extract-core'] = 'no';
@@ -159,7 +161,7 @@ class ExtractTaskTest extends TestCase
         $this->assertTrue($result === 0);
 
         $result = $this->model->find()
-            ->where(['refs LIKE' => '%cache_form.ctp%'])
+            ->where(['refs LIKE' => '%cache_form.php%'])
             ->count();
         $this->assertTrue($result > 0);
     }
@@ -171,7 +173,7 @@ class ExtractTaskTest extends TestCase
      */
     public function testExtractWithoutLocations()
     {
-        $this->Task->params['paths'] = PLUGIN_TESTS . 'test_app/src/Template';
+        $this->Task->params['paths'] = PLUGIN_TESTS . 'test_app/templates';
         $this->Task->params['output'] = TMP;
         $this->Task->params['exclude'] = 'Pages,Layout';
         $this->Task->params['extract-core'] = 'no';
@@ -199,8 +201,8 @@ class ExtractTaskTest extends TestCase
         $this->Task->interactive = false;
 
         $this->Task->params['paths'] =
-            PLUGIN_TESTS . 'test_app/src/Template/Pages,' .
-            PLUGIN_TESTS . 'test_app/src/Template/Posts';
+            PLUGIN_TESTS . 'test_app/templates/Pages,' .
+            PLUGIN_TESTS . 'test_app/templates/Posts';
 
         $this->Task->params['output'] = TMP;
         $this->Task->params['extract-core'] = 'no';
@@ -209,12 +211,12 @@ class ExtractTaskTest extends TestCase
         $this->Task->main();
 
         $result = $this->model->find()
-            ->where(['refs LIKE' => '%extract.ctp%'])
+            ->where(['refs LIKE' => '%extract.php%'])
             ->count();
         $this->assertTrue($result > 0);
 
         $result = $this->model->find()
-            ->where(['refs LIKE' => '%cache_form.ctp%'])
+            ->where(['refs LIKE' => '%cache_form.php%'])
             ->count();
         $this->assertTrue($result > 0);
     }
@@ -256,6 +258,9 @@ class ExtractTaskTest extends TestCase
     {
         Configure::write('App.namespace', 'TestApp');
 
+        $plugin = new \TestPlugin\Plugin();
+        $this->loadPlugins([$plugin]);
+
         $this->Task = $this->getMockBuilder('ADmad\I18n\Shell\Task\ExtractTask')
             ->setMethods(['_isExtractingApp', 'in', 'out', 'err', 'clear', '_stop'])
             ->setConstructorArgs([$this->io])
@@ -272,7 +277,7 @@ class ExtractTaskTest extends TestCase
         $this->assertTrue($result === 0);
 
         $result = $this->model->find()
-            ->where(['refs LIKE' => '%translate.ctp%'])
+            ->where(['refs LIKE' => '%translate.php%'])
             ->count();
         $this->assertTrue($result > 0);
     }
@@ -284,6 +289,9 @@ class ExtractTaskTest extends TestCase
      */
     public function testExtractVendoredPlugin()
     {
+        $plugin = new \Company\TestPluginThree\Plugin();
+        $this->loadPlugins([$plugin]);
+
         Configure::write('App.namespace', 'TestApp');
 
         $this->Task = $this->getMockBuilder('ADmad\I18n\Shell\Task\ExtractTask')

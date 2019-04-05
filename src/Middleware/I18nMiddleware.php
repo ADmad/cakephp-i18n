@@ -7,9 +7,12 @@ use Cake\Http\ServerRequest;
 use Cake\I18n\I18n;
 use Cake\Utility\Hash;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\RedirectResponse;
 
-class I18nMiddleware
+class I18nMiddleware implements MiddlewareInterface
 {
     use InstanceConfigTrait;
 
@@ -50,14 +53,12 @@ class I18nMiddleware
      * Sets appropriate locale and lang to I18n::locale() and App.language config
      * respectively based on "lang" request param.
      *
-     * @param \Cake\Http\ServerRequest $request The request.
-     * @param \Psr\Http\Message\ResponseInterface $response The response.
-     * @param callable $next Callback to invoke the next middleware.
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
+     * @param \Psr\Http\Server\RequestHandlerInterface $handler The request handler.
      *
-     * @return \Psr\Http\Message\ResponseInterface A response
+     * @return \Psr\Http\Message\ResponseInterface A response.
      */
-    public function __invoke(ServerRequest $request, ResponseInterface $response, $next)
-    {
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface    {
         $config = $this->getConfig();
         $url = $request->getUri()->getPath();
 
@@ -88,7 +89,7 @@ class I18nMiddleware
 
         Configure::write('App.language', $lang);
 
-        return $next($request, $response);
+        return $handler->handle($request);
     }
 
     /**

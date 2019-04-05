@@ -1,6 +1,7 @@
 <?php
 namespace ADmad\I18n\Shell;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 
@@ -119,7 +120,7 @@ class I18nShell extends Shell
      *
      * @return \Cake\Console\ConsoleOptionParser
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         $parser = parent::getOptionParser();
         $initParser = [

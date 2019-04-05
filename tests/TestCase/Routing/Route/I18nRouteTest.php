@@ -77,7 +77,7 @@ class I18nRouteTest extends TestCase
             ->withParam('action', 'index');
         Router::pushRequest($request);
 
-        $result = Router::url(['_name' => 'blog_show', 'id' => 123, 'slug' => 'hello']);
+        $result = Router::url(['_name' => 'blog_show', 'id' => '123', 'slug' => 'hello']);
         $this->assertEquals('/en/blog/123-hello', $result);
     }
 }

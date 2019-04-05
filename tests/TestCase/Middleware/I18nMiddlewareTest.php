@@ -2,17 +2,27 @@
 namespace ADmad\I18n\Test\TestCase\Middleware;
 
 use ADmad\I18n\Middleware\I18nMiddleware;
-use Cake\Http\Response;
 use Cake\Http\ServerRequestFactory;
 use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
 use Locale;
+use TestApp\Http\TestRequestHandler;
 
 /**
  * I18nMiddleware test.
  */
 class I18nMiddlewareTest extends TestCase
 {
+    protected $server;
+
+    protected $locale;
+
+    protected $config;
+
+    protected $request;
+
+    protected $handler;
+
     /**
      * setup.
      *
@@ -34,10 +44,7 @@ class I18nMiddlewareTest extends TestCase
         $_SERVER['REQUEST_URI'] = '/';
         $this->request = ServerRequestFactory::fromGlobals();
         $this->request = $this->request->withAttribute('webroot', '/');
-        $this->response = new Response();
-        $this->next = function ($req, $res) {
-            return $res;
-        };
+        $this->handler = new TestRequestHandler();
     }
 
     /**
@@ -61,7 +68,7 @@ class I18nMiddlewareTest extends TestCase
     public function testRedirectionFromSiteRoot()
     {
         $middleware = new I18nMiddleware($this->config + ['detectLanguage' => false]);
-        $response = $middleware($this->request, $this->response, $this->next);
+        $response = $middleware->process($this->request, $this->handler);
 
         $headers = $response->getHeaders();
         $this->assertEquals('/fr', $headers['location'][0]);
@@ -71,7 +78,7 @@ class I18nMiddlewareTest extends TestCase
         $request = ServerRequestFactory::fromGlobals();
         $request = $request->withAttribute('webroot', '/');
         $middleware = new I18nMiddleware($this->config);
-        $response = $middleware($request, $this->response, $this->next);
+        $response = $middleware->process($request, $this->handler);
 
         $headers = $response->getHeaders();
         $this->assertEquals('/en', $headers['location'][0]);
@@ -89,7 +96,7 @@ class I18nMiddlewareTest extends TestCase
         $request = ServerRequestFactory::fromGlobals();
         $request = $request->withAttribute('params', ['lang' => 'fr']);
         $middleware = new I18nMiddleware($this->config);
-        $response = $middleware($request, $this->response, $this->next);
+        $response = $middleware->process($request, $this->handler);
 
         $this->assertEquals('fr', I18n::getLocale());
     }

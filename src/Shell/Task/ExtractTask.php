@@ -1,8 +1,10 @@
 <?php
 namespace ADmad\I18n\Shell\Task;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
 use Cake\Shell\Task\ExtractTask as CoreExtractTask;
@@ -33,7 +35,7 @@ class ExtractTask extends CoreExtractTask
      *
      * @return void
      */
-    public function main()
+    public function main(): void
     {
         if (!empty($this->params['exclude'])) {
             $this->_exclude = explode(',', $this->params['exclude']);
@@ -45,10 +47,10 @@ class ExtractTask extends CoreExtractTask
             $this->_paths = explode(',', $this->params['paths']);
         } elseif (isset($this->params['plugin'])) {
             $plugin = Inflector::camelize($this->params['plugin']);
-            if (!Plugin::loaded($plugin)) {
-                Plugin::load($plugin);
+            if (!Plugin::isLoaded($plugin)) {
+                throw new MissingPluginException(['plugin' => $plugin]);
             }
-            $this->_paths = [Plugin::classPath($plugin)];
+            $this->_paths = [Plugin::classPath($plugin), Plugin::templatePath($plugin)];
             $this->params['plugin'] = $plugin;
         } else {
             $this->_getPaths();
@@ -80,7 +82,7 @@ class ExtractTask extends CoreExtractTask
             $response = $this->in(
                 'Would you like to merge all domain strings into the default domain?',
                 ['y', 'n'],
-                'n',
+                'n'
             );
             $this->_merge = strtolower($response) === 'y';
         }
@@ -97,7 +99,7 @@ class ExtractTask extends CoreExtractTask
      *
      * @return \Cake\Console\ConsoleOptionParser
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         $parser = parent::getOptionParser();
         $parser->setDescription(
@@ -152,7 +154,7 @@ class ExtractTask extends CoreExtractTask
      *
      * @return void
      */
-    protected function _extract()
+    protected function _extract(): void
     {
         $this->out();
         $this->out();
