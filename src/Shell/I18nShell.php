@@ -4,7 +4,7 @@ namespace ADmad\I18n\Shell;
 
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Shell for I18N management.
@@ -13,6 +13,8 @@ use Cake\ORM\TableRegistry;
  */
 class I18nShell extends Shell
 {
+    use LocatorAwareTrait;
+
     /**
      * Contains tasks to load and instantiate.
      *
@@ -69,15 +71,16 @@ class I18nShell extends Shell
      *
      * @return int|null
      */
-    public function init($language = null)
+    public function init($language = null): ?int
     {
-        if (!$language) {
+        if ($language === null) {
             $language = $this->in('Please specify language code, e.g. `en`, `eng`, `en_US` etc.');
         }
         if (strlen($language) < 2) {
-            return $this->error('Invalid language code. Valid is `en`, `eng`, `en_US` etc.');
+            return (int)$this->err('Invalid language code. Valid is `en`, `eng`, `en_US` etc.');
         }
 
+        /** @var string $model */
         $model = $this->param('model');
         if (empty($model)) {
             $model = 'I18nMessages';
@@ -85,7 +88,7 @@ class I18nShell extends Shell
 
         $fields = ['domain', 'singular', 'plural', 'context'];
 
-        $model = TableRegistry::get($model);
+        $model = $this->getTableLocator()->get($model);
         $messages = $model->find()
             ->select($fields)
             ->distinct(['domain', 'singular', 'context'])
@@ -95,7 +98,7 @@ class I18nShell extends Shell
         $entities = $model->newEntities($messages);
 
         $return = $model->getConnection()->transactional(
-            function () use ($model, $entities, $language) {
+            function () use ($model, $entities, $language): ?bool {
                 $model->deleteAll([
                     'locale' => $language,
                 ]);
@@ -106,6 +109,8 @@ class I18nShell extends Shell
                         return false;
                     }
                 }
+
+                return null;
             }
         );
 
@@ -114,6 +119,8 @@ class I18nShell extends Shell
         } else {
             $this->out('Unable to create messages for "' . $language . '"');
         }
+
+        return null;
     }
 
     /**

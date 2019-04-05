@@ -7,7 +7,7 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Shell\Task\ExtractTask as CoreExtractTask;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -17,6 +17,8 @@ use Cake\Utility\Inflector;
  */
 class ExtractTask extends CoreExtractTask
 {
+    use LocatorAwareTrait;
+
     /**
      * App languages.
      *
@@ -61,7 +63,7 @@ class ExtractTask extends CoreExtractTask
             $this->_extractCore = !(strtolower($this->params['extract-core']) === 'no');
         } else {
             $response = $this->in('Would you like to extract the messages from the CakePHP core?', ['y', 'n'], 'n');
-            $this->_extractCore = strtolower($response) === 'y';
+            $this->_extractCore = $response && strtolower($response) === 'y';
         }
 
         if (!empty($this->params['exclude-plugins']) && $this->_isExtractingApp()) {
@@ -85,7 +87,7 @@ class ExtractTask extends CoreExtractTask
                 ['y', 'n'],
                 'n'
             );
-            $this->_merge = strtolower($response) === 'y';
+            $this->_merge = $response && strtolower($response) === 'y';
         }
 
         if (empty($this->_files)) {
@@ -187,7 +189,7 @@ class ExtractTask extends CoreExtractTask
         $paths = $this->_paths;
         $paths[] = realpath(APP) . DIRECTORY_SEPARATOR;
 
-        usort($paths, function ($a, $b) {
+        usort($paths, function (string $a, string $b): int {
             return strlen($a) - strlen($b);
         });
 
@@ -281,7 +283,7 @@ class ExtractTask extends CoreExtractTask
             $model = $this->params['model'];
         }
 
-        return $this->_model = TableRegistry::get($model);
+        return $this->_model = $this->getTableLocator()->get($model);
     }
 
     /**

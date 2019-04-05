@@ -3,9 +3,10 @@ declare(strict_types=1);
 namespace ADmad\I18n\I18n;
 
 use Aura\Intl\Package;
+use Cake\Datasource\RepositoryInterface;
 use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 
 /**
  * DbMessages loader.
@@ -14,6 +15,8 @@ use Cake\ORM\TableRegistry;
  */
 class DbMessagesLoader
 {
+    use LocatorAwareTrait;
+
     /**
      * The domain name.
      *
@@ -47,17 +50,17 @@ class DbMessagesLoader
      *
      * @param string $domain Domain name.
      * @param string $locale Locale string.
-     * @param string|\Cake\Datasource\RepositoryInterface $model Model name or instance.
+     * @param string|\Cake\Datasource\RepositoryInterface|null $model Model name or instance.
      *   Defaults to 'I18nMessages'.
      * @param string $formatter Formatter name. Defaults to 'default' (ICU formatter).
      */
     public function __construct(
-        $domain,
-        $locale,
+        string $domain,
+        string $locale,
         $model = null,
-        $formatter = 'default'
+        string $formatter = 'default'
     ) {
-        if (!$model) {
+        if (empty($model)) {
             $model = 'I18nMessages';
         }
         $this->_domain = $domain;
@@ -74,19 +77,9 @@ class DbMessagesLoader
      *
      * @return \Aura\Intl\Package
      */
-    public function __invoke()
+    public function __invoke(): Package
     {
-        $model = $this->_model;
-        if (is_string($model)) {
-            $model = TableRegistry::get($this->_model);
-            if (!$model) {
-                throw new \RuntimeException(
-                    sprintf('Unable to load model "%s".', $this->_model)
-                );
-            }
-            $this->_model = $model;
-        }
-
+        $model = $this->_getModel();
         $query = $model->find();
 
         if ($model instanceof Table) {
@@ -115,7 +108,7 @@ class DbMessagesLoader
      *
      * @return array
      */
-    protected function _messages(ResultSetInterface $results)
+    protected function _messages(ResultSetInterface $results): array
     {
         if (!$results->count()) {
             return [];
@@ -161,5 +154,19 @@ class DbMessagesLoader
         }
 
         return $messages;
+    }
+
+    /**
+     * Get model instance
+     *
+     * @return \Cake\Datasource\RepositoryInterface
+     */
+    protected function _getModel(): RepositoryInterface
+    {
+        if (is_string($this->_model)) {
+            $this->_model = $this->getTableLocator()->get($this->_model);
+        }
+
+        return $this->_model;
     }
 }

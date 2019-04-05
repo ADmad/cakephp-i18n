@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files>
+  <file src="src/I18n/DbMessagesLoader.php">
+    <UndefinedInterfaceMethod occurrences="2">
+      <code>select</code>
+      <code>enableHydration</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Middleware/I18nMiddleware.php">
+    <TypeCoercion occurrences="1">
+      <code>$request</code>
+    </TypeCoercion>
+  </file>
+  <file src="src/Shell/Task/ExtractTask.php">
+    <UndefinedConstant occurrences="2">
+      <code>CAKE</code>
+      <code>APP</code>
+    </UndefinedConstant>
+  </file>
+</files>

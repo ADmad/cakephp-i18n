@@ -12,6 +12,7 @@ class Validator extends \Cake\Validation\Validator
     public function __construct()
     {
         parent::__construct();
+
         $this->_useI18n = true;
     }
 
@@ -30,12 +31,13 @@ class Validator extends \Cake\Validation\Validator
      *
      * @return string|null
      */
-    public function validationDomain($domain = null)
+    public function validationDomain($domain = null): ?string
     {
         if ($domain === null) {
             return $this->_validationDomain;
         }
-        $this->_validationDomain = $domain;
+
+        return $this->_validationDomain = $domain;
     }
 
     /**
@@ -85,7 +87,7 @@ class Validator extends \Cake\Validation\Validator
      *
      * @return array Translated args.
      */
-    protected function _translateArgs($args)
+    protected function _translateArgs(array $args): array
     {
         foreach ((array)$args as $k => $arg) {
             if (is_string($arg)) {

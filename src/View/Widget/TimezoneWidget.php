@@ -35,7 +35,7 @@ class TimezoneWidget extends SelectBoxWidget
      *
      * @return array
      */
-    protected function _identifierList($options)
+    protected function _identifierList(array $options): array
     {
         if (empty($options)) {
             $options = [

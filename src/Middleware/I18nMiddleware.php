@@ -41,7 +41,7 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @param array $config Settings for the filter.
      */
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
         if (isset($config['languages'])) {
             $config['languages'] = Hash::normalize($config['languages']);
@@ -106,7 +106,7 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @return string
      */
-    public function detectLanguage(ServerRequest $request, $default = null)
+    public function detectLanguage(ServerRequest $request, ?string $default = null)
     {
         if (empty($default)) {
             $lang = $this->_config['defaultLanguage'];
@@ -114,6 +114,7 @@ class I18nMiddleware implements MiddlewareInterface
             $lang = $default;
         }
 
+        /** @var array $browserLangs */
         $browserLangs = $request->acceptLanguage();
         foreach ($browserLangs as $k => $langKey) {
             if (strpos($langKey, '-') !== false) {

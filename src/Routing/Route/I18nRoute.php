@@ -11,7 +11,7 @@ class I18nRoute extends DashedRoute
     /**
      * Regular expression for `lang` route element.
      *
-     * @var string
+     * @var string|null
      */
     protected static $_langRegEx = null;
 
@@ -24,7 +24,7 @@ class I18nRoute extends DashedRoute
      *
      * @return void
      */
-    public function __construct($template, $defaults = [], array $options = [])
+    public function __construct(string $template, array $defaults = [], array $options = [])
     {
         if (strpos($template, ':lang') === false) {
             $template = '/:lang' . $template;
