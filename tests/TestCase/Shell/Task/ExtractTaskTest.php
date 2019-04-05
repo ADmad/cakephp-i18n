@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
 namespace App\Test\TestCase\Shell\Task;
 
-use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 

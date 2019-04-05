@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace ADmad\I18n\Test\Routing\Route;
 
 use ADmad\I18n\Routing\Route\I18nRoute;

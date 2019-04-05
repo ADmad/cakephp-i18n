@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace ADmad\I18n\Middleware;
 
 use Cake\Core\Configure;
@@ -58,7 +59,8 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @return \Psr\Http\Message\ResponseInterface A response.
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface    {
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
         $config = $this->getConfig();
         $url = $request->getUri()->getPath();
 
@@ -80,7 +82,7 @@ class I18nMiddleware implements MiddlewareInterface
 
         $langs = $config['languages'];
         $requestParams = $request->getAttribute('params');
-        $lang = isset($requestParams['lang']) ? $requestParams['lang'] : $config['defaultLanguage'];
+        $lang = $requestParams['lang'] ?? $config['defaultLanguage'];
         if (isset($langs[$lang])) {
             I18n::setLocale($langs[$lang]['locale']);
         } else {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace ADmad\I18n\Test\TestCase\Shell;
 
 use ADmad\I18n\Shell\I18nShell;
