@@ -80,7 +80,7 @@ class ExtractTask extends CoreExtractTask
             $response = $this->in(
                 'Would you like to merge all domain strings into the default domain?',
                 ['y', 'n'],
-                'n',
+                'n'
             );
             $this->_merge = strtolower($response) === 'y';
         }
