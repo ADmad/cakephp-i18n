@@ -41,5 +41,6 @@
             "Company\\TestPluginThree\\": "tests/test_app/plugins/Company/TestPluginThree/src"
         }
     },
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
