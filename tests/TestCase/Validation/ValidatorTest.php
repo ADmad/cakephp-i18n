@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace ADmad\I18n\Test\Validation;
 
 use ADmad\I18n\Validation\Validator;
