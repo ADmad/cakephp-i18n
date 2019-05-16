@@ -18,7 +18,7 @@ class I18nRouteTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         Configure::write('I18n.languages', ['en', 'fr', 'de']);
 

@@ -20,7 +20,7 @@ class ValidatorTest extends TestCase
      */
     public $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
-    public function setUp()
+    public function setUp(): void
     {
         Cache::clear('_cake_core_');
 
