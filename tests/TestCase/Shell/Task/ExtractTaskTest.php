@@ -2,6 +2,7 @@
 namespace App\Test\TestCase\Shell\Task;
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -254,6 +255,12 @@ class ExtractTaskTest extends TestCase
      */
     public function testExtractPlugin()
     {
+        if (method_exists($this, 'loadPlugins')) {
+            $this->loadPlugins(['TestPlugin']);
+        } else {
+            Plugin::load('TestPlugin');
+        }
+
         Configure::write('App.namespace', 'TestApp');
 
         $this->Task = $this->getMockBuilder('ADmad\I18n\Shell\Task\ExtractTask')
@@ -284,6 +291,12 @@ class ExtractTaskTest extends TestCase
      */
     public function testExtractVendoredPlugin()
     {
+        if (method_exists($this, 'loadPlugins')) {
+            $this->loadPlugins(['Company/TestPluginThree']);
+        } else {
+            Plugin::load('Company/TestPluginThree');
+        }
+
         Configure::write('App.namespace', 'TestApp');
 
         $this->Task = $this->getMockBuilder('ADmad\I18n\Shell\Task\ExtractTask')
