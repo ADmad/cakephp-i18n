@@ -45,9 +45,6 @@ class ExtractTask extends CoreExtractTask
             $this->_paths = explode(',', $this->params['paths']);
         } elseif (isset($this->params['plugin'])) {
             $plugin = Inflector::camelize($this->params['plugin']);
-            if (!Plugin::loaded($plugin)) {
-                Plugin::load($plugin);
-            }
             $this->_paths = [Plugin::classPath($plugin)];
             $this->params['plugin'] = $plugin;
         } else {
@@ -122,8 +119,8 @@ class ExtractTask extends CoreExtractTask
             'default' => true,
             'help' => 'Ignores all files in plugins if this command is run inside from the same app directory.',
         ])->addOption('plugin', [
-            'help' => 'Extracts tokens only from the plugin specified and '
-                . 'puts the result in the plugin\'s Locale directory.',
+            'help' => 'Extracts tokens only from the plugin specified and ' .
+                'puts the result in the plugin\'s Locale directory.',
         ])->addOption('ignore-model-validation', [
             'boolean' => true,
             'default' => false,

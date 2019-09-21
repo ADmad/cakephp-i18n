@@ -1,17 +1,19 @@
 language: php
 
 php:
-  - 7.0
   - 5.6
   - 7.1
-  - 7.2
   - 7.3
+
+services:
+  - mysql
+  - postgresql
 
 env:
   matrix:
-    - DB=mysql db_dsn='mysql://root@127.0.0.1/cakephp_test'
-    - DB=pgsql db_dsn='postgres://postgres@127.0.0.1/cakephp_test'
     - DB=sqlite db_dsn='sqlite:///:memory:'
+    - DB=mysql db_dsn='mysql://root@127.0.0.1/cakephp_test?init[]=SET sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"'
+    - DB=pgsql db_dsn='postgres://postgres@127.0.0.1/cakephp_test'
 
   global:
     - DEFAULT=1
@@ -20,7 +22,7 @@ matrix:
   fast_finish: true
 
   include:
-    - php: 7.0
+    - php: 7.1
       env: PHPCS=1 DEFAULT=0
 
     - php: 7.1
@@ -30,7 +32,7 @@ matrix:
       env: PREFER_LOWEST=1
 
 before_script:
-  - if [[ $TRAVIS_PHP_VERSION != 7.0 ]]; then phpenv config-rm xdebug.ini; fi
+  - if [[ $TRAVIS_PHP_VERSION != 7.1 ]]; then phpenv config-rm xdebug.ini; fi
 
   - if [[ $PREFER_LOWEST != 1 ]]; then composer install --no-interaction; fi
   - if [[ $PREFER_LOWEST = 1 ]]; then composer update --no-interaction --prefer-lowest --prefer-stable; fi
@@ -41,15 +43,15 @@ before_script:
   - if [[ $PHPCS = '1' ]]; then composer require cakephp/cakephp-codesniffer; fi
 
 script:
-  - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION = 7.0 ]]; then vendor/bin/phpunit --coverage-clover=clover.xml; fi
-  - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION != 7.0 ]]; then vendor/bin/phpunit; fi
+  - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION = 7.1 ]]; then vendor/bin/phpunit --coverage-clover=clover.xml; fi
+  - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION != 7.1 ]]; then vendor/bin/phpunit; fi
 
   - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --extensions=php --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi
 
   - if [[ $STATIC_ANALYSIS = 1 ]]; then composer require --dev phpstan/phpstan:^0.11 && vendor/bin/phpstan analyse src; fi
 
 after_success:
-  - if [[ $DEFAULT = 1 && $DB = 'mysql' && $TRAVIS_PHP_VERSION = 7.0 ]]; then bash <(curl -s https://codecov.io/bash); fi
+  - if [[ $DEFAULT = 1 && $DB = 'mysql' && $TRAVIS_PHP_VERSION = 7.1 ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 notifications:
   email: false
