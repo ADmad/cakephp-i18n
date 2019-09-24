@@ -112,10 +112,12 @@ The middleware does basically two things:
    for e.g. `/en`. The langauge is redirects to depends on the configuration keys
    `detectLanguage` and `defaultLanguage` shown above.
 
-   Now in order to prevent CakePHP from complaining about missing route for `/`
+   Now in order to prevent CakePHP from complaining about missing route for `/`,
    you must connect a route for `/` to a controller action. That controller action
    will never be actually called as the middleware will intercept and redirect
    the request.
+   
+   For e.g. `$routes->connect('/', ['controller' => 'Foo']);`
 
 2. When accesing any URL with language prefix    it set's the app's locale based
    on the prefix. For that it checks the value of `lang` route element in current
