@@ -33,8 +33,8 @@ class I18nRouteTest extends TestCase
      */
     public function testConstructor()
     {
-        $route = new I18nRoute('/:controller/:action');
-        $this->assertEquals('/:lang/:controller/:action', $route->template);
+        $route = new I18nRoute('/{controller}/{action}');
+        $this->assertEquals('/{lang}/{controller}/{action}', $route->template);
         $this->assertEquals([], $route->defaults);
         $this->assertEquals(
             [
@@ -47,13 +47,13 @@ class I18nRouteTest extends TestCase
         );
 
         $route = new I18nRoute('/');
-        $this->assertEquals('/:lang', $route->template);
+        $this->assertEquals('/{lang}', $route->template);
 
-        $route = new I18nRoute('/:controller/:action', [], ['lang' => 'fr|es']);
+        $route = new I18nRoute('/{controller}/{action}', [], ['lang' => 'fr|es']);
         $this->assertEquals('fr|es', $route->options['lang']);
 
-        $route = new I18nRoute('/prefix/:lang/:controller');
-        $this->assertEquals('/prefix/:lang/:controller', $route->template);
+        $route = new I18nRoute('/prefix/{lang}/{controller}');
+        $this->assertEquals('/prefix/{lang}/{controller}', $route->template);
     }
 
     /**
@@ -63,7 +63,7 @@ class I18nRouteTest extends TestCase
     public function testUrlWithNamedRoute()
     {
         Router::connect(
-            '/blog/:id-:slug',
+            '/blog/{id}-{slug}',
             ['controller' => 'Posts', 'action' => 'show'],
             [
                 'id' => '\d+',
@@ -77,7 +77,7 @@ class I18nRouteTest extends TestCase
         $request = $request->withParam('lang', 'en')
             ->withParam('controller', 'Posts')
             ->withParam('action', 'index');
-        Router::pushRequest($request);
+        Router::setRequest($request);
 
         $result = Router::url(['_name' => 'blog_show', 'id' => '123', 'slug' => 'hello']);
         $this->assertEquals('/en/blog/123-hello', $result);

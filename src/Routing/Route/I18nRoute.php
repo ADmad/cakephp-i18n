@@ -27,11 +27,11 @@ class I18nRoute extends DashedRoute
      */
     public function __construct(string $template, array $defaults = [], array $options = [])
     {
-        if (strpos($template, ':lang') === false) {
-            $template = '/:lang' . $template;
+        if (strpos($template, '{lang}') === false) {
+            $template = '/{lang}' . $template;
         }
-        if ($template === '/:lang/') {
-            $template = '/:lang';
+        if ($template === '/{lang}/') {
+            $template = '/{lang}';
         }
 
         $options['inflect'] = 'dasherize';
