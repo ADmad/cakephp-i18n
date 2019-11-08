@@ -8,6 +8,7 @@ use Cake\Http\ServerRequestFactory;
 use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
 use Locale;
+use Psr\Http\Message\ServerRequestInterface;
 use TestApp\Http\TestRequestHandler;
 
 /**
@@ -101,5 +102,17 @@ class I18nMiddlewareTest extends TestCase
         $response = $middleware->process($request, $this->handler);
 
         $this->assertEquals('fr', I18n::getLocale());
+    }
+
+    public function testSkippingProcessWhitelistCallback()
+    {
+        $middleware = new I18nMiddleware($this->config + ['detectLanguage' => false]);
+        $middleware->whitelistCallback(function (ServerRequestInterface $request) {
+            return true;
+        });
+
+        $response = $middleware->process($this->request, $this->handler);
+        // No redirection
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }

@@ -8,6 +8,7 @@ use Cake\Core\InstanceConfigTrait;
 use Cake\Http\ServerRequest;
 use Cake\I18n\I18n;
 use Cake\Utility\Hash;
+use Closure;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -38,6 +39,15 @@ class I18nMiddleware implements MiddlewareInterface
     ];
 
     /**
+     * Closure for deciding whether or not to skip the token check for particular request.
+     *
+     * CSRF protection token check will be skipped if the callback returns `true`.
+     *
+     * @var \Closure|null
+     */
+    protected $_whitelistCallback;
+
+    /**
      * Constructor.
      *
      * @param array $config Settings for the filter.
@@ -62,6 +72,13 @@ class I18nMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        if (
+            $this->_whitelistCallback !== null
+            && call_user_func($this->_whitelistCallback, $request) === true
+        ) {
+            return $handler->handle($request);
+        }
+
         $config = $this->getConfig();
         $url = $request->getUri()->getPath();
 
@@ -93,6 +110,22 @@ class I18nMiddleware implements MiddlewareInterface
         Configure::write('App.language', $lang);
 
         return $handler->handle($request);
+    }
+
+    /**
+     * Set callback for allowing to skip token check for particular request.
+     *
+     * The callback will receive request instance as argument and must return
+     * `true` if you want to skip token check for the current request.
+     *
+     * @param \Closure $callback A callback.
+     * @return $this
+     */
+    public function whitelistCallback(Closure $callback)
+    {
+        $this->_whitelistCallback = $callback;
+
+        return $this;
     }
 
     /**
