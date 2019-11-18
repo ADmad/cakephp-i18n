@@ -87,6 +87,7 @@ class I18nMiddleware implements MiddlewareInterface
             $lang = $config['defaultLanguage'];
             if ($config['detectLanguage']) {
                 $statusCode = 302;
+                /** @psalm-suppress ArgumentTypeCoercion */
                 $lang = $this->detectLanguage($request, $lang);
             }
 

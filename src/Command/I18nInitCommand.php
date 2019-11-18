@@ -95,8 +95,6 @@ class I18nInitCommand extends \Cake\Command\I18nInitCommand
            ])
             ->addOption('model', [
                 'help' => 'Model to use for storing messages. Defaults to: ' . static::DEFAULT_MODEL,
-            ])->addOption('model-type', [
-                'help' => 'Type of model to use for storing messages.',
             ]);
 
         return $parser;

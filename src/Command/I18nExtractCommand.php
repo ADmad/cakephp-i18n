@@ -142,8 +142,9 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
      */
     protected function _getLanguages(Arguments $args): void
     {
-        if ($args->getOption('languages')) {
-            $this->_languages = explode(',', $args->getOption('languages'));
+        $langs = (string)$args->getOption('languages');
+        if ($langs) {
+            $this->_languages = explode(',', $langs);
 
             return;
         }
@@ -173,6 +174,7 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
     protected function _saveMessages(Arguments $args, ConsoleIo $io): void
     {
         $paths = $this->_paths;
+        /** @psalm-suppress UndefinedConstant */
         $paths[] = realpath(APP) . DIRECTORY_SEPARATOR;
 
         usort($paths, function (string $a, string $b): int {
@@ -181,7 +183,7 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
 
         $domains = null;
         if ($args->getOption('domains')) {
-            $domains = explode(',', $args->getOption('domains'));
+            $domains = explode(',', (string)$args->getOption('domains'));
         }
 
         $this->_loadModel($args);
@@ -272,8 +274,6 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
             'provided to the <info>__</info> family of functions are extracted.'
         )->addOption('model', [
             'help' => 'Model to use for storing messages. Defaults to: ' . static::DEFAULT_MODEL,
-        ])->addOption('model-type', [
-            'help' => 'Type of model to use for storing messages.',
         ])->addOption('languages', [
             'help' => 'Comma separated list of languages used by app. Defaults used from `I18n.languages` config.',
         ])->addOption('app', [
