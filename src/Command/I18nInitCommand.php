@@ -20,6 +20,13 @@ class I18nInitCommand extends \Cake\Command\I18nInitCommand
     public const DEFAULT_MODEL = 'I18nMessages';
 
     /**
+     * The name of this command.
+     *
+     * @var string
+     */
+    protected $name = 'i18n init';
+
+    /**
      * @inheritDoc
      */
     public static function defaultName(): string

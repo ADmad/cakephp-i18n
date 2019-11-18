@@ -33,6 +33,27 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
     protected $_languages = [];
 
     /**
+     * The name of this command.
+     *
+     * @var string
+     */
+    protected $name = 'i18n extract';
+
+    /**
+     * Get the command name.
+     *
+     * Returns the command name based on class name.
+     * For e.g. for a command with class name `UpdateTableCommand` the default
+     * name returned would be `'update_table'`.
+     *
+     * @return string
+     */
+    public static function defaultName(): string
+    {
+        return 'i18n extract';
+    }
+
+    /**
      * Execute the command.
      *
      * @param \Cake\Console\Arguments $args The command arguments.

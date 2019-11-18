@@ -14,6 +14,27 @@ use Cake\Console\ConsoleOptionParser;
 class I18nCommand extends Command
 {
     /**
+     * The name of this command.
+     *
+     * @var string
+     */
+    protected $name = 'i18n';
+
+    /**
+     * Get the command name.
+     *
+     * Returns the command name based on class name.
+     * For e.g. for a command with class name `UpdateTableCommand` the default
+     * name returned would be `'update_table'`.
+     *
+     * @return string
+     */
+    public static function defaultName(): string
+    {
+        return 'i18n';
+    }
+
+    /**
      * Execute interactive mode
      *
      * @param \Cake\Console\Arguments $args The command arguments.
