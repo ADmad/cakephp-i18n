@@ -7,6 +7,7 @@ declare(strict_types=1);
  */
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 /*
  * This function is used to find the location of CakePHP whether CakePHP
@@ -32,3 +33,5 @@ define('PLUGIN_ROOT', $root . DS);
 define('PLUGIN_TESTS', $root . DS . 'tests' . DS);
 
 Configure::write('App.paths.plugins', [PLUGIN_TESTS . 'test_app' . DS . 'plugins' . DS]);
+
+Plugin::getCollection()->add(new \ADmad\I18n\Plugin());
