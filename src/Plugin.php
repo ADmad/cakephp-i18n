@@ -27,9 +27,9 @@ class Plugin extends BasePlugin
     public function console(CommandCollection $commands): CommandCollection
     {
         return $commands->addMany([
-            'i18n' => I18nCommand::class,
-            'i18n extract' => I18nExtractCommand::class,
-            'i18n init' => I18nInitCommand::class,
+            'admad/i18n' => I18nCommand::class,
+            'admad/i18n extract' => I18nExtractCommand::class,
+            'admad/i18n init' => I18nInitCommand::class,
         ]);
     }
 }
