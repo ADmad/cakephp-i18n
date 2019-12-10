@@ -5,6 +5,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     errorBaseline="psalm-baseline.xml"
+    autoloader="vendor/cakephp/cakephp/tests/bootstrap.php"
 >
     <projectFiles>
         <directory name="src" />
