@@ -19,6 +19,10 @@ class I18nInitCommandTest extends ConsoleIntegrationTestCase
 
         $this->useCommandRunner();
         $this->setAppNamespace();
+        $this->configApplication(
+            'TestApp\Application',
+            [PLUGIN_TESTS . 'test_app' . DS . 'config']
+        );
 
         $this->model = TableRegistry::getTableLocator()->get('I18nMessages');
     }
