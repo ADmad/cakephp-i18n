@@ -88,7 +88,7 @@ class DbMessagesLoader
             $fields = $model->getSchema()->columns();
             $fields = array_flip(array_diff(
                 $fields,
-                $model->getSchema()->primaryKey()
+                $model->getSchema()->getPrimaryKey()
             ));
             unset($fields['domain'], $fields['locale']);
             $query->select(array_flip($fields));
@@ -96,7 +96,7 @@ class DbMessagesLoader
 
         $results = $query
             ->where(['domain' => $this->_domain, 'locale' => $this->_locale])
-            ->enableHydration(false)
+            ->disableHydration()
             ->all();
 
         return new Package($this->_formatter, null, $this->_messages($results));
