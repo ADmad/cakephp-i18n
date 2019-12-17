@@ -50,7 +50,7 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
      */
     public static function defaultName(): string
     {
-        return 'i18n extract';
+        return 'admad/i18n extract';
     }
 
     /**
