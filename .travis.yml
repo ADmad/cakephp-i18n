@@ -3,7 +3,7 @@ language: php
 php:
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
 
 services:
   - postgresql
@@ -38,7 +38,7 @@ before_script:
   - if [[ $DB = 'mysql' ]]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi
   - if [[ $DB = 'pgsql' ]]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
 
-  - if [[ $PHPCS = 1 ]]; then composer require cakephp/cakephp-codesniffer:dev-next; fi
+  - if [[ $PHPCS = 1 ]]; then composer require cakephp/cakephp-codesniffer:^4.0; fi
 
 script:
   - |
@@ -51,8 +51,7 @@ script:
 
   - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi
 
-  - if [[ $STATIC_ANALYSIS = 1 ]]; then composer require --dev psalm/phar:^3.4 && vendor/bin/psalm.phar; fi
-  - if [[ $STATIC_ANALYSIS = 1 ]]; then composer require --dev phpstan/phpstan-shim:^0.11 && vendor/bin/phpstan.phar analyse src; fi
+  - if [[ $STATIC_ANALYSIS = 1 ]]; then composer require --dev psalm/phar:^3.7 && vendor/bin/psalm.phar; fi
 
 after_success:
   - |
