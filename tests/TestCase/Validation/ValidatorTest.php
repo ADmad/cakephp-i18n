@@ -96,7 +96,7 @@ class ValidatorTest extends TestCase
      */
     public function testErrors()
     {
-        $errors = $this->validator->errors([
+        $errors = $this->validator->validate([
             'email' => 'foo',
             'field' => '100',
         ]);
@@ -118,7 +118,7 @@ class ValidatorTest extends TestCase
         $this->validator->validationDomain('validation_non_default');
         $this->assertEquals('validation_non_default', $this->validator->validationDomain());
 
-        $errors = $this->validator->errors([
+        $errors = $this->validator->validate([
             'email' => 'foo',
         ]);
 
