@@ -189,7 +189,7 @@ class I18nExtractCommandTest extends ConsoleIntegrationTestCase
         $this->exec(
             'i18n extract ' .
             '--exclude-plugins ' .
-            '--paths=' . PLUGIN_TESTS . 'test_app/src'
+            '--paths=' . PLUGIN_TESTS . 'test_app/src --extract-core=no'
         );
         $this->assertExitSuccess();
 
@@ -211,7 +211,7 @@ class I18nExtractCommandTest extends ConsoleIntegrationTestCase
 
         $this->exec(
             'i18n extract ' .
-            '--plugin=TestPlugin'
+            '--plugin=TestPlugin --extract-core=no'
         );
         $this->assertExitSuccess();
 
