@@ -12,11 +12,18 @@ use Cake\Core\BasePlugin;
 class Plugin extends BasePlugin
 {
     /**
-     * Disable console commands by default.
+     * Do bootstrapping or not
      *
      * @var bool
      */
-    protected $consoleEnabled = false;
+    protected $bootstrapEnabled = false;
+
+    /**
+     * Load routes or not
+     *
+     * @var bool
+     */
+    protected $routesEnabled = false;
 
     /**
      * Add console commands for the plugin.
