@@ -17,10 +17,6 @@ This plugins provides:
 - Validation class for auto translating validation message.
 - A widget to generate select box with list of timezone identifiers.
 
-## Requirements
-
-* CakePHP 3.0+
-
 ## Installation
 
 ```
@@ -42,7 +38,7 @@ The `I18nRoutes` helps generating routes of style `/:lang/:controller/:action`.
 For e.g. you can add routes to your `routes.php` similar to the ones shown below:
 
 ```php
-Router::scope('/', function ($routes) {
+$routes->scope('/', function ($routes) {
     $routes->connect(
         '/:controller',
         ['action' => 'index'],
@@ -92,13 +88,13 @@ I18n::setConfig('default', function ($domain, $locale) {
 });
 ```
 
-You can use `ADmad/I18n.I18n` shell to extract the translation message from your
+You can use `admad/i18n extract` command to extract the translation message from your
 code files and populate the translations table. Updating the db records with
 translations for each language is upto you. Having the messages in a table
 instead of files make it much to make a web interface for managing translations.
 
 ```
-bin/cake ADmad/I18n.i18n extract
+bin/cake admad/i18n extract
 ```
 
 ### I18nMiddleware
@@ -130,7 +126,7 @@ In your `AppView::initialize()` configure the `FormHelper` to use `TimezoneWidge
 
 ```php
 // src/View/AppView.php
-public function initialize()
+public function initialize(): void
 {
     $this->loadHelper('Form', [
         'widget' => [
