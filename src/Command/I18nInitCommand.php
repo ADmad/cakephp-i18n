@@ -31,7 +31,7 @@ class I18nInitCommand extends \Cake\Command\I18nInitCommand
      */
     public static function defaultName(): string
     {
-        return 'i18n init';
+        return 'admad/i18n init';
     }
 
     /**

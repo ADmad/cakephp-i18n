@@ -31,7 +31,7 @@ class I18nCommand extends Command
      */
     public static function defaultName(): string
     {
-        return 'i18n';
+        return 'admad/i18n';
     }
 
     /**

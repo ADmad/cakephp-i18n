@@ -37,7 +37,7 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
      *
      * @var string
      */
-    protected $name = 'i18n extract';
+    protected $name = 'admad/i18n extract';
 
     /**
      * Get the command name.
