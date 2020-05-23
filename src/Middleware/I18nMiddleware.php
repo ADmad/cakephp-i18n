@@ -27,14 +27,14 @@ class I18nMiddleware implements MiddlewareInterface
      * - `detectLanguage`: If `true` will attempt to get browser locale and
      *   redirect to similar language available in app when going to site root.
      *   Default `true`.
-     * - `defaultLanguage`: Default language for app. Default `en_US`.
+     * - `defaultLanguage`: Default language for app. Defaults to value of `I18n::getDefaultLocale()`
      * - `languages`: Languages available in app. Default `[]`.
      *
      * @var array
      */
     protected $_defaultConfig = [
         'detectLanguage' => true,
-        'defaultLanguage' => 'en_US',
+        'defaultLanguage' => null,
         'languages' => [],
     ];
 
@@ -54,6 +54,7 @@ class I18nMiddleware implements MiddlewareInterface
      */
     public function __construct(array $config = [])
     {
+        $this->_defaultConfig['defaultLanguage'] = I18n::getDefaultLocale();
         if (isset($config['languages'])) {
             $config['languages'] = Hash::normalize($config['languages']);
         }
