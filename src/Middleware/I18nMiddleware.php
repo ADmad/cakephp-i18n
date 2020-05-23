@@ -9,11 +9,11 @@ use Cake\Http\ServerRequest;
 use Cake\I18n\I18n;
 use Cake\Utility\Hash;
 use Closure;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\RedirectResponse;
 
 class I18nMiddleware implements MiddlewareInterface
 {
@@ -67,7 +67,6 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request The request.
      * @param \Psr\Http\Server\RequestHandlerInterface $handler The request handler.
-     *
      * @return \Psr\Http\Message\ResponseInterface A response.
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -138,7 +137,6 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @param \Cake\Http\ServerRequest $request The request.
      * @param string|null $default Default language to return if no match is found.
-     *
      * @return string
      */
     public function detectLanguage(ServerRequest $request, ?string $default = null)
