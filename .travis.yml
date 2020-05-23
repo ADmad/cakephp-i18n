@@ -8,10 +8,6 @@ services:
   - postgresql
   - mysql
 
-services:
-  - mysql
-  - postgresql
-
 env:
   matrix:
     - DB=sqlite db_dsn='sqlite:///:memory:'
