@@ -22,7 +22,6 @@ class I18nRoute extends DashedRoute
      * @param string $template Template string with parameter placeholders
      * @param array $defaults Array of defaults for the route.
      * @param array $options Array of parameters and additional options for the Route
-     *
      * @return void
      */
     public function __construct(string $template, array $defaults = [], array $options = [])

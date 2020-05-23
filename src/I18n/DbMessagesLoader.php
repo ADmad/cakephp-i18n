@@ -75,7 +75,6 @@ class DbMessagesLoader
      * messages.
      *
      * @throws \RuntimeException If model could not be loaded.
-     *
      * @return \Aura\Intl\Package
      */
     public function __invoke(): Package
@@ -107,7 +106,6 @@ class DbMessagesLoader
      * Convert db resultset to messages array.
      *
      * @param \Cake\Datasource\ResultSetInterface $results ResultSet instance.
-     *
      * @return array
      */
     protected function _messages(ResultSetInterface $results): array

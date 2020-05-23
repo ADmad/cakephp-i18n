@@ -29,7 +29,6 @@ class Validator extends \Cake\Validation\Validator
      *
      * @param string|null $domain The validation domain to be used. If null
      *   returns currently set domain.
-     *
      * @return string|null
      */
     public function validationDomain($domain = null): ?string
@@ -49,7 +48,6 @@ class Validator extends \Cake\Validation\Validator
      * @param \Cake\Validation\ValidationSet $rules the list of rules for a field
      * @param array $data the full data passed to the validator
      * @param bool $newRecord whether is it a new record or an existing one
-     *
      * @return array
      */
     protected function _processRules(string $field, ValidationSet $rules, array $data, bool $newRecord): array
@@ -85,7 +83,6 @@ class Validator extends \Cake\Validation\Validator
      * Applies translations to validator arguments.
      *
      * @param array $args The args to translate
-     *
      * @return array Translated args.
      */
     protected function _translateArgs(array $args): array

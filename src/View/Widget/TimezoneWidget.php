@@ -19,7 +19,6 @@ class TimezoneWidget extends SelectBoxWidget
      * Eg. `['Asia' => DateTimeZone::ASIA, 'Europe' => DateTimeZone::EUROPE]`
      *
      * @param array $data The context for rendering a select.
-     *
      * @return array
      */
     protected function _renderContent(array $data): array
@@ -33,7 +32,6 @@ class TimezoneWidget extends SelectBoxWidget
      * Converts list of regions to identifiers list.
      *
      * @param array $options List of regions
-     *
      * @return array
      */
     protected function _identifierList(array $options): array

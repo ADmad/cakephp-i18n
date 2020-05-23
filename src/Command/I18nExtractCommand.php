@@ -251,7 +251,6 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
      * @param string|null $plural Plural message id.
      * @param string|null $context Context.
      * @param string|null $refs Source code references.
-     *
      * @return void
      */
     protected function _save(

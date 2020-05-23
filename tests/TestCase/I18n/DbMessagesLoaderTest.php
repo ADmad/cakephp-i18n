@@ -25,7 +25,6 @@ class DbMessagesLoaderTest extends TestCase
      * @param string $locale
      * @param string $model
      * @param array $expected
-     *
      * @return void
      * @dataProvider paramsProvider
      */
