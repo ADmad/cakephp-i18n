@@ -107,7 +107,7 @@ class I18nMiddlewareTest extends TestCase
     public function testSkippingProcessWhitelistCallback()
     {
         $middleware = new I18nMiddleware($this->config + ['detectLanguage' => false]);
-        $middleware->whitelistCallback(function (ServerRequestInterface $request) {
+        $middleware->ignoreRequestCallback(function (ServerRequestInterface $request) {
             return true;
         });
 

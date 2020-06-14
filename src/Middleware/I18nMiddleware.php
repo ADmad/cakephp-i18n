@@ -39,13 +39,13 @@ class I18nMiddleware implements MiddlewareInterface
     ];
 
     /**
-     * Closure for deciding whether or not to skip the token check for particular request.
+     * Closure for deciding whether or not to ignore particular request.
      *
-     * CSRF protection token check will be skipped if the callback returns `true`.
+     * Request will not be processd if the callback returns `true`.
      *
      * @var \Closure|null
      */
-    protected $_whitelistCallback;
+    protected $_ignoreRequestCallback;
 
     /**
      * Constructor.
@@ -73,8 +73,8 @@ class I18nMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (
-            $this->_whitelistCallback !== null
-            && call_user_func($this->_whitelistCallback, $request) === true
+            $this->_ignoreRequestCallback !== null
+            && call_user_func($this->_ignoreRequestCallback, $request) === true
         ) {
             return $handler->handle($request);
         }
@@ -114,17 +114,16 @@ class I18nMiddleware implements MiddlewareInterface
     }
 
     /**
-     * Set callback for allowing to skip token check for particular request.
+     * Set closure for deciding whether or not to ignore particular request.
      *
-     * The callback will receive request instance as argument and must return
-     * `true` if you want to skip token check for the current request.
+     * Request will not be processd if the callback returns `true`.
      *
      * @param \Closure $callback A callback.
      * @return $this
      */
-    public function whitelistCallback(Closure $callback)
+    public function ignoreRequestCallback(Closure $callback)
     {
-        $this->_whitelistCallback = $callback;
+        $this->_ignoreRequestCallback = $callback;
 
         return $this;
     }
