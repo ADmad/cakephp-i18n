@@ -149,7 +149,7 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
         $io->out();
         if ($this->_countMarkerError) {
             $io->err("{$this->_countMarkerError} marker error(s) detected.");
-            $io->err(" => Use the --marker-error option to display errors.");
+            $io->err(' => Use the --marker-error option to display errors.');
         }
 
         $io->out('Done.');
