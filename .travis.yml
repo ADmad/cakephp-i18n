@@ -34,27 +34,28 @@ before_script:
   - if [[ $PREFER_LOWEST != 1 ]]; then composer update --no-interaction; fi
   - if [[ $PREFER_LOWEST == 1 ]]; then composer update --no-interaction --prefer-lowest --prefer-stable; fi
 
-  - if [[ $DB = 'mysql' ]]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi
-  - if [[ $DB = 'pgsql' ]]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
+  - if [[ $DB == 'mysql' ]]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi
+  - if [[ $DB == 'pgsql' ]]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
 
-  - if [[ $PHPCS = 1 ]]; then composer require cakephp/cakephp-codesniffer:^4.0; fi
+  - if [[ $PHPCS == 1 ]]; then composer require cakephp/cakephp-codesniffer:^4.0; fi
+  - if [[ $STATIC_ANALYSIS == 1 ]]; then composer stan-setup; fi
 
 script:
   - |
-      if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION = 7.2 ]]; then
+      if [[ $DEFAULT == 1 && $TRAVIS_PHP_VERSION == 7.2 ]]; then
         mkdir -p build/logs
         vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
       fi
 
-  - if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION != 7.2 ]]; then vendor/bin/phpunit; fi
+  - if [[ $DEFAULT == 1 && $TRAVIS_PHP_VERSION != 7.2 ]]; then vendor/bin/phpunit; fi
 
-  - if [[ $PHPCS = 1 ]]; then vendor/bin/phpcs -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi
+  - if [[ $PHPCS == 1 ]]; then vendor/bin/phpcs -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests; fi
 
-  - if [[ $STATIC_ANALYSIS = 1 ]]; then composer require --dev psalm/phar:^3.7 && vendor/bin/psalm.phar; fi
+  - if [[ $STATIC_ANALYSIS == 1 ]]; then composer stan; fi
 
 after_success:
   - |
-      if [[ $DEFAULT = 1 && $TRAVIS_PHP_VERSION = 7.2 ]]; then
+      if [[ $DEFAULT == 1 && $TRAVIS_PHP_VERSION = 7.2 ]]; then
         wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
         chmod +x php-coveralls.phar
         ./php-coveralls.phar

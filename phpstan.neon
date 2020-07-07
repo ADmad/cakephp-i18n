@@ -3,8 +3,10 @@ parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     treatPhpDocTypesAsCertain: false
-    autoload_files:
+    bootstrapFiles:
         - tests/bootstrap.php
+    paths:
+        - src
     ignoreErrors:
         -
             message: "#^Parameter \\#1 \\$var_array of function extract is passed by reference, so it expects variables only\\.$#"
