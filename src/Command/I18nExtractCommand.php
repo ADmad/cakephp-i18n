@@ -584,7 +584,9 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
 
         foreach ($this->_paths as $path) {
             $path = realpath($path) . DIRECTORY_SEPARATOR;
+            /** @psalm-suppress InternalClass */
             $fs = new Filesystem();
+            /** @psalm-suppress InternalMethod */
             $files = $fs->findRecursive($path, '/\.php$/');
             $files = array_keys(iterator_to_array($files));
             sort($files);
