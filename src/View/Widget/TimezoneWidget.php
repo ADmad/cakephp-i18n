@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ADmad\I18n\View\Widget;
 
 use Cake\View\Widget\SelectBoxWidget;
@@ -17,10 +19,9 @@ class TimezoneWidget extends SelectBoxWidget
      * Eg. `['Asia' => DateTimeZone::ASIA, 'Europe' => DateTimeZone::EUROPE]`
      *
      * @param array $data The context for rendering a select.
-     *
      * @return array
      */
-    protected function _renderContent($data)
+    protected function _renderContent(array $data): array
     {
         $data['options'] = $this->_identifierList($data['options']);
 
@@ -31,10 +32,9 @@ class TimezoneWidget extends SelectBoxWidget
      * Converts list of regions to identifiers list.
      *
      * @param array $options List of regions
-     *
      * @return array
      */
-    protected function _identifierList($options)
+    protected function _identifierList(array $options): array
     {
         if (empty($options)) {
             $options = [
@@ -54,7 +54,7 @@ class TimezoneWidget extends SelectBoxWidget
 
         $identifiers = [];
         foreach ($options as $name => $region) {
-            $list = DateTimeZone::listIdentifiers($region);
+            $list = (array)DateTimeZone::listIdentifiers($region);
             $identifiers[$name] = array_combine($list, $list);
         }
 

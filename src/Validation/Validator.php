@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ADmad\I18n\Validation;
 
 use Cake\Validation\ValidationSet;
@@ -11,6 +13,7 @@ class Validator extends \Cake\Validation\Validator
     public function __construct()
     {
         parent::__construct();
+
         $this->_useI18n = true;
     }
 
@@ -26,15 +29,15 @@ class Validator extends \Cake\Validation\Validator
      *
      * @param string|null $domain The validation domain to be used. If null
      *   returns currently set domain.
-     *
      * @return string|null
      */
-    public function validationDomain($domain = null)
+    public function validationDomain($domain = null): ?string
     {
         if ($domain === null) {
             return $this->_validationDomain;
         }
-        $this->_validationDomain = $domain;
+
+        return $this->_validationDomain = $domain;
     }
 
     /**
@@ -45,10 +48,9 @@ class Validator extends \Cake\Validation\Validator
      * @param \Cake\Validation\ValidationSet $rules the list of rules for a field
      * @param array $data the full data passed to the validator
      * @param bool $newRecord whether is it a new record or an existing one
-     *
      * @return array
      */
-    protected function _processRules($field, ValidationSet $rules, $data, $newRecord)
+    protected function _processRules(string $field, ValidationSet $rules, array $data, bool $newRecord): array
     {
         $errors = [];
         // Loading default provider in case there is none
@@ -81,10 +83,9 @@ class Validator extends \Cake\Validation\Validator
      * Applies translations to validator arguments.
      *
      * @param array $args The args to translate
-     *
      * @return array Translated args.
      */
-    protected function _translateArgs($args)
+    protected function _translateArgs(array $args): array
     {
         foreach ((array)$args as $k => $arg) {
             if (is_string($arg)) {

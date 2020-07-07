@@ -1,6 +1,24 @@
 parameters:
-    level: 3
-    autoload_files:
-        - tests/bootstrap.php
-    ignoreErrors:
-        - '#Call to an undefined method Cake\\Datasource\\QueryInterface::enableHydration\(\)#'
+	level: 6
+	checkMissingIterableValueType: false
+	checkGenericClassInNonGenericObjectType: false
+	treatPhpDocTypesAsCertain: false
+	bootstrapFiles:
+		- tests/bootstrap.php
+	paths:
+		- src
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$var_array of function extract is passed by reference, so it expects variables only\\.$#"
+			count: 1
+			path: src/Command/I18nExtractCommand.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between null and null will always evaluate to false\\.$#"
+			count: 2
+			path: src/Command/I18nExtractCommand.php
+
+		-
+			message: "#^Parameter \\#1 \\$request of method ADmad\\\\I18n\\\\Middleware\\\\I18nMiddleware\\:\\:detectLanguage\\(\\) expects Cake\\\\Http\\\\ServerRequest, Psr\\\\Http\\\\Message\\\\ServerRequestInterface given\\.$#"
+			count: 1
+			path: src/Middleware/I18nMiddleware.php

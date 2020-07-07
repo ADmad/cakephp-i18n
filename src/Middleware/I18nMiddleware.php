@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ADmad\I18n\Middleware;
 
 use Cake\Core\Configure;
@@ -6,10 +8,14 @@ use Cake\Core\InstanceConfigTrait;
 use Cake\Http\ServerRequest;
 use Cake\I18n\I18n;
 use Cake\Utility\Hash;
+use Closure;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
-use Zend\Diactoros\Response\RedirectResponse;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class I18nMiddleware
+class I18nMiddleware implements MiddlewareInterface
 {
     use InstanceConfigTrait;
 
@@ -21,24 +27,34 @@ class I18nMiddleware
      * - `detectLanguage`: If `true` will attempt to get browser locale and
      *   redirect to similar language available in app when going to site root.
      *   Default `true`.
-     * - `defaultLanguage`: Default language for app. Default `en_US`.
+     * - `defaultLanguage`: Default language for app. Defaults to value of `I18n::getDefaultLocale()`
      * - `languages`: Languages available in app. Default `[]`.
      *
      * @var array
      */
     protected $_defaultConfig = [
         'detectLanguage' => true,
-        'defaultLanguage' => 'en_US',
+        'defaultLanguage' => null,
         'languages' => [],
     ];
+
+    /**
+     * Closure for deciding whether or not to ignore particular request.
+     *
+     * Request will not be processd if the callback returns `true`.
+     *
+     * @var \Closure|null
+     */
+    protected $_ignoreRequestCallback;
 
     /**
      * Constructor.
      *
      * @param array $config Settings for the filter.
      */
-    public function __construct($config = [])
+    public function __construct(array $config = [])
     {
+        $this->_defaultConfig['defaultLanguage'] = I18n::getDefaultLocale();
         if (isset($config['languages'])) {
             $config['languages'] = Hash::normalize($config['languages']);
         }
@@ -50,14 +66,19 @@ class I18nMiddleware
      * Sets appropriate locale and lang to I18n::locale() and App.language config
      * respectively based on "lang" request param.
      *
-     * @param \Cake\Http\ServerRequest $request The request.
-     * @param \Psr\Http\Message\ResponseInterface $response The response.
-     * @param callable $next Callback to invoke the next middleware.
-     *
-     * @return \Psr\Http\Message\ResponseInterface A response
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
+     * @param \Psr\Http\Server\RequestHandlerInterface $handler The request handler.
+     * @return \Psr\Http\Message\ResponseInterface A response.
      */
-    public function __invoke(ServerRequest $request, ResponseInterface $response, $next)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        if (
+            $this->_ignoreRequestCallback !== null
+            && call_user_func($this->_ignoreRequestCallback, $request) === true
+        ) {
+            return $handler->handle($request);
+        }
+
         $config = $this->getConfig();
         $url = $request->getUri()->getPath();
 
@@ -66,6 +87,7 @@ class I18nMiddleware
             $lang = $config['defaultLanguage'];
             if ($config['detectLanguage']) {
                 $statusCode = 302;
+                /** @psalm-suppress ArgumentTypeCoercion */
                 $lang = $this->detectLanguage($request, $lang);
             }
 
@@ -79,7 +101,7 @@ class I18nMiddleware
 
         $langs = $config['languages'];
         $requestParams = $request->getAttribute('params');
-        $lang = isset($requestParams['lang']) ? $requestParams['lang'] : $config['defaultLanguage'];
+        $lang = $requestParams['lang'] ?? $config['defaultLanguage'];
         if (isset($langs[$lang])) {
             I18n::setLocale($langs[$lang]['locale']);
         } else {
@@ -88,7 +110,22 @@ class I18nMiddleware
 
         Configure::write('App.language', $lang);
 
-        return $next($request, $response);
+        return $handler->handle($request);
+    }
+
+    /**
+     * Set closure for deciding whether or not to ignore particular request.
+     *
+     * Request will not be processd if the callback returns `true`.
+     *
+     * @param \Closure $callback A callback.
+     * @return $this
+     */
+    public function ignoreRequestCallback(Closure $callback)
+    {
+        $this->_ignoreRequestCallback = $callback;
+
+        return $this;
     }
 
     /**
@@ -100,10 +137,9 @@ class I18nMiddleware
      *
      * @param \Cake\Http\ServerRequest $request The request.
      * @param string|null $default Default language to return if no match is found.
-     *
      * @return string
      */
-    public function detectLanguage(ServerRequest $request, $default = null)
+    public function detectLanguage(ServerRequest $request, ?string $default = null)
     {
         if (empty($default)) {
             $lang = $this->_config['defaultLanguage'];
@@ -111,6 +147,7 @@ class I18nMiddleware
             $lang = $default;
         }
 
+        /** @var array $browserLangs */
         $browserLangs = $request->acceptLanguage();
         foreach ($browserLangs as $k => $langKey) {
             if (strpos($langKey, '-') !== false) {

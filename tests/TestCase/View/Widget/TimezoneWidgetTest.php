@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ADmad\I18n\Test\View\Widget;
 
 use ADmad\I18n\View\Widget\TimezoneWidget;
@@ -16,7 +18,7 @@ class TimezoneWidgetTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $templates = [

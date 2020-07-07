@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ADmad\I18n\Test\Validation;
 
 use ADmad\I18n\Validation\Validator;
@@ -19,9 +21,9 @@ class ValidatorTest extends TestCase
      */
     public $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
-    public function setUp()
+    public function setUp(): void
     {
-        Cache::clear(false, '_cake_core_');
+        Cache::clear('_cake_core_');
 
         I18n::config('validation', function ($domain, $locale) {
             return new \ADmad\I18n\I18n\DbMessagesLoader(
@@ -94,7 +96,7 @@ class ValidatorTest extends TestCase
      */
     public function testErrors()
     {
-        $errors = $this->validator->errors([
+        $errors = $this->validator->validate([
             'email' => 'foo',
             'field' => '100',
         ]);
@@ -116,7 +118,7 @@ class ValidatorTest extends TestCase
         $this->validator->validationDomain('validation_non_default');
         $this->assertEquals('validation_non_default', $this->validator->validationDomain());
 
-        $errors = $this->validator->errors([
+        $errors = $this->validator->validate([
             'email' => 'foo',
         ]);
 

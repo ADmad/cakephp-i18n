@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ADmad\I18n\Routing\Route;
 
 use Cake\Core\Configure;
@@ -10,7 +12,7 @@ class I18nRoute extends DashedRoute
     /**
      * Regular expression for `lang` route element.
      *
-     * @var string
+     * @var string|null
      */
     protected static $_langRegEx = null;
 
@@ -20,16 +22,15 @@ class I18nRoute extends DashedRoute
      * @param string $template Template string with parameter placeholders
      * @param array $defaults Array of defaults for the route.
      * @param array $options Array of parameters and additional options for the Route
-     *
      * @return void
      */
-    public function __construct($template, $defaults = [], array $options = [])
+    public function __construct(string $template, array $defaults = [], array $options = [])
     {
-        if (strpos($template, ':lang') === false) {
-            $template = '/:lang' . $template;
+        if (strpos($template, '{lang}') === false) {
+            $template = '/{lang}' . $template;
         }
-        if ($template === '/:lang/') {
-            $template = '/:lang';
+        if ($template === '/{lang}/') {
+            $template = '/{lang}';
         }
 
         $options['inflect'] = 'dasherize';

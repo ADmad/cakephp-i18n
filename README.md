@@ -17,10 +17,6 @@ This plugins provides:
 - Validation class for auto translating validation message.
 - A widget to generate select box with list of timezone identifiers.
 
-## Requirements
-
-* CakePHP 3.0+
-
 ## Installation
 
 ```
@@ -46,7 +42,7 @@ The `I18nRoutes` helps generating language prefixed routes of style
 For e.g. you can add routes to your `routes.php` similar to the ones shown below:
 
 ```php
-Router::scope('/', function ($routes) {
+$routes->scope('/', function ($routes) {
     $routes->connect(
         '/:controller',
         ['action' => 'index'],
@@ -79,7 +75,7 @@ inflected accordingly.
 
 ### I18nMiddleware
 
-While not necessary one would generally use the `I18nMiddleware` too when using
+While not necessary, one would generally use the `I18nMiddleware` too when using
 language prefixed routes with the help of `I18nRoute`.
 
 You can setup the `I18nMiddleware` in your `src/Application::middleware()` as
@@ -104,7 +100,8 @@ $middlware->add(new \ADmad\I18n\Middleware\I18nMiddleware([
 
 The keys of `languages` array are the language prefixes you use in your URL.
 
-To ensure that the `lang` router param is available, you must add this middleware *after* adding CakePHP's default routing middleware (i.e. after `->add(new RoutingMiddleware($this))`).
+To ensure that the `lang` router param is available, you must add this middleware
+*after* adding CakePHP's default routing middleware (i.e. after `->add(new RoutingMiddleware($this))`).
 
 The middleware does basically two things:
 
@@ -116,7 +113,7 @@ The middleware does basically two things:
    you must connect a route for `/` to a controller action. That controller action
    will never be actually called as the middleware will intercept and redirect
    the request.
-   
+
    For e.g. `$routes->connect('/', ['controller' => 'Foo']);`
 
 2. When accesing any URL with language prefix    it set's the app's locale based
@@ -154,12 +151,12 @@ I18n::config('default', function ($domain, $locale) {
 });
 ```
 
-You can use `ADmad/I18n.I18n` shell to extract the translation message from your
+You can use `admad/i18n extract` command to extract the translation message from your
 code files and populate the translations table. Updating the db records with
 translations for each language is upto you.
 
 ```
-bin/cake ADmad/I18n.i18n extract
+bin/cake admad/i18n extract
 ```
 
 Now you can use the translation funtions like `__()` etc. as you normally would.
@@ -172,7 +169,7 @@ In your `AppView::initialize()` configure the `FormHelper` to use `TimezoneWidge
 
 ```php
 // src/View/AppView.php
-public function initialize()
+public function initialize(): void
 {
     $this->loadHelper('Form', [
         'widget' => [

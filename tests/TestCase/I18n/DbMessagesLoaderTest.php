@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace ADmad\I18n\Test\I18n;
 
 use ADmad\I18n\I18n\DbMessagesLoader;
@@ -23,7 +25,6 @@ class DbMessagesLoaderTest extends TestCase
      * @param string $locale
      * @param string $model
      * @param array $expected
-     *
      * @return void
      * @dataProvider paramsProvider
      */
