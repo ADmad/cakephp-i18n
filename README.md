@@ -172,7 +172,7 @@ In your `AppView::initialize()` configure the `FormHelper` to use `TimezoneWidge
 public function initialize(): void
 {
     $this->loadHelper('Form', [
-        'widget' => [
+        'widgets' => [
             'timezone' => ['ADmad/I18n.Timezone']
         ]
     ]);
