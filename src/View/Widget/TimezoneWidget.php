@@ -31,10 +31,10 @@ class TimezoneWidget extends SelectBoxWidget
     /**
      * Converts list of regions to identifiers list.
      *
-     * @param array $options List of regions
+     * @param array|null $options List of regions
      * @return array
      */
-    protected function _identifierList(array $options): array
+    protected function _identifierList(array $options = null): array
     {
         if (empty($options)) {
             $options = [
