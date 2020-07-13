@@ -74,4 +74,20 @@ class TimezoneWidgetTest extends TestCase
         ];
         $this->assertHtml($expected, $result);
     }
+
+    /**
+     * @see https://github.com/ADmad/cakephp-i18n/pull/52
+     * @doesNotPerformAssertions
+     * @return void
+     */
+    public function testRenderOptionsNull()
+    {
+        $data = [
+            'name' => 'timezone',
+            'options' => null,
+        ];
+
+        $select = new TimezoneWidget($this->templates);
+        $select->render($data, $this->context);
+    }
 }
