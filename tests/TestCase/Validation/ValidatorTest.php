@@ -6,7 +6,6 @@ namespace ADmad\I18n\Test\Validation;
 use ADmad\I18n\Validation\Validator;
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -39,7 +38,7 @@ class ValidatorTest extends TestCase
             );
         });
 
-        $I18nMessages = TableRegistry::get('I18nMessages');
+        $I18nMessages = $this->getTableLocator()->get('I18nMessages');
         $messages = [
             [
                 'domain' => 'validation',
