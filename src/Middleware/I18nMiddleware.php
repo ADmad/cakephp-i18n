@@ -80,14 +80,13 @@ class I18nMiddleware implements MiddlewareInterface
         }
 
         $config = $this->getConfig();
-        $url = $request->getUri()->getPath();
 
-        if ($url === '/') {
+        /** @var \Cake\Http\ServerRequest $request */
+        if ($request->getPath() === '/') {
             $statusCode = 301;
             $lang = $config['defaultLanguage'];
             if ($config['detectLanguage']) {
                 $statusCode = 302;
-                /** @psalm-suppress ArgumentTypeCoercion */
                 $lang = $this->detectLanguage($request, $lang);
             }
 
@@ -159,6 +158,7 @@ class I18nMiddleware implements MiddlewareInterface
             array_keys($this->_config['languages'])
         );
         if (!empty($acceptedLangs)) {
+            /** @var string $lang */
             $lang = reset($acceptedLangs);
         }
 
