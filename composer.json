@@ -40,14 +40,5 @@
             "TestPlugin\\": "tests/test_app/plugins/TestPlugin/src",
             "Company\\TestPluginThree\\": "tests/test_app/plugins/Company/TestPluginThree/src"
         }
-    },
-    "scripts": {
-        "phpstan": "phpstan.phar analyse",
-        "psalm": "psalm.phar",
-        "stan": [
-            "@phpstan",
-            "@psalm"
-        ],
-        "stan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan:^0.12 psalm/phar:^3.11.2 && mv composer.backup composer.json"
     }
 }
