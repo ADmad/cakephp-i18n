@@ -87,7 +87,7 @@ class Validator extends \Cake\Validation\Validator
      */
     protected function _translateArgs(array $args): array
     {
-        foreach ((array)$args as $k => $arg) {
+        foreach ($args as $k => $arg) {
             if (is_string($arg)) {
                 $args[$k] = __d($this->_validationDomain, $arg);
             }
