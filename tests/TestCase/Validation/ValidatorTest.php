@@ -25,17 +25,21 @@ class ValidatorTest extends TestCase
         Cache::clear('_cake_core_');
 
         I18n::config('validation', function ($domain, $locale) {
-            return new \ADmad\I18n\I18n\DbMessagesLoader(
+            $loader = new \ADmad\I18n\I18n\DbMessagesLoader(
                 $domain,
                 $locale
             );
+
+            return $loader();
         });
 
         I18n::config('validation_non_default', function ($domain, $locale) {
-            return new \ADmad\I18n\I18n\DbMessagesLoader(
+            $loader = new \ADmad\I18n\I18n\DbMessagesLoader(
                 $domain,
                 $locale
             );
+
+            return $loader();
         });
 
         $I18nMessages = $this->getTableLocator()->get('I18nMessages');
