@@ -139,7 +139,10 @@ plugin's `config` folder.
 Add code similar to what's shown below in your app's `config/bootstrap.php`:
 
 ```php
-// NOTE: This is should be done below Cache config setup.
+// Add the I18n class import at top of file
+use Cake\I18n\I18n;
+
+// NOTE: The following should be done below Cache config setup.
 
 // Configure I18n to use DbMessagesLoader for default domain. You need to do
 // this for each domain separately.
