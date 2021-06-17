@@ -37,27 +37,27 @@ and chose the ones you require.
 ### I18nRoute
 
 The `I18nRoutes` helps generating language prefixed routes of style
-`/:lang/:controller/:action`.
+`/{lang}/{controller}/{action}`.
 
 For e.g. you can add routes to your `routes.php` similar to the ones shown below:
 
 ```php
 $routes->scope('/', function ($routes) {
     $routes->connect(
-        '/:controller',
+        '/{controller}',
         ['action' => 'index'],
         ['routeClass' => 'ADmad/I18n.I18nRoute']
     );
     $routes->connect(
-        '/:controller/:action/*',
+        '/{controller}/{action}/*',
         [],
         ['routeClass' => 'ADmad/I18n.I18nRoute']
     );
 });
 ```
 
-Fragment `/:lang` will be auto prefixed to the routes which allows matching
-URLs like `/en/posts`, `/en/posts/add` etc. The `:lang` element is persisted so
+Fragment `/{lang}` will be auto prefixed to the routes which allows matching
+URLs like `/en/posts`, `/en/posts/add` etc. The `lang` element is persisted so
 that when generating URLs if you don't provide the `lang` key in URL array it
 will be automatically added based on current URL.
 
