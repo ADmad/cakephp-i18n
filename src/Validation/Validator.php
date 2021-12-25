@@ -48,7 +48,7 @@ class Validator extends \Cake\Validation\Validator
      * @param \Cake\Validation\ValidationSet $rules the list of rules for a field
      * @param array $data the full data passed to the validator
      * @param bool $newRecord whether is it a new record or an existing one
-     * @return array
+     * @return array<string, mixed>
      */
     protected function _processRules(string $field, ValidationSet $rules, array $data, bool $newRecord): array
     {
