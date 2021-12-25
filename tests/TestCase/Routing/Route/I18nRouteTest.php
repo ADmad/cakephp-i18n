@@ -62,7 +62,7 @@ class I18nRouteTest extends TestCase
      */
     public function testUrlWithNamedRoute()
     {
-        Router::connect(
+        Router::createRouteBuilder('/')->connect(
             '/blog/{id}-{slug}',
             ['controller' => 'Posts', 'action' => 'show'],
             [
@@ -77,6 +77,26 @@ class I18nRouteTest extends TestCase
         $request = $request->withParam('lang', 'en')
             ->withParam('controller', 'Posts')
             ->withParam('action', 'index');
+        Router::setRequest($request);
+
+        $result = Router::url(['_name' => 'blog_show', 'id' => '123', 'slug' => 'hello']);
+        $this->assertEquals('/en/blog/123-hello', $result);
+    }
+
+    public function testRouteMatchingWithoutPersistedLang()
+    {
+        Router::createRouteBuilder('/')->connect(
+            '/blog/{id}-{slug}',
+            ['controller' => 'Posts', 'action' => 'show'],
+            [
+                'id' => '\d+',
+                'slug' => '[0-9A-Za-z\-]+',
+                'pass' => ['id', 'slug'],
+                '_name' => 'blog_show',
+                'routeClass' => 'ADmad/I18n.I18nRoute',
+            ]
+        );
+        $request = new ServerRequest();
         Router::setRequest($request);
 
         $result = Router::url(['_name' => 'blog_show', 'id' => '123', 'slug' => 'hello']);

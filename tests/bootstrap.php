@@ -35,3 +35,5 @@ define('PLUGIN_TESTS', $root . DS . 'tests' . DS);
 Configure::write('App.paths.plugins', [PLUGIN_TESTS . 'test_app' . DS . 'plugins' . DS]);
 
 Plugin::getCollection()->add(new \ADmad\I18n\Plugin());
+
+Configure::write('Error.ignoredDeprecationPaths', ['src/TestSuite/Fixture/FixtureInjector.php']);
