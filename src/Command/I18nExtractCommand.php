@@ -109,7 +109,10 @@ class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
         }
 
         $this->_markerError = (bool)$args->getOption('marker-error');
-        $this->_relativePaths = (bool)$args->getOption('relative-paths');
+        if (property_exists($this, '_relativePaths')) {
+            /** @psalm-suppress UndefinedThisPropertyAssignment */
+            $this->_relativePaths = (bool)$args->getOption('relative-paths');
+        }
 
         if (empty($this->_files)) {
             $this->_searchFiles();
