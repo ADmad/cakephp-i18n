@@ -10,11 +10,11 @@ use Cake\Utility\Hash;
 class I18nRoute extends DashedRoute
 {
     /**
-     * Regular expression for `lang` route element.
+     * List of available languages.
      *
-     * @var string|null
+     * @var array|null
      */
-    protected static $_langRegEx = null;
+    protected static $_availableLangs;
 
     /**
      * Constructor for a Route.
@@ -37,13 +37,40 @@ class I18nRoute extends DashedRoute
         $options['persist'][] = 'lang';
 
         if (!array_key_exists('lang', $options)) {
-            $langs = Configure::read('I18n.languages');
-            if (self::$_langRegEx === null && $langs) {
-                self::$_langRegEx = implode('|', array_keys(Hash::normalize($langs)));
+            if (self::$_availableLangs === null) {
+                self::$_availableLangs = array_keys(
+                    Hash::normalize((array)Configure::read('I18n.languages'))
+                );
             }
-            $options['lang'] = self::$_langRegEx;
+
+            if (self::$_availableLangs) {
+                $options['lang'] = implode('|', self::$_availableLangs);
+            }
         }
 
         parent::__construct($template, $defaults, $options);
+    }
+
+    /**
+     * Apply persistent parameters to a URL array. Persistent parameters are a
+     * special key used during route creation to force route parameters to
+     * persist when omitted from a URL array.
+     *
+     * If `lang` isn't found in persisted parameter use the 1st lang for available
+     * langs list.
+     *
+     * @param array $url The array to apply persistent parameters to.
+     * @param array $params An array of persistent values to replace persistent ones.
+     * @return array An array with persistent parameters applied.
+     */
+    protected function _persistParams(array $url, array $params): array
+    {
+        $url = parent::_persistParams($url, $params);
+
+        if (!isset($url['lang']) && isset($this->options['_name']) && self::$_availableLangs) {
+            $url['lang'] = current(self::$_availableLangs);
+        }
+
+        return $url;
     }
 }
