@@ -5,13 +5,16 @@ namespace ADmad\I18n\Test\TestCase\Command;
 
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\ConsoleIntegrationTestCase;
+use Cake\TestSuite\ConsoleIntegrationTestTrait;
+use Cake\TestSuite\TestCase;
 
 /**
  * I18nExtractCommand Test Case.
  */
-class I18nExtractCommandTest extends ConsoleIntegrationTestCase
+class I18nExtractCommandTest extends TestCase
 {
+    use ConsoleIntegrationTestTrait;
+
     protected $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
     public function setUp(): void
