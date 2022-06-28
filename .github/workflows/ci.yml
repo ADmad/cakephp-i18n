@@ -10,7 +10,7 @@ on:
 
 jobs:
   testsuite:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -31,7 +31,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup Service
       if: matrix.db-type == 'mysql'
@@ -48,7 +48,6 @@ jobs:
 
     - name: Composer install
       run: |
-        composer --version
         if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
           composer update --prefer-lowest --prefer-stable
         else
@@ -58,25 +57,25 @@ jobs:
     - name: Run PHPUnit
       run: |
         if [[ ${{ matrix.db-type }} == 'sqlite' ]]; then export DB_URL='sqlite:///:memory:'; fi
-        if [[ ${{ matrix.db-type }} == 'mysql' ]]; then export DB_URL='mysql://root:root@127.0.0.1/cakephp?init[]=SET sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"'; fi
+        if [[ ${{ matrix.db-type }} == 'mysql' ]]; then export DB_URL='mysql://root:root@127.0.0.1/cakephp'; fi
         if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then export DB_URL='postgres://postgres:postgres@127.0.0.1/postgres'; fi
 
         if [[ ${{ matrix.php-version }} == '7.2' && ${{ matrix.db-type }} == 'mysql' ]]; then
-          vendor/bin/phpunit --coverage-clover=coverage.xml
+          vendor/bin/phpunit --coverage-clover=coverage.xml --verbose
         else
           vendor/bin/phpunit
         fi
 
     - name: Code Coverage Report
       if: success() && matrix.php-version == '7.4' && matrix.db-type == 'mysql'
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v3
 
   cs-stan:
     name: Coding Standard & Static Analysis
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -84,18 +83,18 @@ jobs:
         php-version: '7.4'
         extensions: mbstring, intl
         coverage: none
-        tools: vimeo/psalm:4.15, phpstan:1.2
+        tools: vimeo/psalm:4, phpstan:1, cs2pr
 
     - name: Composer Install
       run: composer require cakephp/cakephp-codesniffer:^4.2
 
     - name: Run phpcs
-      run: vendor/bin/phpcs --standard=CakePHP src/ tests/
+      run: vendor/bin/phpcs --report=checkstyle --standard=CakePHP src/ tests/ | cs2pr
 
     - name: Run psalm
-      if: success() || failure()
+      if: always()
       run: psalm --output-format=github
 
     - name: Run phpstan
-      if: success() || failure()
+      if: always()
       run: phpstan analyse

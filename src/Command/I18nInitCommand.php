@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ADmad\I18n\Command;
 
+use Cake\Command\I18nInitCommand as CakeI18nInitCommand;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
@@ -10,7 +11,7 @@ use Cake\Console\ConsoleOptionParser;
 /**
  * Command for interactive I18N management.
  */
-class I18nInitCommand extends \Cake\Command\I18nInitCommand
+class I18nInitCommand extends CakeI18nInitCommand
 {
     use I18nModelTrait;
 
@@ -48,17 +49,15 @@ class I18nInitCommand extends \Cake\Command\I18nInitCommand
             $language = $io->ask('Please specify language code, e.g. `en`, `eng`, `en_US` etc.');
         }
         if (strlen($language) < 2) {
-            $io->err('Invalid language code. Valid is `en`, `eng`, `en_US` etc.');
+            $io->err('Invalid language code. Valid are `en`, `eng`, `en_US` etc.');
 
             return static::CODE_ERROR;
         }
 
-        $fields = ['domain', 'singular', 'plural', 'context'];
-
         $model = $this->_loadModel($args);
         $messages = $model->find()
-            ->select($fields)
-            ->distinct(['domain', 'singular', 'context'])
+            ->select(['domain', 'singular', 'plural', 'context'])
+            ->distinct()
             ->disableHydration()
             ->toArray();
 
