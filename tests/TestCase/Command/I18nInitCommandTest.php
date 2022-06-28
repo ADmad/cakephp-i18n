@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace ADmad\I18n\Test\TestCase\Command;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -27,7 +26,7 @@ class I18nInitCommandTest extends TestCase
             [PLUGIN_TESTS . 'test_app' . DS . 'config']
         );
 
-        $this->model = TableRegistry::getTableLocator()->get('I18nMessages');
+        $this->model = $this->getTableLocator()->get('I18nMessages');
     }
 
     public function testExecute()

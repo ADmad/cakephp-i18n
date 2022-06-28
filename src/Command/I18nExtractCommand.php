@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ADmad\I18n\Command;
 
+use Cake\Command\I18nExtractCommand as CakeI18nExtractCommand;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
@@ -15,7 +16,7 @@ use Cake\Utility\Inflector;
 /**
  * Language string extractor
  */
-class I18nExtractCommand extends \Cake\Command\I18nExtractCommand
+class I18nExtractCommand extends CakeI18nExtractCommand
 {
     use I18nModelTrait;
 
