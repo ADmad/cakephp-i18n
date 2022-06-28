@@ -16,7 +16,7 @@ trait I18nModelTrait
      *
      * @var \Cake\ORM\Table
      */
-    protected $_model;
+    protected Table $_model;
 
     /**
      * Get translation model.

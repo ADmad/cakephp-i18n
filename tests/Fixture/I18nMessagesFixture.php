@@ -5,30 +5,7 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 class I18nMessagesFixture extends TestFixture
 {
-    /**
-     * fields property.
-     *
-     * @var array
-     */
-    public $fields = [
-        'id' => ['type' => 'integer'],
-        'domain' => ['type' => 'string', 'null' => false],
-        'locale' => ['type' => 'string', 'null' => false],
-        'context' => ['type' => 'string', 'null' => true, 'default' => null],
-        'singular' => ['type' => 'string', 'null' => false],
-        'plural' => ['type' => 'string', 'null' => true, 'default' => null],
-        'refs' => ['type' => 'string', 'null' => true, 'default' => null],
-        'value_0' => ['type' => 'string', 'null' => true, 'default' => null],
-        'value_1' => ['type' => 'string', 'null' => true, 'default' => null],
-        '_constraints' => ['primary' => ['type' => 'primary', 'columns' => ['id']]],
-    ];
-
-    /**
-     * records property.
-     *
-     * @var array
-     */
-    public $records = [
+    public array $records = [
         [
             'domain' => 'default', 'locale' => 'en', 'context' => '', 'singular' => 'test',
             'plural' => '', 'value_0' => 'test translated', 'value_1' => '',

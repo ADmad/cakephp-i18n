@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace ADmad\I18n\Test\TestCase\Command;
 
+use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Core\Configure;
-use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use TestPlugin\Plugin;
 
 /**
  * I18nExtractCommand Test Case.
@@ -14,13 +15,12 @@ class I18nExtractCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
 
-    protected $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
+    protected array $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->useCommandRunner();
         $this->setAppNamespace();
         $this->configApplication(
             'TestApp\Application',
@@ -208,7 +208,7 @@ class I18nExtractCommandTest extends TestCase
      */
     public function testExtractPlugin()
     {
-        $plugin = new \TestPlugin\Plugin();
+        $plugin = new Plugin();
         $this->loadPlugins([$plugin]);
 
         $this->exec(
@@ -235,6 +235,7 @@ class I18nExtractCommandTest extends TestCase
      */
     public function testExtractVendoredPlugin()
     {
+        // phpcs:ignore
         $plugin = new \Company\TestPluginThree\Plugin();
         $this->loadPlugins([$plugin]);
 

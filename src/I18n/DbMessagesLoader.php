@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace ADmad\I18n\I18n;
 
-use Aura\Intl\Package;
 use Cake\Datasource\RepositoryInterface;
 use Cake\Datasource\ResultSetInterface;
+use Cake\I18n\Package;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Table;
 
@@ -23,50 +23,47 @@ class DbMessagesLoader
      *
      * @var string
      */
-    protected $_domain;
+    protected string $_domain;
 
     /**
      * The locale to load messages for.
      *
      * @var string
      */
-    protected $_locale;
+    protected string $_locale;
 
     /**
      * The model name to use for loading messages or model instance.
      *
-     * @var string|\Cake\Datasource\RepositoryInterface
+     * @var \Cake\Datasource\RepositoryInterface|string
      */
-    protected $_model;
+    protected string|RepositoryInterface $_model;
 
     /**
      * Formatting used for messsages.
      *
      * @var string
      */
-    protected $_formatter;
+    protected string $_formatter;
 
     /**
      * Constructor.
      *
      * @param string $domain Domain name.
      * @param string $locale Locale string.
-     * @param string|\Cake\Datasource\RepositoryInterface|null $model Model name or instance.
+     * @param \Cake\Datasource\RepositoryInterface|string|null $model Model name or instance.
      *   Defaults to 'I18nMessages'.
      * @param string $formatter Formatter name. Defaults to 'default' (ICU formatter).
      */
     public function __construct(
         string $domain,
         string $locale,
-        $model = null,
+        string|RepositoryInterface|null $model = null,
         string $formatter = 'default'
     ) {
-        if (empty($model)) {
-            $model = 'I18nMessages';
-        }
         $this->_domain = $domain;
         $this->_locale = $locale;
-        $this->_model = $model;
+        $this->_model = $model ?: 'I18nMessages';
         $this->_formatter = $formatter;
     }
 
@@ -75,7 +72,7 @@ class DbMessagesLoader
      * messages.
      *
      * @throws \RuntimeException If model could not be loaded.
-     * @return \Aura\Intl\Package
+     * @return \Cake\I18n\Package
      */
     public function __invoke(): Package
     {
@@ -129,7 +126,6 @@ class DbMessagesLoader
         foreach ($results as $item) {
             $singular = $item['singular'];
             $context = $item['context'];
-            $translation = $item['value_0'];
             if ($context) {
                 $messages[$singular]['_context'][$context] = $item['value_0'];
             } else {

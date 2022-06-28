@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace ADmad\I18n\Test\TestCase\Command;
 
-use Cake\TestSuite\ConsoleIntegrationTestTrait;
+use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
+use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -13,13 +14,14 @@ class I18nInitCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
 
-    protected $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
+    protected array $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
+
+    protected Table $model;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->useCommandRunner();
         $this->setAppNamespace();
         $this->configApplication(
             'TestApp\Application',

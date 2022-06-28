@@ -30,14 +30,14 @@ class I18nExtractCommand extends CakeI18nExtractCommand
      *
      * @var array
      */
-    protected $_languages = [];
+    protected array $_languages = [];
 
     /**
      * The name of this command.
      *
      * @var string
      */
-    protected $name = 'admad/i18n extract';
+    protected string $name = 'admad/i18n extract';
 
     /**
      * Get the command name.
