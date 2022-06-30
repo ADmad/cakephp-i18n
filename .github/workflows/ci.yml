@@ -14,13 +14,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.1', '8.2']
+        php-version: ['8.1']
         db-type: [mysql, pgsql]
-        prefer-lowest: ['']
+        dependencies: ['highest']
         include:
           - php-version: '8.1'
             db-type: 'sqlite'
-            prefer-lowest: 'prefer-lowest'
+            dependencies: 'lowest'
+          - php-version: '8.2'
+            db-type: 'mysql'
+            composer-options: '--ignore-platform-req=php'
 
     services:
       postgres:
@@ -47,14 +50,10 @@ jobs:
         coverage: pcov
 
     - name: Composer install
-      run: |
-        if ${{ matrix.prefer-lowest == 'prefer-lowest' }}; then
-          composer update --prefer-lowest --prefer-stable
-        elif ${{ matrix.php-version == '8.2' }}; then
-          composer update --ignore-platform-req=php
-        else
-          composer update
-        fi
+      uses: ramsey/composer-install@v2
+      with:
+        dependency-versions: ${{ matrix.dependencies }}
+        composer-options: ${{ matrix.composer-options }}
 
     - name: Run PHPUnit
       run: |
@@ -62,7 +61,7 @@ jobs:
         if [[ ${{ matrix.db-type }} == 'mysql' ]]; then export DB_URL='mysql://root:root@127.0.0.1/cakephp'; fi
         if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then export DB_URL='postgres://postgres:postgres@127.0.0.1/postgres'; fi
 
-        if [[ ${{ matrix.php-version }} == '7.2' && ${{ matrix.db-type }} == 'mysql' ]]; then
+        if [[ ${{ matrix.php-version }} == '8.1' && ${{ matrix.db-type }} == 'mysql' ]]; then
           vendor/bin/phpunit --coverage-clover=coverage.xml --verbose
         else
           vendor/bin/phpunit
