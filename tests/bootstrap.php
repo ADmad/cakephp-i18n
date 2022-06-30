@@ -5,7 +5,7 @@ declare(strict_types=1);
  * Test suite bootstrap
  *
  */
-
+use ADmad\I18n\I18nPlugin;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
@@ -34,6 +34,4 @@ define('PLUGIN_TESTS', $root . DS . 'tests' . DS);
 
 Configure::write('App.paths.plugins', [PLUGIN_TESTS . 'test_app' . DS . 'plugins' . DS]);
 
-Plugin::getCollection()->add(new \ADmad\I18n\Plugin());
-
-Configure::write('Error.ignoredDeprecationPaths', ['src/TestSuite/Fixture/FixtureInjector.php']);
+Plugin::getCollection()->add(new I18nPlugin());

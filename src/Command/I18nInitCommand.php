@@ -25,7 +25,7 @@ class I18nInitCommand extends CakeI18nInitCommand
      *
      * @var string
      */
-    protected $name = 'admad/i18n init';
+    protected string $name = 'admad/i18n init';
 
     /**
      * @inheritDoc

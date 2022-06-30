@@ -32,7 +32,7 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'detectLanguage' => true,
         'defaultLanguage' => null,
         'languages' => [],
@@ -45,7 +45,7 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @var \Closure|null
      */
-    protected $_ignoreRequestCallback;
+    protected ?Closure $_ignoreRequestCallback = null;
 
     /**
      * Constructor.
@@ -90,12 +90,10 @@ class I18nMiddleware implements MiddlewareInterface
                 $lang = $this->detectLanguage($request, $lang);
             }
 
-            $response = new RedirectResponse(
+            return new RedirectResponse(
                 $request->getAttribute('webroot') . $lang,
                 $statusCode
             );
-
-            return $response;
         }
 
         $langs = $config['languages'];
@@ -138,7 +136,7 @@ class I18nMiddleware implements MiddlewareInterface
      * @param string|null $default Default language to return if no match is found.
      * @return string
      */
-    public function detectLanguage(ServerRequest $request, ?string $default = null)
+    public function detectLanguage(ServerRequest $request, ?string $default = null): string
     {
         if (empty($default)) {
             $lang = $this->_config['defaultLanguage'];

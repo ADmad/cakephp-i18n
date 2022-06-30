@@ -18,7 +18,7 @@ class I18nCommand extends Command
      *
      * @var string
      */
-    protected $name = 'admad/i18n';
+    protected string $name = 'admad/i18n';
 
     /**
      * Get the command name.

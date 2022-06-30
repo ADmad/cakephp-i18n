@@ -11,12 +11,7 @@ use Cake\TestSuite\TestCase;
  */
 class DbMessagesLoaderTest extends TestCase
 {
-    /**
-     * fixtures.
-     *
-     * @var array
-     */
-    public $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
+    protected array $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
     /**
      * testInvoke method.

@@ -16,5 +16,6 @@
 
     <issueHandlers>
         <PropertyNotSetInConstructor errorLevel="info" />
+        <MissingConstructor errorLevel="info" />
     </issueHandlers>
 </psalm>

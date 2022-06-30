@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ADmad\I18n\Test\Validation;
 
+use ADmad\I18n\I18n\DbMessagesLoader;
 use ADmad\I18n\Validation\Validator;
 use Cake\Cache\Cache;
 use Cake\I18n\I18n;
@@ -13,19 +14,14 @@ use Cake\TestSuite\TestCase;
  */
 class ValidatorTest extends TestCase
 {
-    /**
-     * fixtures.
-     *
-     * @var array
-     */
-    public $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
+    protected array $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
     public function setUp(): void
     {
         Cache::clear('_cake_core_');
 
         I18n::config('validation', function ($domain, $locale) {
-            $loader = new \ADmad\I18n\I18n\DbMessagesLoader(
+            $loader = new DbMessagesLoader(
                 $domain,
                 $locale
             );
@@ -34,7 +30,7 @@ class ValidatorTest extends TestCase
         });
 
         I18n::config('validation_non_default', function ($domain, $locale) {
-            $loader = new \ADmad\I18n\I18n\DbMessagesLoader(
+            $loader = new DbMessagesLoader(
                 $domain,
                 $locale
             );
