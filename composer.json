@@ -40,5 +40,13 @@
             "TestPlugin\\": "tests/test_app/plugins/TestPlugin/src",
             "Company\\TestPluginThree\\": "tests/test_app/plugins/Company/TestPluginThree/src"
         }
-    }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

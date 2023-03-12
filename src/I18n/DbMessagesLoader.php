@@ -77,7 +77,7 @@ class DbMessagesLoader
     public function __invoke(): Package
     {
         $model = $this->_getModel();
-        /** @var \Cake\ORM\Query $query */
+        /** @var \Cake\ORM\Query\SelectQuery $query */
         $query = $model->find();
 
         if ($model instanceof Table) {
