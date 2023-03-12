@@ -1,6 +1,6 @@
 # CakePHP plugin for I18n related tools.
 
-[![Build Status](https://img.shields.io/github/workflow/status/ADmad/cakephp-i18n/CI/master?style=flat-square)](https://github.com/ADmad/cakephp-i18n/actions?query=workflow%3ACI+branch%3Amaster)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/ADmad/cakephp-i18n/ci.yml?branch=master&style=flat-square)](https://github.com/ADmad/cakephp-i18n/actions/workflows/ci.yml?query=branch%3Amaster)
 [![Coverage Status](https://img.shields.io/codecov/c/github/ADmad/cakephp-i18n.svg?style=flat-square)](https://codecov.io/github/ADmad/cakephp-i18n)
 [![Total Downloads](https://img.shields.io/packagist/dt/ADmad/cakephp-i18n.svg?style=flat-square)](https://packagist.org/packages/ADmad/cakephp-i18n)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE.txt)
