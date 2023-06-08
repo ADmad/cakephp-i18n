@@ -36,7 +36,7 @@ class DbMessagesLoaderTest extends TestCase
      *
      * @return array
      */
-    public function paramsProvider()
+    public static function paramsProvider()
     {
         return [
             [
