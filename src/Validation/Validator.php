@@ -5,6 +5,7 @@ namespace ADmad\I18n\Validation;
 
 use Cake\Validation\ValidationSet;
 use Cake\Validation\Validator as CakeValidator;
+use function Cake\I18n\__d;
 
 class Validator extends CakeValidator
 {
