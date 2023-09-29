@@ -23,7 +23,7 @@
         "issues":"https://github.com/ADmad/cakephp-i18n/issues"
     },
     "require": {
-        "cakephp/cakephp": "5.x-dev"
+        "cakephp/cakephp": "^5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.1"
@@ -46,7 +46,5 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
