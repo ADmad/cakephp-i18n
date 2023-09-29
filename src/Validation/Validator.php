@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace ADmad\I18n\Validation;
 
 use Cake\Validation\ValidationSet;
+use Cake\Validation\Validator as CakeValidator;
+use function Cake\I18n\__d;
 
-class Validator extends \Cake\Validation\Validator
+class Validator extends CakeValidator
 {
     /**
      * Constructor.
@@ -22,7 +24,7 @@ class Validator extends \Cake\Validation\Validator
      *
      * @var string
      */
-    protected $_validationDomain = 'validation';
+    protected string $_validationDomain = 'validation';
 
     /**
      * Get/set the I18n domain for validation messages.
@@ -31,7 +33,7 @@ class Validator extends \Cake\Validation\Validator
      *   returns currently set domain.
      * @return string|null
      */
-    public function validationDomain($domain = null): ?string
+    public function validationDomain(?string $domain = null): ?string
     {
         if ($domain === null) {
             return $this->_validationDomain;

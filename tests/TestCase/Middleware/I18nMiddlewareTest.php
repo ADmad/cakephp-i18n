@@ -99,7 +99,7 @@ class I18nMiddlewareTest extends TestCase
         $request = ServerRequestFactory::fromGlobals();
         $request = $request->withAttribute('params', ['lang' => 'fr']);
         $middleware = new I18nMiddleware($this->config);
-        $response = $middleware->process($request, $this->handler);
+        $middleware->process($request, $this->handler);
 
         $this->assertEquals('fr', I18n::getLocale());
     }

@@ -14,7 +14,7 @@ class I18nRoute extends DashedRoute
      *
      * @var array|null
      */
-    protected static $_availableLangs;
+    protected static ?array $_availableLangs = null;
 
     /**
      * Constructor for a Route.

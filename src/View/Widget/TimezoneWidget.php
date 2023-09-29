@@ -59,8 +59,7 @@ class TimezoneWidget extends SelectBoxWidget
 
         $identifiers = [];
         foreach ($options as $name => $region) {
-            $list = (array)DateTimeZone::listIdentifiers($region);
-            /** @psalm-suppress InvalidScalarArgument */
+            $list = DateTimeZone::listIdentifiers($region);
             $identifiers[$name] = array_combine($list, $list);
         }
 
