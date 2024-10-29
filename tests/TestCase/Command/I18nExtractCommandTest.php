@@ -5,6 +5,7 @@ namespace ADmad\I18n\Test\TestCase\Command;
 
 use Cake\Console\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\Core\Configure;
+use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use TestPlugin\Plugin;
 
@@ -16,6 +17,8 @@ class I18nExtractCommandTest extends TestCase
     use ConsoleIntegrationTestTrait;
 
     protected array $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
+
+    protected Table $model;
 
     public function setUp(): void
     {

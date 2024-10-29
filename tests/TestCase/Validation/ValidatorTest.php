@@ -6,6 +6,7 @@ namespace ADmad\I18n\Test\Validation;
 use ADmad\I18n\I18n\DbMessagesLoader;
 use ADmad\I18n\Validation\Validator;
 use Cake\Cache\Cache;
+use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
 
@@ -16,9 +17,15 @@ class ValidatorTest extends TestCase
 {
     protected array $fixtures = ['plugin.ADmad/I18n.I18nMessages'];
 
+    protected Validator $validator;
+
     public function setUp(): void
     {
-        Cache::clear('_cake_core_');
+        if (version_compare(Configure::version(), '5.1.0', '<')) {
+            Cache::clear('_cake_core_');
+        } else {
+            Cache::clear('_cake_translations_');
+        }
 
         I18n::config('validation', function ($domain, $locale) {
             $loader = new DbMessagesLoader(

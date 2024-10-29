@@ -138,7 +138,7 @@ class I18nMiddleware implements MiddlewareInterface
      */
     public function detectLanguage(ServerRequest $request, ?string $default = null): string
     {
-        if (empty($default)) {
+        if (!$default) {
             $lang = $this->_config['defaultLanguage'];
         } else {
             $lang = $default;
