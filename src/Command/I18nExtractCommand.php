@@ -63,15 +63,15 @@ class I18nExtractCommand extends CakeI18nExtractCommand
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
         $plugin = '';
-        if ($args->getOption('exclude')) {
+        if ($args->hasOption('exclude')) {
             $this->_exclude = explode(',', (string)$args->getOption('exclude'));
         }
-        if ($args->getOption('files')) {
+        if ($args->hasOption('files')) {
             $this->_files = explode(',', (string)$args->getOption('files'));
         }
-        if ($args->getOption('paths')) {
+        if ($args->hasOption('paths')) {
             $this->_paths = explode(',', (string)$args->getOption('paths'));
-        } elseif ($args->getOption('plugin')) {
+        } elseif ($args->hasOption('plugin')) {
             $plugin = Inflector::camelize((string)$args->getOption('plugin'));
             $this->_paths = [Plugin::classPath($plugin), Plugin::templatePath($plugin)];
         } else {
@@ -90,6 +90,10 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         }
 
         if ($args->hasOption('exclude-plugins') && $this->_isExtractingApp()) {
+            /**
+             * @phpstan-ignore-next-line
+             * @psalm-suppress PropertyTypeCoercion
+             */
             $this->_exclude = array_merge($this->_exclude, App::path('plugins'));
         }
 
@@ -206,7 +210,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         });
 
         $domains = null;
-        if ($args->getOption('domains')) {
+        if ($args->hasOption('domains')) {
             $domains = explode(',', (string)$args->getOption('domains'));
         }
 
@@ -222,7 +226,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
             foreach ($translations as $msgid => $contexts) {
                 foreach ($contexts as $context => $details) {
                     $references = null;
-                    if (!$args->getOption('no-location')) {
+                    if (!(bool)$args->getOption('no-location')) {
                         $files = $details['references'];
                         $occurrences = [];
                         foreach ($files as $file => $lines) {
