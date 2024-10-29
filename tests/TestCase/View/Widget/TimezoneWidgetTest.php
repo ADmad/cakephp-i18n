@@ -7,12 +7,17 @@ use ADmad\I18n\View\Widget\TimezoneWidget;
 use Cake\TestSuite\TestCase;
 use Cake\View\StringTemplate;
 use DateTimeZone;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 
 /**
  * Tests for TimezoneWidget.
  */
 class TimezoneWidgetTest extends TestCase
 {
+    protected $context;
+
+    protected StringTemplate $templates;
+
     /**
      * setup method.
      *
@@ -77,9 +82,9 @@ class TimezoneWidgetTest extends TestCase
 
     /**
      * @see https://github.com/ADmad/cakephp-i18n/pull/52
-     * @doesNotPerformAssertions
      * @return void
      */
+    #[DoesNotPerformAssertions]
     public function testRenderOptionsNull()
     {
         $data = [

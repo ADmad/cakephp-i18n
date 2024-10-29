@@ -5,6 +5,7 @@ namespace ADmad\I18n\Test\I18n;
 
 use ADmad\I18n\I18n\DbMessagesLoader;
 use Cake\TestSuite\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Tests for DbMessagesLoader.
@@ -21,8 +22,8 @@ class DbMessagesLoaderTest extends TestCase
      * @param string $model
      * @param array $expected
      * @return void
-     * @dataProvider paramsProvider
      */
+    #[DataProvider('paramsProvider')]
     public function testInvoke($domain, $locale, $model, $expected)
     {
         $loader = new DbMessagesLoader($domain, $locale, $model);
