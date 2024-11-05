@@ -9,12 +9,12 @@
 
 This plugins provides:
 
-- Route class for generating and matching urls with language prefix.
-- Middleware which sets locale using `I18n::setLocale()`
+- A route class for generating and matching urls with language prefix.
+- A middleware which sets locale using `I18n::setLocale()`
   based on language prefix in URL and also provides redirection to appropriate
   URL with language prefix when accessing site root.
-- Class for retrieving translation messages stored in database instead of po/mo files.
-- Validation class for auto translating validation message.
+- A class for retrieving translation messages stored in the database instead of using po/mo files.
+- A validation class for auto translating validation message.
 - A widget to generate select box with list of timezone identifiers.
 
 ## Installation
@@ -36,7 +36,7 @@ and chose the ones you require.
 
 ### I18nRoute
 
-The `I18nRoutes` helps generating language prefixed routes of style
+The `I18nRoute` class helps generating language prefixed routes of style
 `/{lang}/{controller}/{action}`.
 
 For e.g. you can add routes to your `routes.php` similar to the ones shown below:
@@ -106,7 +106,7 @@ To ensure that the `lang` router param is available, you must add this middlewar
 The middleware does basically two things:
 
 1. When accessing site root `/` it redirects the user to a language prefixed URL,
-   for e.g. `/en`. The langauge is redirects to depends on the configuration keys
+   for e.g. `/en`. The langauge it redirects to depends on the configuration keys
    `detectLanguage` and `defaultLanguage` shown above.
 
    Now in order to prevent CakePHP from complaining about missing route for `/`,
@@ -116,24 +116,24 @@ The middleware does basically two things:
 
    For e.g. `$routes->connect('/', ['controller' => 'Foo']);`
 
-2. When accesing any URL with language prefix    it set's the app's locale based
+2. When accesing any URL with language prefix it sets the app's locale based
    on the prefix. For that it checks the value of `lang` route element in current
    request's params. This route element would be available if the matched route
-   has been connects using the `I18nRoute`.
+   has been connected using the `I18nRoute`.
 
    Using the array provided for the `languages` key it sets the `App.language`
-   config to language prefix through `Configure::write()` and the value of `locale`
-   is for `I18n::setLocale()` call.
+   config to the language prefix through `Configure::write()` and the value of `locale`
+   is used for the `I18n::setLocale()` call.
 
 ### DbMessagesLoader
 
-By default CakePHP using `.po` files to store static string translations. If
+By default CakePHP using `.po` files to store the static string translations. If
 for whatever reason you don't want to use `.po` files you can use the `DbMessagesLoader`
 class to store the translation messaged in database instead. Personally I belive
 having the messages in a table instead of `.po` files make it much easier to
 make a web interface for managing translations.
 
-To use this class first create database table using sql file provided in the
+To use this class first create the database table using sql file provided in the
 plugin's `config` folder.
 
 Add code similar to what's shown below in your app's `config/bootstrap.php`:
@@ -161,7 +161,7 @@ translations for each language is upto you.
 bin/cake admad/i18n extract
 ```
 
-Now you can use the translation funtions like `__()` etc. as you normally would.
+Now you can use the translation functions like `__()` etc. as you normally would.
 The `I18n` class will fetch the required translations from the database instead
 of `.po` files.
 
