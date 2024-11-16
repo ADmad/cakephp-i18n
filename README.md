@@ -93,7 +93,7 @@ $middlware->add(new \ADmad\I18n\Middleware\I18nMiddleware([
     // in URLs. Based on the language the locale will be also set.
     'languages' => [
         'en' => ['locale' => 'en_US'],
-        'fr' => ['locale' => 'fr_FR']
+        'fr' => ['locale' => 'fr_FR'],
     ],
 ]));
 ```
@@ -144,12 +144,10 @@ Add code similar to what's shown below in your app's `config/bootstrap.php`:
 // Configure I18n to use DbMessagesLoader for default domain. You need to do
 // this for each domain separately.
 \Cake\I18n\I18n::config('default', function ($domain, $locale) {
-    $loader = new \ADmad\I18n\I18n\DbMessagesLoader(
+    return new \ADmad\I18n\I18n\DbMessagesLoader(
         $domain,
         $locale
     );
-
-    return $loader();
 });
 ```
 
@@ -175,8 +173,8 @@ public function initialize(): void
 {
     $this->loadHelper('Form', [
         'widgets' => [
-            'timezone' => ['ADmad/I18n.Timezone']
-        ]
+            'timezone' => ['ADmad/I18n.Timezone'],
+        ],
     ]);
 }
 ```
@@ -192,8 +190,8 @@ $this->Form->control('fieldname', [
     'type' => 'timezone',
     'options' => [
         'Asia' => DateTimeZone::ASIA,
-        'Europe' => DateTimeZone::EUROPE
-    ]
+        'Europe' => DateTimeZone::EUROPE,
+    ],
 ]);
 ```
 
