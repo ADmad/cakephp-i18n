@@ -218,7 +218,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
             return strlen($a) - strlen($b);
         });
 
-        $domains = null;
+        $domains = [];
         if ($args->hasOption('domains')) {
             $domains = explode(',', (string)$args->getOption('domains'));
         }
@@ -226,7 +226,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         $this->_loadModel($args);
 
         foreach ($this->_translations as $domain => $translations) {
-            if (!empty($domains) && !in_array($domain, $domains)) {
+            if ($domains && !in_array($domain, $domains)) {
                 continue;
             }
             if ($this->_merge) {
@@ -277,22 +277,22 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         ?string $refs = null
     ): void {
         foreach ($this->_languages as $locale) {
-            $found = $this->_model->find()
-                ->where(compact('domain', 'locale', 'singular'))
-                ->count();
-
-            if (!$found) {
-                $entity = $this->_model->newEntity(compact(
-                    'domain',
-                    'locale',
-                    'singular',
-                    'plural',
-                    'context',
-                    'refs'
-                ), ['guard' => false]);
-
-                $this->_model->save($entity);
+            if (
+                $this->_model->exists(compact('domain', 'locale', 'singular'))
+            ) {
+                continue;
             }
+
+            $entity = $this->_model->newEntity(compact(
+                'domain',
+                'locale',
+                'singular',
+                'plural',
+                'context',
+                'refs'
+            ), ['guard' => false]);
+
+            $this->_model->save($entity);
         }
     }
 
