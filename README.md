@@ -160,6 +160,12 @@ translations for each language is upto you.
 ```
 bin/cake admad/i18n extract
 ```
+Before executing make sure you have set the `I18n.languages config` in app_local for example:
+```
+    'I18n' => [
+        'languages' => ['en', 'fr', 'de']
+    ],
+```
 
 Now you can use the translation funtions like `__()` etc. as you normally would.
 The `I18n` class will fetch the required translations from the database instead
