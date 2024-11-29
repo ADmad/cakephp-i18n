@@ -85,6 +85,15 @@ class I18nExtractCommandTest extends TestCase
         $this->assertEquals('You have %d new messages (domain).', $result['plural']);
     }
 
+    public function testExecuteError()
+    {
+        Configure::delete('I18n.languages');
+
+        $this->exec('i18n extract');
+        $this->assertExitError();
+        $this->assertErrorContains('You must specify the languages list using the `I18n.languages` config or the `--languages` option.');
+    }
+
     /**
      * testExecute with merging on method.
      *

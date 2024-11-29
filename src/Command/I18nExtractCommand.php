@@ -28,7 +28,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
     /**
      * App languages.
      *
-     * @var array
+     * @var list<string>
      */
     protected array $_languages = [];
 
@@ -62,6 +62,15 @@ class I18nExtractCommand extends CakeI18nExtractCommand
      */
     public function execute(Arguments $args, ConsoleIo $io): ?int
     {
+        $this->_languages = $this->_getLanguages($args);
+        if ($this->_languages === []) {
+            $io->err(
+                'You must specify the languages list using the `I18n.languages` config or the `--languages` option.'
+            );
+
+            return static::CODE_ERROR;
+        }
+
         $plugin = '';
         if ($args->hasOption('exclude')) {
             $this->_exclude = explode(',', (string)$args->getOption('exclude'));
@@ -148,7 +157,6 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         $io->hr();
         $this->_extractTokens($args, $io);
 
-        $this->_getLanguages($args);
         $this->_saveMessages($args, $io);
 
         $this->_paths = $this->_files = $this->_storage = [];
@@ -166,30 +174,31 @@ class I18nExtractCommand extends CakeI18nExtractCommand
      * Get app languages.
      *
      * @param \Cake\Console\Arguments $args The Arguments instance
-     * @return void
+     * @return list<string>
      */
-    protected function _getLanguages(Arguments $args): void
+    protected function _getLanguages(Arguments $args): array
     {
         $langs = (string)$args->getOption('languages');
         if ($langs) {
-            $this->_languages = explode(',', $langs);
-
-            return;
+            return explode(',', $langs);
         }
 
-        $langs = Configure::read('I18n.languages');
-        if (empty($langs)) {
-            return;
+        $langs = Configure::read('I18n.languages', []);
+        if ($langs === []) {
+            return [];
         }
 
+        $return = [];
         $langs = Hash::normalize($langs);
         foreach ($langs as $key => $value) {
             if (isset($value['locale'])) {
-                $this->_languages[] = $value['locale'];
+                $return[] = $value['locale'];
             } else {
-                $this->_languages[] = $key;
+                $return[] = $key;
             }
         }
+
+        return $return;
     }
 
     /**
