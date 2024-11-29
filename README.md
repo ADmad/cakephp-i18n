@@ -19,7 +19,7 @@ This plugins provides:
 
 ## Installation
 
-```
+```bash
 composer require admad/cakephp-i18n
 ```
 
@@ -27,7 +27,7 @@ composer require admad/cakephp-i18n
 
 Load the plugin by running command:
 
-```
+```bash
 bin/cake plugin load ADmad/I18n
 ```
 
@@ -63,11 +63,16 @@ will be automatically added based on current URL.
 
 When connecting the routes you can use `lang` key in options to provide regular
 expression to match only languages which your app supports. Or your can set
-config value `I18n.languages` which the route class will use to auto generate
+config value `I18n.languages`, which the route class will use to auto generate
 regex for `lang` element matching:
 
 ```php
-Configure::write('I18n.languages', ['en', 'fr', 'de']);
+// In your config/app.php
+    ...
+    'I18n' => [
+        'languages' => ['en', 'fr', 'de']
+    ]
+    ...
 ```
 
 Note: `I18nRoute` extends core's `DashedRoute` so the URL fragments will be
@@ -127,21 +132,21 @@ The middleware does basically two things:
 
 ### DbMessagesLoader
 
-By default CakePHP using `.po` files to store the static string translations. If
-for whatever reason you don't want to use `.po` files you can use the `DbMessagesLoader`
-class to store the translation messaged in database instead. Personally I belive
-having the messages in a table instead of `.po` files make it much easier to
-make a web interface for managing translations.
+By default CakePHP uses `.po` files to store the static string translations. If
+for whatever reason you can't/don't want to use `.po` files, you can use the
+`DbMessagesLoader` to store the translation messages in the database instead.
+Personally I belive having the messages in a table instead of `.po` files makes
+it much easier to make a web interface for managing translations.
 
-To use this class first create the database table using sql file provided in the
-plugin's `config` folder.
+To use this class first create the `i18n_messages` database table using the sql
+file provided in the plugin's `config` folder.
 
 Add code similar to what's shown below in your app's `config/bootstrap.php`:
 
 ```php
 // NOTE: This is should be done below Cache config setup.
 
-// Configure I18n to use DbMessagesLoader for default domain. You need to do
+// Configure `I18n` to use `DbMessagesLoader` for the `default` domain. You need to do
 // this for each domain separately.
 \Cake\I18n\I18n::config('default', function ($domain, $locale) {
     return new \ADmad\I18n\I18n\DbMessagesLoader(
@@ -151,17 +156,37 @@ Add code similar to what's shown below in your app's `config/bootstrap.php`:
 });
 ```
 
-You can use `admad/i18n extract` command to extract the translation message from your
-code files and populate the translations table. Updating the db records with
+Now you can use the translation functions like `__()` etc. as you normally would.
+The `I18n` class will fetch the required translations from the `i18n_messages`
+table instead of `.po` files.
+
+Use the `admad/i18n extract` command to extract the translation messages from your
+code files and populate the translations table. Updating the database records with
 translations for each language is upto you.
 
-```
+```bash
 bin/cake admad/i18n extract
 ```
 
-Now you can use the translation functions like `__()` etc. as you normally would.
-The `I18n` class will fetch the required translations from the database instead
-of `.po` files.
+The extract command needs the list of languages/locales to populate the  `i18n_messages`
+table. This can be done by setting the `I18n.languages` config **or** by specifying
+the languages list using the `languages` option.
+
+```php
+// In your config/app.php
+    ...
+    'I18n' => [
+        'languages' => ['en', 'fr', 'de']
+    ]
+    ...
+```
+
+```bash
+bin/cake admad/i18n extract --languages en,fr,de
+```
+
+You can run the command multiple times as needed. It will add new messages it
+finds to the tables, keeping the ones already present untouched.
 
 ### TimezoneWidget
 
