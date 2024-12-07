@@ -9,6 +9,7 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
+use Laminas\Diactoros\UploadedFile;
 
 /**
  * Tests for Validator.
@@ -83,6 +84,15 @@ class ValidatorTest extends TestCase
                 'value_0' => 'Message from validation_non_default',
                 'value_1' => '',
             ],
+            [
+                'domain' => 'validation',
+                'locale' => I18n::getLocale(),
+                'context' => '',
+                'singular' => 'mimeType',
+                'plural' => '',
+                'value_0' => 'Valid mime types: {0}',
+                'value_1' => '',
+            ],
         ];
         foreach ($messages as $row) {
             $I18nMessages->save($I18nMessages->newEntity($row));
@@ -92,7 +102,8 @@ class ValidatorTest extends TestCase
 
         $this->validator
             ->add('email', 'email', ['rule' => 'email'])
-            ->add('field', 'comparison', ['rule' => ['comparison', '<', 50]]);
+            ->add('field', 'comparison', ['rule' => ['comparison', '<', 50]])
+            ->add('file', 'mimeType', ['rule' => ['mimeType', ['image/jpeg, image/png']]]);
     }
 
     /**
@@ -102,14 +113,18 @@ class ValidatorTest extends TestCase
      */
     public function testErrors()
     {
+        $file = new UploadedFile(__FILE__, 1, UPLOAD_ERR_OK, 'foo.txt', 'text/plain');
+
         $errors = $this->validator->validate([
             'email' => 'foo',
             'field' => '100',
+            'file' => $file,
         ]);
 
         $expected = [
             'email' => ['email' => 'Enter a valid email'],
             'field' => ['comparison' => 'This value must be less than 50'],
+            'file' => ['mimeType' => 'Valid mime types: image/jpeg, image/png'],
         ];
         $this->assertEquals($expected, $errors);
     }
