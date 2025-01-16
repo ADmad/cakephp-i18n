@@ -10,16 +10,6 @@ use function Cake\I18n\__d;
 class Validator extends CakeValidator
 {
     /**
-     * Constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->_useI18n = true;
-    }
-
-    /**
      * I18n domain for validation messages.
      *
      * @var string
