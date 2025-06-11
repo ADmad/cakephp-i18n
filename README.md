@@ -149,10 +149,12 @@ Add code similar to what's shown below in your app's `config/bootstrap.php`:
 // Configure `I18n` to use `DbMessagesLoader` for the `default` domain. You need to do
 // this for each domain separately.
 \Cake\I18n\I18n::config('default', function ($domain, $locale) {
-    return new \ADmad\I18n\I18n\DbMessagesLoader(
+    $loader = new \ADmad\I18n\I18n\DbMessagesLoader(
         $domain,
         $locale
     );
+
+    return $loader();
 });
 ```
 
