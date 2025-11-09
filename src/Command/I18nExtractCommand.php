@@ -65,7 +65,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         $this->_languages = $this->_getLanguages($args);
         if ($this->_languages === []) {
             $io->err(
-                'You must specify the languages list using the `I18n.languages` config or the `--languages` option.'
+                'You must specify the languages list using the `I18n.languages` config or the `--languages` option.',
             );
 
             return static::CODE_ERROR;
@@ -93,7 +93,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
             $response = $io->askChoice(
                 'Would you like to extract the messages from the CakePHP core?',
                 ['y', 'n'],
-                'n'
+                'n',
             );
             $this->_extractCore = strtolower($response) === 'y';
         }
@@ -117,7 +117,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
             $response = $io->askChoice(
                 'Would you like to merge all domain strings into the default.pot file?',
                 ['y', 'n'],
-                'n'
+                'n',
             );
             $this->_merge = strtolower($response) === 'y';
         }
@@ -252,7 +252,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
                         $msgid,
                         $details['msgid_plural'] === false ? null : $details['msgid_plural'],
                         $context ?: null,
-                        $references
+                        $references,
                     );
                 }
             }
@@ -274,7 +274,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         string $singular,
         ?string $plural = null,
         ?string $context = null,
-        ?string $refs = null
+        ?string $refs = null,
     ): void {
         foreach ($this->_languages as $locale) {
             if (
@@ -289,7 +289,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
                 'singular',
                 'plural',
                 'context',
-                'refs'
+                'refs',
             ), ['guard' => false]);
 
             $this->_model->save($entity);
@@ -307,7 +307,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         $parser->setDescription(
             'Extract translated strings from application source files. ' .
             'Source files are parsed and string literal format strings ' .
-            'provided to the <info>__</info> family of functions are extracted.'
+            'provided to the <info>__</info> family of functions are extracted.',
         )->addOption('model', [
             'help' => 'Model to use for storing messages. Defaults to: ' . static::DEFAULT_MODEL,
         ])->addOption('languages', [

@@ -75,7 +75,7 @@ class I18nInitCommand extends CakeI18nInitCommand
                         return false;
                     }
                 }
-            }
+            },
         );
 
         if ($return) {

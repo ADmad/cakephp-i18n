@@ -43,7 +43,7 @@ class I18nRouteTest extends TestCase
                 'persist' => ['lang'],
                 '_ext' => [],
             ],
-            $route->options
+            $route->options,
         );
 
         $route = new I18nRoute('/');
@@ -71,7 +71,7 @@ class I18nRouteTest extends TestCase
                 'pass' => ['id', 'slug'],
                 '_name' => 'blog_show',
                 'routeClass' => 'ADmad/I18n.I18nRoute',
-            ]
+            ],
         );
         $request = new ServerRequest();
         $request = $request->withParam('lang', 'en')
@@ -94,7 +94,7 @@ class I18nRouteTest extends TestCase
                 'pass' => ['id', 'slug'],
                 '_name' => 'blog_show',
                 'routeClass' => 'ADmad/I18n.I18nRoute',
-            ]
+            ],
         );
         $request = new ServerRequest();
         Router::setRequest($request);

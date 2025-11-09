@@ -92,7 +92,7 @@ class I18nMiddleware implements MiddlewareInterface
 
             return new RedirectResponse(
                 $request->getAttribute('webroot') . $lang,
-                $statusCode
+                $statusCode,
             );
         }
 
@@ -153,7 +153,7 @@ class I18nMiddleware implements MiddlewareInterface
         }
         $acceptedLangs = array_intersect(
             $browserLangs,
-            array_keys($this->_config['languages'])
+            array_keys($this->_config['languages']),
         );
         if (!empty($acceptedLangs)) {
             /** @var string $lang */

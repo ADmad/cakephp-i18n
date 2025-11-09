@@ -27,7 +27,7 @@ class I18nExtractCommandTest extends TestCase
         $this->setAppNamespace();
         $this->configApplication(
             'TestApp\Application',
-            [PLUGIN_TESTS . 'test_app' . DS . 'config']
+            [PLUGIN_TESTS . 'test_app' . DS . 'config'],
         );
 
         $this->model = $this->getTableLocator()->get('I18nMessages');
@@ -42,7 +42,7 @@ class I18nExtractCommandTest extends TestCase
             'i18n extract ' .
             '--extract-core=no ' .
             '--merge=no ' .
-            '--paths=' . PLUGIN_TESTS . 'test_app/templates/Pages'
+            '--paths=' . PLUGIN_TESTS . 'test_app/templates/Pages',
         );
         $this->assertExitSuccess();
 
@@ -105,7 +105,7 @@ class I18nExtractCommandTest extends TestCase
             'i18n extract ' .
             '--extract-core=no ' .
             '--merge=yes ' .
-            '--paths=' . PLUGIN_TESTS . 'test_app/templates/Pages'
+            '--paths=' . PLUGIN_TESTS . 'test_app/templates/Pages',
         );
         $this->assertExitSuccess();
 
@@ -131,7 +131,7 @@ class I18nExtractCommandTest extends TestCase
             'i18n extract ' .
             '--extract-core=no ' .
             '--exclude=Pages,layout ' .
-            '--paths=' . PLUGIN_TESTS . 'test_app/templates'
+            '--paths=' . PLUGIN_TESTS . 'test_app/templates',
         );
         $this->assertExitSuccess();
 
@@ -158,7 +158,7 @@ class I18nExtractCommandTest extends TestCase
             '--extract-core=no ' .
             '--exclude=Pages,layout ' .
             '--no-location ' .
-            '--paths=' . PLUGIN_TESTS . 'test_app/templates'
+            '--paths=' . PLUGIN_TESTS . 'test_app/templates',
         );
         $this->assertExitSuccess();
 
@@ -178,7 +178,7 @@ class I18nExtractCommandTest extends TestCase
         $this->exec(
             'i18n extract ' .
             '--extract-core=no ' .
-            '--paths=' . PLUGIN_TESTS . 'test_app/templates/Pages,' . PLUGIN_TESTS . 'test_app/templates/Posts'
+            '--paths=' . PLUGIN_TESTS . 'test_app/templates/Pages,' . PLUGIN_TESTS . 'test_app/templates/Posts',
         );
         $this->assertExitSuccess();
 
@@ -203,7 +203,7 @@ class I18nExtractCommandTest extends TestCase
         $this->exec(
             'i18n extract ' .
             '--exclude-plugins ' .
-            '--paths=' . PLUGIN_TESTS . 'test_app/src --extract-core=no'
+            '--paths=' . PLUGIN_TESTS . 'test_app/src --extract-core=no',
         );
         $this->assertExitSuccess();
 
@@ -225,7 +225,7 @@ class I18nExtractCommandTest extends TestCase
 
         $this->exec(
             'i18n extract ' .
-            '--plugin=TestPlugin --extract-core=no'
+            '--plugin=TestPlugin --extract-core=no',
         );
         $this->assertExitSuccess();
 
@@ -254,7 +254,7 @@ class I18nExtractCommandTest extends TestCase
         $this->exec(
             'i18n extract ' .
             '--extract-core=no ' .
-            '--plugin=Company/TestPluginThree'
+            '--plugin=Company/TestPluginThree',
         );
         $this->assertExitSuccess();
 
@@ -279,7 +279,7 @@ class I18nExtractCommandTest extends TestCase
         $this->exec(
             'i18n extract ' .
             '--extract-core=yes ' .
-            '--paths=' . PLUGIN_TESTS . 'test_app/src'
+            '--paths=' . PLUGIN_TESTS . 'test_app/src',
         );
         $this->assertExitSuccess();
 

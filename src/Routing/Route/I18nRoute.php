@@ -39,7 +39,7 @@ class I18nRoute extends DashedRoute
         if (!array_key_exists('lang', $options)) {
             if (self::$_availableLangs === null) {
                 self::$_availableLangs = array_keys(
-                    Hash::normalize((array)Configure::read('I18n.languages'))
+                    Hash::normalize((array)Configure::read('I18n.languages')),
                 );
             }
 

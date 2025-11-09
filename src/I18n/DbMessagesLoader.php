@@ -59,7 +59,7 @@ class DbMessagesLoader
         string $domain,
         string $locale,
         string|RepositoryInterface|null $model = null,
-        string $formatter = 'default'
+        string $formatter = 'default',
     ) {
         $this->_domain = $domain;
         $this->_locale = $locale;
@@ -85,7 +85,7 @@ class DbMessagesLoader
             $fields = $model->getSchema()->columns();
             $fields = array_flip(array_diff(
                 $fields,
-                $model->getSchema()->getPrimaryKey()
+                $model->getSchema()->getPrimaryKey(),
             ));
             unset($fields['domain'], $fields['locale']);
             $query->select(array_flip($fields));

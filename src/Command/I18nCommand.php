@@ -69,7 +69,7 @@ class I18nCommand extends Command
                 default:
                     $io->err(
                         'You have made an invalid selection. ' .
-                        'Please choose a command to execute by entering E, I, H, or Q.'
+                        'Please choose a command to execute by entering E, I, H, or Q.',
                     );
             }
             if ($code === static::CODE_ERROR) {
@@ -89,7 +89,7 @@ class I18nCommand extends Command
     public function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         $parser->setDescription(
-            'I18n commands let you populate messages repository to power translations in your application.'
+            'I18n commands let you populate messages repository to power translations in your application.',
         );
 
         return $parser;

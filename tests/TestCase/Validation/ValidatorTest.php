@@ -31,7 +31,7 @@ class ValidatorTest extends TestCase
         I18n::config('validation', function ($domain, $locale) {
             $loader = new DbMessagesLoader(
                 $domain,
-                $locale
+                $locale,
             );
 
             return $loader();
@@ -40,7 +40,7 @@ class ValidatorTest extends TestCase
         I18n::config('validation_non_default', function ($domain, $locale) {
             $loader = new DbMessagesLoader(
                 $domain,
-                $locale
+                $locale,
             );
 
             return $loader();
