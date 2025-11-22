@@ -99,10 +99,6 @@ class I18nExtractCommand extends CakeI18nExtractCommand
         }
 
         if ($args->hasOption('exclude-plugins') && $this->_isExtractingApp()) {
-            /**
-             * @phpstan-ignore-next-line
-             * @psalm-suppress PropertyTypeCoercion
-             */
             $this->_exclude = array_merge($this->_exclude, App::path('plugins'));
         }
 

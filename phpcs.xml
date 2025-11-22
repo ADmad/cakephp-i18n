@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<ruleset name="cakehp-i18n">
+    <rule ref="CakePHP"/>
+
+    <file>src/</file>
+    <file>tests/</file>
+</ruleset>
