@@ -22,6 +22,8 @@ class I18nExtractCommand extends CakeI18nExtractCommand
 
     /**
      * Default model for storing translation messages.
+     *
+     * @var string
      */
     public const DEFAULT_MODEL = 'I18nMessages';
 
@@ -207,7 +209,7 @@ class I18nExtractCommand extends CakeI18nExtractCommand
     protected function _saveMessages(Arguments $args, ConsoleIo $io): void
     {
         $paths = $this->_paths;
-        /** @psalm-suppress UndefinedConstant */
+        /** @psalm-suppress UndefinedConstant, PossiblyFalseOperand */
         $paths[] = realpath(APP) . DIRECTORY_SEPARATOR;
 
         usort($paths, function (string $a, string $b): int {

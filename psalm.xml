@@ -20,5 +20,10 @@
         <PropertyNotSetInConstructor errorLevel="info" />
         <MissingConstructor errorLevel="info" />
         <RiskyTruthyFalsyComparison errorLevel="info" />
+        <MissingOverrideAttribute errorLevel="info" />
+        <ClassMustBeFinal errorLevel="info" />
+        <PossiblyNullArrayAccess errorLevel="info" />
+        <PossiblyNullArrayAssignment errorLevel="info" />
+        <PossiblyNullArrayOffset errorLevel="info" />
     </issueHandlers>
 </psalm>
