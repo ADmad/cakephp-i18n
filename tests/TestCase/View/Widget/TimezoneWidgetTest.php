@@ -5,6 +5,7 @@ namespace ADmad\I18n\Test\View\Widget;
 
 use ADmad\I18n\View\Widget\TimezoneWidget;
 use Cake\TestSuite\TestCase;
+use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
 use DateTimeZone;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
@@ -14,7 +15,7 @@ use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
  */
 class TimezoneWidgetTest extends TestCase
 {
-    protected $context;
+    protected ContextInterface $context;
 
     protected StringTemplate $templates;
 
@@ -32,7 +33,7 @@ class TimezoneWidgetTest extends TestCase
             'option' => '<option value="{{value}}"{{attrs}}>{{text}}</option>',
             'optgroup' => '<optgroup label="{{label}}"{{attrs}}>{{content}}</optgroup>',
         ];
-        $this->context = $this->getMockBuilder('Cake\View\Form\ContextInterface')->getMock();
+        $this->context = $this->createStub(ContextInterface::class);
         $this->templates = new StringTemplate($templates);
     }
 

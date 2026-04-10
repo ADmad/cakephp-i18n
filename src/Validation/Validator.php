@@ -40,16 +40,21 @@ class Validator extends CakeValidator
      * @param \Cake\Validation\ValidationSet $rules the list of rules for a field
      * @param array $data the full data passed to the validator
      * @param bool $newRecord whether is it a new record or an existing one
+     * @param array $context Additional validation context.
      * @return array<string, mixed>
      */
-    protected function _processRules(string $field, ValidationSet $rules, array $data, bool $newRecord): array
-    {
+    protected function _processRules(
+        string $field,
+        ValidationSet $rules,
+        array $data,
+        bool $newRecord,
+        array $context = [],
+    ): array {
         $errors = [];
-        // Loading default provider in case there is none
-        $this->getProvider('default');
+        $context = compact('newRecord', 'data', 'field') + $context;
 
         foreach ($rules as $name => $rule) {
-            $result = $rule->process($data[$field], $this->_providers, compact('newRecord', 'data', 'field'));
+            $result = $rule->process($data[$field], $this->_providers, $context);
             if ($result === true) {
                 continue;
             }
@@ -61,6 +66,10 @@ class Validator extends CakeValidator
             } else {
                 $args = $rule->get('pass');
                 $errors[$name] = __d($this->_validationDomain, $name, $this->_translateArgs($args));
+
+                if ($errors[$name] === $name) {
+                    $errors[$name] = __d('cake', 'The provided value is invalid');
+                }
             }
 
             if ($rule->isLast()) {
