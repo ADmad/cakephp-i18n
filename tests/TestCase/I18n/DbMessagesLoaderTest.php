@@ -82,6 +82,18 @@ class DbMessagesLoaderTest extends TestCase
                     ],
                 ],
             ],
+            // A singular-only row returned before the plural row must not make
+            // the plural collapse to its singular value.
+            [
+                'plural_order',
+                'en',
+                null,
+                [
+                    'first' => 'first value',
+                    'singular' => '{0} value',
+                    'plural' => ['{0} value', '{0} values'],
+                ],
+            ],
             [
                 'foo',
                 'bar',

@@ -34,5 +34,15 @@ class I18nMessagesFixture extends TestFixture
             'domain' => 'w_context', 'locale' => 'en', 'context' => 'c2', 'singular' => 'singular',
             'plural' => 'plural', 'value_0' => '{0} value c2', 'value_1' => '{0} values c2',
         ],
+        // Singular-only row with a NULL plural value returned *before* the
+        // plural row. Reproduces the plural-form detection bug.
+        [
+            'domain' => 'plural_order', 'locale' => 'en', 'context' => '', 'singular' => 'first',
+            'plural' => '', 'value_0' => 'first value', 'value_1' => null,
+        ],
+        [
+            'domain' => 'plural_order', 'locale' => 'en', 'context' => '', 'singular' => 'singular',
+            'plural' => 'plural', 'value_0' => '{0} value', 'value_1' => '{0} values',
+        ],
     ];
 }
