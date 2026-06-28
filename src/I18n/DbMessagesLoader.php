@@ -114,12 +114,14 @@ class DbMessagesLoader
         $messages = [];
         $pluralForms = 0;
         $item = $results->first();
-        // There are max 6 plural forms possible but most people won't need
-        // that so will only have the required number of value_{n} fields in db.
-        for ($i = 5; $i > 0; $i--) {
-            if (isset($item['value_' . $i])) {
-                $pluralForms = $i;
-                break;
+        // Count plural forms from the selected columns, not the values: a
+        // singular-only first row has NULL values and would report 0 forms.
+        if (is_array($item)) {
+            for ($i = 5; $i > 0; $i--) {
+                if (array_key_exists('value_' . $i, $item)) {
+                    $pluralForms = $i;
+                    break;
+                }
             }
         }
 
