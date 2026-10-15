@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace ADmad\I18n\Command;
 
-use Cake\Console\Arguments;
 use Cake\ORM\Table;
 
 /**
@@ -16,19 +15,18 @@ trait I18nModelTrait
      *
      * @var \Cake\ORM\Table
      */
-    protected Table $_model;
+    protected Table $model;
 
     /**
      * Get translation model.
      *
-     * @param \Cake\Console\Arguments $args The Arguments instance
      * @return \Cake\ORM\Table
      */
-    protected function _loadModel(Arguments $args): Table
+    protected function loadModel(): Table
     {
         /** @var string $model */
-        $model = $args->getOption('model') ?: static::DEFAULT_MODEL;
+        $model = $this->args->getOption('model') ?: static::DEFAULT_MODEL;
 
-        return $this->_model = $this->getTableLocator()->get($model);
+        return $this->model = $this->getTableLocator()->get($model);
     }
 }

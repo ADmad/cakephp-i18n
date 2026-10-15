@@ -28,7 +28,7 @@ class TimezoneWidget extends SelectBoxWidget
      */
     public function render(array $data, ContextInterface $context): string
     {
-        $data['options'] = $this->_identifierList($data['options'] ?? []);
+        $data['options'] = $this->identifierList($data['options'] ?? []);
 
         return parent::render($data, $context);
     }
@@ -39,7 +39,7 @@ class TimezoneWidget extends SelectBoxWidget
      * @param array $options List of regions
      * @return array
      */
-    protected function _identifierList(array $options): array
+    protected function identifierList(array $options): array
     {
         if (empty($options)) {
             $options = [

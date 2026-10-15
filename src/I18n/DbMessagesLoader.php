@@ -23,28 +23,28 @@ class DbMessagesLoader
      *
      * @var string
      */
-    protected string $_domain;
+    protected string $domain;
 
     /**
      * The locale to load messages for.
      *
      * @var string
      */
-    protected string $_locale;
+    protected string $locale;
 
     /**
      * The model name to use for loading messages or model instance.
      *
      * @var \Cake\Datasource\RepositoryInterface|string
      */
-    protected string|RepositoryInterface $_model;
+    protected string|RepositoryInterface $model;
 
     /**
      * Formatting used for messsages.
      *
      * @var string
      */
-    protected string $_formatter;
+    protected string $formatter;
 
     /**
      * Constructor.
@@ -61,10 +61,10 @@ class DbMessagesLoader
         string|RepositoryInterface|null $model = null,
         string $formatter = 'default',
     ) {
-        $this->_domain = $domain;
-        $this->_locale = $locale;
-        $this->_model = $model ?: 'I18nMessages';
-        $this->_formatter = $formatter;
+        $this->domain = $domain;
+        $this->locale = $locale;
+        $this->model = $model ?: 'I18nMessages';
+        $this->formatter = $formatter;
     }
 
     /**
@@ -76,11 +76,12 @@ class DbMessagesLoader
      */
     public function __invoke(): Package
     {
-        $model = $this->_getModel();
-        /** @var \Cake\ORM\Query\SelectQuery $query */
-        $query = $model->find();
+        $model = $this->getModel();
 
         if ($model instanceof Table) {
+            /** @var \Cake\ORM\Query\UnhydratedSelectQuery $query */
+            $query = $model->unhydratedFind();
+
             // Get list of fields without primaryKey, domain, locale.
             $fields = $model->getSchema()->columns();
             $fields = array_flip(array_diff(
@@ -89,14 +90,16 @@ class DbMessagesLoader
             ));
             unset($fields['domain'], $fields['locale']);
             $query->select(array_flip($fields));
+        } else {
+            /** @var \Cake\Datasource\QueryInterface $query */
+            $query = $model->find();
         }
 
         $results = $query
-            ->where(['domain' => $this->_domain, 'locale' => $this->_locale])
-            ->disableHydration()
+            ->where(['domain' => $this->domain, 'locale' => $this->locale])
             ->all();
 
-        return new Package($this->_formatter, null, $this->_messages($results));
+        return new Package($this->formatter, null, $this->messages($results));
     }
 
     /**
@@ -105,7 +108,7 @@ class DbMessagesLoader
      * @param \Cake\Datasource\ResultSetInterface $results ResultSet instance.
      * @return array
      */
-    protected function _messages(ResultSetInterface $results): array
+    protected function messages(ResultSetInterface $results): array
     {
         if (!$results->count()) {
             return [];
@@ -159,12 +162,12 @@ class DbMessagesLoader
      *
      * @return \Cake\Datasource\RepositoryInterface
      */
-    protected function _getModel(): RepositoryInterface
+    protected function getModel(): RepositoryInterface
     {
-        if (is_string($this->_model)) {
-            $this->_model = $this->getTableLocator()->get($this->_model);
+        if (is_string($this->model)) {
+            $this->model = $this->getTableLocator()->get($this->model);
         }
 
-        return $this->_model;
+        return $this->model;
     }
 }
