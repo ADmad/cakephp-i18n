@@ -14,7 +14,7 @@ class Validator extends CakeValidator
      *
      * @var string
      */
-    protected string $_validationDomain = 'validation';
+    protected string $validationDomain = 'validation';
 
     /**
      * Get/set the I18n domain for validation messages.
@@ -26,10 +26,10 @@ class Validator extends CakeValidator
     public function validationDomain(?string $domain = null): ?string
     {
         if ($domain === null) {
-            return $this->_validationDomain;
+            return $this->validationDomain;
         }
 
-        return $this->_validationDomain = $domain;
+        return $this->validationDomain = $domain;
     }
 
     /**
@@ -43,7 +43,7 @@ class Validator extends CakeValidator
      * @param array $context Additional validation context.
      * @return array<string, mixed>
      */
-    protected function _processRules(
+    protected function processRules(
         string $field,
         ValidationSet $rules,
         array $data,
@@ -54,7 +54,7 @@ class Validator extends CakeValidator
         $context = compact('newRecord', 'data', 'field') + $context;
 
         foreach ($rules as $name => $rule) {
-            $result = $rule->process($data[$field], $this->_providers, $context);
+            $result = $rule->process($data[$field], $context);
             if ($result === true) {
                 continue;
             }
@@ -64,15 +64,15 @@ class Validator extends CakeValidator
             } elseif (is_string($result)) {
                 $errors[$name] = $result;
             } else {
-                $args = $rule->get('pass');
-                $errors[$name] = __d($this->_validationDomain, $name, $this->_translateArgs($args));
+                $args = $rule->pass;
+                $errors[$name] = __d($this->validationDomain, $name, $this->translateArgs($args));
 
                 if ($errors[$name] === $name) {
                     $errors[$name] = __d('cake', 'The provided value is invalid');
                 }
             }
 
-            if ($rule->isLast()) {
+            if ($rule->last) {
                 break;
             }
         }
@@ -86,14 +86,14 @@ class Validator extends CakeValidator
      * @param array $args The args to translate
      * @return array Translated args.
      */
-    protected function _translateArgs(array $args): array
+    protected function translateArgs(array $args): array
     {
         foreach ($args as $k => $arg) {
             if (is_array($arg)) {
                 $arg = implode(', ', $arg);
             }
 
-            $args[$k] = __d($this->_validationDomain, (string)$arg);
+            $args[$k] = __d($this->validationDomain, (string)$arg);
         }
 
         return $args;

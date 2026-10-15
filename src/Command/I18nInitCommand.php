@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace ADmad\I18n\Command;
 
 use Cake\Command\I18nInitCommand as CakeI18nInitCommand;
-use Cake\Console\Arguments;
-use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 
 /**
@@ -18,7 +16,7 @@ class I18nInitCommand extends CakeI18nInitCommand
     /**
      * Default model for storing translation messages.
      */
-    public const DEFAULT_MODEL = 'I18nMessages';
+    public const string DEFAULT_MODEL = 'I18nMessages';
 
     /**
      * The name of this command.
@@ -38,33 +36,31 @@ class I18nInitCommand extends CakeI18nInitCommand
     /**
      * Execute the command
      *
-     * @param \Cake\Console\Arguments $args The command arguments.
-     * @param \Cake\Console\ConsoleIo $io The console io
      * @return int|null The exit code or null for success
      */
-    public function execute(Arguments $args, ConsoleIo $io): ?int
+    public function execute(): ?int
     {
-        $language = $args->getArgument('language');
+        $language = $this->args->getArgument('language');
         if (!$language) {
-            $language = $io->ask('Please specify language code, e.g. `en`, `eng`, `en_US` etc.');
+            $language = $this->io->ask('Please specify language code, e.g. `en`, `eng`, `en_US` etc.');
         }
+
         if (strlen($language) < 2) {
-            $io->err('Invalid language code. Valid are `en`, `eng`, `en_US` etc.');
+            $this->io->err('Invalid language code. Valid are `en`, `eng`, `en_US` etc.');
 
             return static::CODE_ERROR;
         }
 
-        $model = $this->_loadModel($args);
-        $messages = $model->find()
+        $model = $this->loadModel();
+        $messages = $model->unhydratedFind()
             ->select(['domain', 'singular', 'plural', 'context'])
             ->distinct()
-            ->disableHydration()
             ->toArray();
 
         $entities = $model->newEntities($messages);
 
         $return = $model->getConnection()->transactional(
-            function () use ($model, $entities, $language) {
+            function () use ($model, $entities, $language): bool {
                 $model->deleteAll([
                     'locale' => $language,
                 ]);
@@ -75,13 +71,15 @@ class I18nInitCommand extends CakeI18nInitCommand
                         return false;
                     }
                 }
+
+                return true;
             },
         );
 
         if ($return) {
-            $io->out('Created ' . count($messages) . ' messages for "' . $language . '"');
+            $this->io->out('Created ' . count($messages) . ' messages for "' . $language . '"');
         } else {
-            $io->out('Unable to create messages for "' . $language . '"');
+            $this->io->out('Unable to create messages for "' . $language . '"');
         }
 
         return static::CODE_SUCCESS;

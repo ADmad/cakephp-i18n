@@ -17,13 +17,13 @@
     </projectFiles>
 
     <issueHandlers>
-        <PropertyNotSetInConstructor errorLevel="info" />
-        <MissingConstructor errorLevel="info" />
-        <RiskyTruthyFalsyComparison errorLevel="info" />
+        <MissingPureAnnotation errorLevel="info" />
         <MissingOverrideAttribute errorLevel="info" />
         <ClassMustBeFinal errorLevel="info" />
-        <PossiblyNullArrayAccess errorLevel="info" />
+        <RiskyTruthyFalsyComparison errorLevel="info" />
         <PossiblyNullArrayAssignment errorLevel="info" />
+        <PossiblyNullArrayAccess errorLevel="info" />
         <PossiblyNullArrayOffset errorLevel="info" />
+        <PropertyNotSetInConstructor errorLevel="info" />
     </issueHandlers>
 </psalm>

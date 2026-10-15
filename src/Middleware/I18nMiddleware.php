@@ -32,7 +32,7 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @var array
      */
-    protected array $_defaultConfig = [
+    protected array $defaultConfig = [
         'detectLanguage' => true,
         'defaultLanguage' => null,
         'languages' => [],
@@ -45,7 +45,7 @@ class I18nMiddleware implements MiddlewareInterface
      *
      * @var \Closure|null
      */
-    protected ?Closure $_ignoreRequestCallback = null;
+    protected ?Closure $ignoreRequestCallback = null;
 
     /**
      * Constructor.
@@ -54,7 +54,7 @@ class I18nMiddleware implements MiddlewareInterface
      */
     public function __construct(array $config = [])
     {
-        $this->_defaultConfig['defaultLanguage'] = I18n::getDefaultLocale();
+        $this->defaultConfig['defaultLanguage'] = I18n::getDefaultLocale();
         if (isset($config['languages'])) {
             $config['languages'] = Hash::normalize($config['languages']);
         }
@@ -73,8 +73,8 @@ class I18nMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if (
-            $this->_ignoreRequestCallback !== null
-            && call_user_func($this->_ignoreRequestCallback, $request) === true
+            $this->ignoreRequestCallback !== null
+            && call_user_func($this->ignoreRequestCallback, $request) === true
         ) {
             return $handler->handle($request);
         }
@@ -118,9 +118,9 @@ class I18nMiddleware implements MiddlewareInterface
      * @param \Closure $callback A callback.
      * @return $this
      */
-    public function ignoreRequestCallback(Closure $callback)
+    public function ignoreRequestCallback(Closure $callback): static
     {
-        $this->_ignoreRequestCallback = $callback;
+        $this->ignoreRequestCallback = $callback;
 
         return $this;
     }
@@ -139,7 +139,7 @@ class I18nMiddleware implements MiddlewareInterface
     public function detectLanguage(ServerRequest $request, ?string $default = null): string
     {
         if (!$default) {
-            $lang = $this->_config['defaultLanguage'];
+            $lang = $this->config['defaultLanguage'];
         } else {
             $lang = $default;
         }
@@ -153,7 +153,7 @@ class I18nMiddleware implements MiddlewareInterface
         }
         $acceptedLangs = array_intersect(
             $browserLangs,
-            array_keys($this->_config['languages']),
+            array_keys($this->config['languages']),
         );
         if (!empty($acceptedLangs)) {
             /** @var string $lang */

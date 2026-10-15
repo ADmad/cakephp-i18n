@@ -14,7 +14,7 @@ class I18nRoute extends DashedRoute
      *
      * @var array|null
      */
-    protected static ?array $_availableLangs = null;
+    protected static ?array $availableLangs = null;
 
     /**
      * Constructor for a Route.
@@ -37,14 +37,14 @@ class I18nRoute extends DashedRoute
         $options['persist'][] = 'lang';
 
         if (!array_key_exists('lang', $options)) {
-            if (self::$_availableLangs === null) {
-                self::$_availableLangs = array_keys(
+            if (self::$availableLangs === null) {
+                self::$availableLangs = array_keys(
                     Hash::normalize((array)Configure::read('I18n.languages')),
                 );
             }
 
-            if (self::$_availableLangs) {
-                $options['lang'] = implode('|', self::$_availableLangs);
+            if (self::$availableLangs) {
+                $options['lang'] = implode('|', self::$availableLangs);
             }
         }
 
@@ -63,12 +63,12 @@ class I18nRoute extends DashedRoute
      * @param array $params An array of persistent values to replace persistent ones.
      * @return array An array with persistent parameters applied.
      */
-    protected function _persistParams(array $url, array $params): array
+    protected function persistParams(array $url, array $params): array
     {
-        $url = parent::_persistParams($url, $params);
+        $url = parent::persistParams($url, $params);
 
-        if (!isset($url['lang']) && isset($this->options['_name']) && self::$_availableLangs) {
-            $url['lang'] = current(self::$_availableLangs);
+        if (!isset($url['lang']) && isset($this->options['_name']) && self::$availableLangs) {
+            $url['lang'] = current(self::$availableLangs);
         }
 
         return $url;
